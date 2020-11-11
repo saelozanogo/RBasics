@@ -1,4 +1,0 @@
-apodo,nombre,apellido
-smatallana,Santiago,Matallana
-abetancur,Andres,Betancur
-ltamayo,Laura,Tamayo

@@ -1,9 +1,0 @@
-"país" "sexo" "Estado" "id"
-"531" "Korea" "female" "isolated" 531
-"457" "Korea" "female" "isolated" 457
-"481" "Korea" "female" "isolated" 481
-"117" "Korea" "female" "isolated" 117
-"1184" "Korea" "male" "isolated" 1184
-"539" "Korea" "female" "isolated" 539
-"224" "Korea" "female" "isolated" 224
-"217" "Korea" "female" "isolated" 217

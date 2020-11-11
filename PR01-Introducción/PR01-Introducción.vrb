@@ -1,9 +1,0 @@
-\frametitle{Including Plots}
-
-You can also embed plots, for example:
-
-\includegraphics{PR01-Introducción_files/figure-beamer/pressure-1.pdf}
-
-Note that the \texttt{echo\ =\ FALSE} parameter was added to the code
-chunk to prevent printing of the R code that generated the plot.
-
