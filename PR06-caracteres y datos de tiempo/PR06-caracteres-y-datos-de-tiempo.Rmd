@@ -1,0 +1,889 @@
+---
+title: "caracteres y datos de tiempo"
+author: "Santiago Lozano"
+date: "7 de marzo de 2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Texto y caracteres
+
+Recordemos que en R los datos de tipo `character` son definidos en comillias
+
+```{r}
+a <- "abc"
+b <- "123"
+```
+
+de igual forma sabemos que los datos de tipo `numeric` pueden ser transformados a `character`, pero los `character` de tipo no numérico no pueden ser tranformados a `numeric`
+
+```
+as.numeric(a)
+```
+
+```
+NAs introduced by coercion[1] NA
+```
+
+```{r}
+as.numeric(b)
+```
+
+Debemos tener una distinción entre `length()` que especifica el largo de un vector y `nchar()` el cual despliega el número de caracteres que tiene un `character`
+
+```{r}
+mascotas<- c("gato","perro","conejo","hamster")
+length(mascotas)
+```
+
+```{r}
+nchar(mascotas)
+```
+
+Y también debemos hacer una distinción entre vectores de tipo `character` y `factor`, los últimos, los cuales establence una variable de tipo cualitativo
+
+```{r}
+class(mascotas)
+```
+
+```{r}
+is.factor(mascotas)
+```
+
+R tiene preestablecido vectores que tienen las letras del abecedario en minúscula
+
+```{r}
+letters
+```
+
+Y mayúscula
+
+```{r}
+LETTERS
+```
+
+Podemos desplegar los datos `character` si comillas 
+
+```{r}
+noquote(letters)
+```
+
+Y especificar cuál es la posición de cierto elemento explícito de un vector
+
+```{r}
+which(letters=="n")
+```
+
+Concatenación de datos de tipo `character` usamos distintas funciones
+
+```{r}
+c(a,b)
+```
+
+la cual despliega en un vector que concatena los dos vectores o datos, otra forma es con
+
+```{r}
+paste(a,b,sep = "")
+```
+
+```{r}
+paste(a,b)
+```
+
+Es importante mencionar que cada dato `character` en una estructura de datos no pierde su espacio en blanco cuando se le aplica `paste()`, y se especifica `sep=""`
+
+```{r}
+paste(a,b," una frase más larga conteniedo espacios en blanco",sep="")
+```
+
+Si uno de los argumentos de `paste()` es un vector, cada uno de los elementos del vector es es pegado junto con el resto de los argumentos
+
+```{r}
+d <- c(a,b,"nuevo")
+e <- paste(d,"una frase más larga que contiene espacios en blanco")
+e
+```
+
+Si por ejemplo, queremos especificar varios elementos que están en una carpeta
+
+```{r}
+drive <- "c:"
+carpeta <- "programcion"
+archivo <- c("archivo1","archivo2","archivo3")
+extension <- ".txt"
+paste(drive, "\\",carpeta, "\\",archivo, extension,sep="")
+```
+
+caso de dos vectores
+
+```{r}
+string1 <- c("a","ab","B","bba","one","!@","brute")
+string2 <- c("e","D")
+paste(string1,string2)
+```
+
+```{r}
+paste(string1,string2,sep="-")
+```
+
+```{r}
+paste(string1,string2,collapse="",sep="")
+```
+
+donde `collapse=` es usado para concatenar elementos dentro del dato `character`
+
+## Extracción de partes de un character
+
+```{r}
+frase <- "el rápido gato marrón salta sobre el perro perezoso"
+```
+
+la función `substr()` se usa para extraer letras de un número especificado de caracteres con un output de `character`
+
+```{r}
+substr(frase,1,1)
+```
+
+Aquí se extrajo una letra desde la primera letra
+
+```{r}
+substr(frase,2,4)
+```
+
+```{r}
+q <- character(20)
+for(i in 1:20){
+  q[i] <- substr(frase,1,i)
+}
+q
+```
+
+## Separación de Characters
+
+Para separar elementos de un `character` (incluyendo espacios en blano) de tipo de dato, usamos `strsplit()`
+
+```{r}
+strsplit(frase,split = "")
+```
+
+la función `table` puede ser usada para contar las ocurrencias de cada letra
+
+```{r}
+table(strsplit(frase,split = ""))
+```
+
+Para separar por palabras
+
+```{r}
+strsplit(frase, " ")
+```
+
+contando el número de letras de cada palabra
+
+```{r}
+lapply(strsplit(frase, " "), nchar)
+```
+
+Revertiendo el orden de las letras
+
+```{r}
+lapply(strsplit(frase,""),rev)
+```
+
+```{r}
+sapply(lapply(strsplit(frase, NULL), rev), paste, collapse="")
+```
+
+Para usar una palabra como marca de separación
+
+```{r}
+strsplit(frase,"el")
+```
+
+Y extrayendo un elemento de esta lista
+
+```{r}
+strsplit(frase,"el")[[1]][2]
+```
+
+## Transformación de textos en mayúscula y minúscula
+
+```{r}
+toupper(frase)
+```
+
+```{r}
+tolower(frase)
+```
+
+## Función match()
+
+Esta función responde la tregunta ¿Dónde los valores en el segundo vector aparecen en el primer vector
+
+```{r}
+primero <- c(5,8,3,5,3,6,4,4,2,8,8,8,4,4,6)
+segundo <- c(8,6,4,2)
+match(primero,segundo)
+```
+
+vemos que aquí la forma en cómo trabaja la función, así, ¡Dónde el 5 del primer vector aparece en el segundo vector?, no aparece, entonces R despiega NA en el output,¿dónde el 8 del primer vector aparece en el segundo? aparece en el primero, y el programa despliega 1.
+
+Esta función es muy importante a la hora de clasificación en base de datos
+
+Por ejemplo, en el campo de la mediciona usted tiene un vector que contiene las identificaciones anónimas de nueve pacientes
+
+```{r}
+sujetos <- c("A", "B", "G", "M", "N", "S", "T", "V", "Z")
+```
+
+Suponga que usted quiere probar una nueva droga a todos los pacientes en un vector de pacientes seleccionados
+
+```{r}
+pacientes.selec<- c("E", "G", "S", "U", "Z")
+```
+
+Usted quiere buscar estos pacientes en la base de datos general para obtener algunos datos, así podemos usar `match()` para buscarlos en la base de datos
+
+```{r}
+match(sujetos,pacientes.selec)
+```
+
+Queremos obtener esta información sabiendo qué paciente se le da la droga nueva y cuál la convencional
+
+```{r}
+q<- character(length(match(sujetos,pacientes.selec)))
+droga <- c("nueva" , "convencional")
+for(i in 1:length(match(sujetos,pacientes.selec))){
+  if(is.na(match(sujetos,pacientes.selec))[i]){
+    q[i]<-droga[2]
+  }else{
+    q[i]<-droga[1]
+  }
+}
+q
+```
+
+## Identificación de patrones
+
+importemos el siguiente dataframe
+
+```{r}
+setwd("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR06-caracteres y datos de tiempo")
+worldfloras<-read.table("worldfloras.txt",header=T)
+attach(worldfloras)
+names(worldfloras)
+```
+
+Existe una forma de encontrar patrones en un vector y apartir de este poder extraer información del dataframe, esto se realiza mediante la función `grep`
+
+en el dataframe tenemos una variable `Country` que corresponde a ciertos países, el cual es un tió factor pues está en un dataframe
+
+```{r}
+head(Country)
+```
+
+Para extraer la ubicación de los países que Tienen la letra R
+
+```{r}
+grep("R",as.character(Country))
+```
+
+Con lo que, extrayendo los nombres de los países
+
+```{r}
+as.vector(Country[grep("R",as.character(Country))])
+```
+
+Si queremos los países que comienzan con R
+
+```{r}
+as.vector(Country[grep("^R",as.character(Country))])
+```
+
+Para seleccionar los países cuyos nombres son más de una palabra y la que nos esprimera palabra comienza con R
+
+```{r}
+as.vector(Country[grep(" R",as.character(Country))])
+```
+
+Para encontrar los países con dos o más palabras
+
+```{r}
+head(as.vector(Country[grep(" ",as.character(Country))]))
+```
+
+Los países cuyo nombre finaliza en y, usamos \$
+
+```{r}
+as.vector(Country[grep("y$",as.character(Country))])
+```
+
+Para condiciones que impliquen expresiones en grupo, es decir, un serie de números o letras ubicadas alfabéticamente, usamos "[]" dentro de los cuales indicamos el rango de valores o letras que son seleccionados. Entonces, para seleccionar los países cuyo nombre contiene las letras de C a E mayúsculas hacemos
+
+```{r}
+head(as.vector(Country[grep("[C-E]",as.character(Country))]))
+```
+
+Aquí hay países como Ivory Coast o Trinstan Cunha que contienen la letra pero no es la primera, para estos propósitos usamos
+
+```{r}
+head(as.vector(Country[grep("^[C-E]",as.character(Country))]))
+```
+
+Para mencionar los países que no cumplen cierta condición usamo el menos "-" , así, buscamos los países cuta palabra no finaliza en una letra de la a la t
+
+```{r}
+as.vector(Country[-grep("[a-t]$",as.character(Country))])
+```
+
+Si queremos del output anterior quitar USA y USSR podemos poner varias condiciones
+
+```{r}
+as.vector(Country[-grep("[A-T a-t]$",as.character(Country))])
+```
+
+El punto en R es un símbolo que es considerado para condicionar cualquier caracter, así, por ejemplo, si queremos especificar la palabra cuya letra es "y" hacemos ^.y, es decir comenzando con cualquier palabra que la siguiente sea "y"
+
+```{r}
+as.vector(Country[grep("^.y",as.character(Country))])
+```
+
+para los países con y como segunda letra ^..y
+
+```{r}
+as.vector(Country[grep("^..y",as.character(Country))])
+```
+
+Si queremos que y sea la sexta letra
+
+```{r}
+as.vector(Country[grep("^.{5}y",as.character(Country))])
+```
+
+entonces el $.\{5\}$ menciona 5 caracteres cualesquiera,
+
+```{r}
+as.vector(Country[grep("^.{,4}y",as.character(Country))])
+```
+
+
+vemos que "." significa cualquier caracter, mientras que $\{,4\}$ significa repetir hasta 4 cualquier cosa antes del \$ (el string final). Así, todos los países con 15 o más caracteres los filtramos mediante
+
+```{r}
+as.vector(Country[grep("^.{15,}$",as.character(Country))])
+```
+
+## Subtitucion de text en un character
+
+R tiene la posibilidad de buscar un caracter y realizar una operación que reemplace ese caracter mediante las funciones `sub()` y `gsub()`, funciones las cuales difieren sólo en que `sub()` reemplaza sólo la primera ocurrencia y `gsub()` reemplaza todas las ocurrencias, veamos un ejemplo
+
+```{r}
+text <- c("arm", "leg", "head", "foot", "hand", "hindleg", "elbow")
+```
+
+y queremos reemplazar "h" por "H"
+
+```{r}
+gsub("h","H",text)
+```
+
+Si queremos sólo reemplazar la primera ocurrencia
+
+```{r}
+sub("o","O",text)
+```
+
+```{r}
+gsub("^.","O",text)
+```
+
+Para este dividimos en 2 grupos, en primer grupo al mencionar `\\w` los caracteres que son letras despues `?` completantdo con frecuencia una vez, es decir, `(\\w?)` me agrupa un grupo de la primera letra y el segundo al poner `\*` agregar al menos un item, es decir, `\\w*` la cadena de al menos cero letras
+
+```{r}
+gsub("(\\w?)(\\w*)", "\\U\\1\\L\\2",text, perl=TRUE)
+```
+
+```{r}
+gsub("(\\w*)", "\\U\\1",text, perl=TRUE)
+```
+
+## Localización de un patrón en un vector usando regexpr
+
+En vez de sustituir el patrón, podemos querer saber si este ocurren en un string, y si es así, donde ocurre dentro de cada string. El resultado de `regexpr` es por tanto un vector numeric, pero indicando la posición de la primera instancia del patrón en el string. Si el patrón no aparece en el string, el valor por defecto retornado por `regexpr` es `-1`
+
+```{r}
+text
+```
+
+```{r}
+regexpr("o",text)
+```
+
+Podemos indicar que despliegue cero si el string no aparece en y un número dependiento la posición de la primera ocurrencia del string
+
+```{r}
+gregexpr("o",text)
+```
+
+Desplegando una lista donde cada elemento de la lista es un vector el cual, el primer elemento despliega las posiciones de las ocurrencias del patrón, el segundo el largo del texto encontrado, el tercero el tipo de dato y el cuarto su usa bytes
+
+```{r}
+lapply(gregexpr("o",text),length)
+```
+
+el cual genera el número de ocurrencias del patrón
+
+```{r}
+freq <- as.vector(unlist(lapply(gregexpr("o",text),length)))
+present <- ifelse(regexpr("o",text)<0,0,1)
+freq*present
+```
+
+Indicando cero si no hay match y un número distinto de cero indicando la cantidad de ocurrencias del patrón
+
+La función `charmatch` es para realizar match entre caracteres, buscando si el patrón se encuentran en alguna parte del elemento del vector, y despliega cero si hay múltiple matches
+
+```{r}
+charmatch("m", c("mean", "median", "mode"))
+```
+
+```{r}
+charmatch("med", c("mean", "median", "mode"))
+```
+
+## Uso de %in% y which
+
+Si queremos ver matches entre vectores de caracteres
+
+```{r}
+stock <- c("carro","van")
+requisitos <- c("camión","remolque","van","deportivo","carro","vagón","carro")
+```
+
+Usamos `which` si queremos encontrar la ubicación del primer vector nombrado en cualesquieras de las entradas del segundo vector nombrado
+
+```{r}
+which(requisitos %in% stock)
+```
+
+Si queremos saber que elementos son 
+
+```{r}
+requisitos[which(requisitos %in% stock)]
+```
+
+y para saber la ubicación exacta
+
+```{r}
+sapply(requisitos, "%in%", stock)
+```
+
+```{r}
+requisitos %in% stock
+```
+
+```{r}
+which(sapply(requisitos, "%in%", stock))
+```
+
+## Más datos sobre búsqueda de patrones
+
+Para nuestros propósitos de especificar estos patrones, ciertos caracteres son llamados **metacaracteres**, especificamente `\ | ( ) [ ] { } ^ $ * + ?`, así cualquier metacaracter con significado especial en nuestro string puede ser citado precediéndolo con un backslash ``\\``, es decir si quiero el significado literal de `{` usamos `\{`.
+
+Existen varias tipos de sintaxis par ala búsqueda de patrones, sin embargo, en R, las expresiones regulares son especificadas por **POSIX (POrtable Operating System Interface** 1003.2, ya sea extendido o básico, dependiendo sobre el valor del argumento extendido, a menos que `perl=TRUE`, lo que corresponde a que usaremos las expresiones regulares tipo PCRE (Perl Compatible Regular Expresions)
+
+Observe que las llaves cuadradas [] son parte de los nombres simbólicos y deben ser incluídos en adición a las llave, por ejemplo [[:alnum:]] significa [0-9A-Za-z], algunas interpretaciones de POSIX las vemos en el documento adjunto, por ejemplo `\{n\}` queiere decir el patrón es buscado n o más veces, `\{,m\}` el patrón es buscado hasta m veces, `\{m,n}\` el patrón es buscado entre n y m veces
+
+```{r}
+text <- c("arm","leg","head", "foot","hand", "hindleg", "elbow")
+```
+
+```{r}
+grep("o{1}",text,value=T)
+```
+
+```{r}
+grep("o{2}",text,value=T)
+```
+
+```{r}
+grep("o{3}",text,value=T)
+```
+
+```{r}
+grep("[[:alnum:]]{4, }",text,value=T)
+```
+
+```{r}
+grep("[[:alnum:]]{5, }",text,value=T)
+```
+
+```{r}
+grep("[[:alnum:]]{6, }",text,value=T)
+```
+
+```{r}
+grep("[[:alnum:]]{7, }",text,value=T)
+```
+
+## Eliminar texto estampado en cadenas complejas
+
+Suponga que queremos separar la información en estas cadenas complicadas
+
+```{r}
+entradas <- c("Prueba 1 58 cervoconis (52 coincidencias)","Prueba 2 60 terrestris (51 conincidencias)","Prueba 8 109 flavicollis (101 coincidencias)")
+entradas
+```
+
+la primera tarea es remover el material del número de coincidencias
+
+```{r}
+gsub("\\(.*\\)$", "", entradas)
+```
+
+
+```{r}
+gsub(" *$", "",gsub("\\(.*\\)$", "", entradas))
+```
+
+```{r}
+pos <- regexpr("\\(.*\\)$", entradas)
+pos
+```
+
+
+```{r}
+substring(entradas, first=pos+1, last=pos+attr(pos,"match.length")-2)
+```
+
+
+
+
+
+
+## Fechas y tiempos en R
+
+El manejo de datos se vuelve altamente complejo dado la variabilidad que tiene este, veamos como R posee un sistema robusto que trata con esta complejidad. Para ver como R maneja fechas y horas, echemos una mirada en 
+
+```{r}
+Sys.time()
+```
+
+cabe aclarar que la zona horaria e despliega en string, esta represetación de la fecha y hora como un caracter es bastante amigable pero no es buena para cálculo, con lo que necesitamos una expresión numérica para combinar fechas y horas. La convención que R utiliza está basada en segundos. Usted puede siempre agregar hasta días o años, pero no puede hacer lo contrario. La línea de base para expresar la fecha y hora de hoy en segundos es el 1 de enero de 1970:
+
+```{r}
+as.numeric(Sys.time())
+```
+
+Esto está bien para graficar series de tiempo, pero no para calcular que mes corresponde o qué día. Para responder estas cuestiones podemos acceder al tablero de variables categoricas asociadas con la fecha. Para acomodar esto R, usa el sistema POSIX para representar tiempos y fechas
+
+```{r}
+class(Sys.time())
+```
+
+Podemos pensar en la clase POSIXct con el sufijo ct continuo en el tienmpo y POSIXlt con el sufijo lista de tiempo 
+
+```{r}
+time.list <- as.POSIXlt(Sys.time())
+unlist(time.list)
+```
+
+Aquí la hora está en formato militar, el mes con el correpondiente número mday es el día del mes, wday es el día de la semana con domingo=0 a sábado=6, el día del año con yday, year es el año teniendo en cuenta 0=1900 e isdst es una variable lógica si está en horario de verano
+
+## Leyendo tiempos de un archivo
+
+Es muy probable que sus datos estén en formato Excel, por ejemplo 03/09/2014, donde día/mes/año, así
+
+```{r}
+setwd("~/Progrmación en R/2020-I/PR06-caracteres y datos de tiempo")
+data <- read.table("dates.txt",header=T)
+attach(data)
+data
+```
+
+cuando se usa `read.table()` este por defecto toma los valore de fecha y los convierte de tipo `factor`
+
+```{r}
+mode(date)
+```
+
+```{r}
+class(date)
+```
+
+El punto es que para nuestros porpósitos, R de inicio no reconoce las fechas como tipo `date`. para esto empleamos la función `strptime`
+
+Para esta función proveemos un formato establecido en comillas en el que le decimos a R que esperar exactamente, en qué orden y separado bajo qué símbolos. Para este ejemplo tenemos días (en 2 dígitos), meses y años, separados por slashes
+
+```{r}
+Rdate <- strptime(as.character(date),"%d/%m/%Y")
+Rdate
+```
+
+```{r}
+class(Rdate)
+```
+
+Con lo que simepre es buena idea poner los datos en el data frame
+
+```{r}
+data <- data.frame(data,Rdate)
+data
+```
+
+Con estos datos podemos hacer cálculos para saber por ejemplo el valor medio de x de cada día de la semana
+
+```{r}
+tapply(x,Rdate$wday,mean)
+```
+
+así la menor media es los lunes y la mayor los viernes, es comlicado recordar los formatos de strptime, equí los recordamos
+
+poner la imagen
+
+Existe una función útil que nos despliega el nombre de la semana
+
+```{r}
+y <- strptime("01/02/2014",format="%d/%m/%Y")
+weekdays(y)
+```
+
+el cual fue convertido de
+
+```{r}
+y$wday
+```
+
+Otro tipo de fecha, tiene que ver con los años en 2 dígitos (`%y`), y los meses abreviados (`%b`) si usar separadores
+
+```{r}
+other.dates <- c("1ene.99", "2ene.05", "31mar.04", "30jul.05")
+strptime(other.dates, "%d%b%y")
+```
+
+Aquí otra posibilidad con el año, mes con el nombre completo y, seguido de la semana del año, y el día de la semana abreviadas
+
+```{r}
+yet.another.date <- c("2016 enero 2 lun.","2017 febrero 6 vie.","2018
+marzo 10 jue.")
+strptime(yet.another.date,"%Y %B %W %a")
+```
+
+el sistema es inteligente en saber la fecha del lunes en la semana número 2 de enero de 2016 
+
+```{r}
+yet.more.dates <- c("2016 2 lun.","2017 6 vie.","2018 10 jue.")
+strptime(yet.more.dates,"%Y %W %a")
+```
+
+## Función difftime
+
+La función `difftime` la diferencia entre 2 objetos de fechas en el tiempo y retorna un objeto de clase `difftime` con un atributo indicando la unidad, se puede usar varias operaciones aritméticas sobre `difftime` como `round`,`signif`,`floor`,`ceiling`,`trunc`,`abs`,`sign` y ciertos operadores lógicos. Podemos crear un objeto `difftime` de la siguiente manera 
+
+```{r}
+yet.more.dates <- c("2016 2 lun.","2017 6 vie.","2018 10 jue.")
+as.difftime(yet.more.dates,"%Y %W %a")
+```
+
+o
+
+```{r}
+difftime("2014-02-06","2014-07-06")
+```
+
+```{r}
+round(difftime("2014-02-06","2014-07-06"),0)
+```
+
+## Cálculos con fechas y tiempo 
+
+Usted puede hacer las siguientes operaciones con fechas y tiempos
+
+- tiempo + número
+
+- tiempo - número
+
+- tiempo1 - tiempo2
+
+- tiempo1 operación lógica tiempo2
+
+donde los operadores lógicos son `==`,`!=`,`<`,`<=`,`>` o `>=` usted puede agragar o sustraer un número de segundos o un objeto `difftime` desde un objeto de fecha-tiempo, pero no puede agregar dos objetos fecha-tiempo. LA sustracción de dos objetos fecha-tiempo es equivalente a usar `difftime`. A menos que la zona horario haya sido especificada,los objetos tipo `POSIXlt` son interpetados estando en la zona horaria actual en los cálculo
+
+Lo que debe comprender es que debe convertir sus fechas y horas en objetos POSIXlt antes de comenzar a hacer cualquier cálculo. Una vez que son objetos POSIXlt, es sencillo calcular medias, diferencias, etc. Aquí queremos calcular el número de días entre dos fechas, 22 de octubre de 2015 y 22 de octubre de 2018:
+
+```{r}
+y2 <- as.POSIXlt("2015-10-22")
+y1 <- as.POSIXlt("2018-10-22")
+y1-y2
+```
+
+## Las funciones difftime y as.difftime
+
+Resolver la diferencia horaria entre dos fechas y horas involucra la función `difftime`, que toma dos objetos de fecha y hora como argumentos. La función devuelve un objeto de clase `difftime` con un atributo que indica las unidades. Por ejemplo, ¿cuántos días transcurrieron entre el 15 de agosto de 2013 y el 21 de octubre de 2015?
+
+```{r}
+difftime("2015-10-21","2013-8-15")
+```
+
+si usted quiere el número de días para usar en el cálculo
+
+```{r}
+as.numeric(difftime("2015-10-21","2013-8-15"))
+```
+
+Su usted tiene tiempo pero no fechas, entonces usted puede usar la función `as.difftime` para crear objetos apropiados para los cálculos
+
+```{r}
+t1 <- as.difftime("6:14:21")
+t2 <- as.difftime("5:12:32")
+t1-t2
+```
+
+A menudo querrá crear objetos POSIXlt a partir de componentes almacenados en diferentes vectores dentro de un dataframe. Por ejemplo, aquí hay un dataframe con las horas, minutos y segundos de un experimento con dos niveles de factores en cuatro columnas separadas:
+
+```{r}
+setwd("~/Progrmación en R/2020-I/PR06-caracteres y datos de tiempo")
+times <- read.table("times.txt",header=T)
+attach(times)
+times
+```
+
+Peguemos los valores dado que los tiempo no están en formato POSIXlt
+
+```{r}
+paste(hrs,min,sec,sep=":")
+```
+
+ahora guardemos las diferencias en un vector de `difftime`
+
+```{r}
+duracion <- as.difftime (paste(hrs,min,sec,sep=":"))
+duracion
+```
+
+llevemos a cabo nuestros cálculos como media varianza usando `tapply`
+
+```{r}
+tapply(duracion,experiment,mean)
+```
+
+cuya respuesta está en horas decimales
+
+## Generacción de secuencias en el tiempo
+
+Podemos generar secuencias de fechas por años, meses, semanas días del mes o días de la semana, veamos nuestro primer ejemplo incrementando en un día
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), as.POSIXlt("2015-11-15"), "1 day")
+```
+
+incrementando en 2 semanas
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), as.POSIXlt("2016-04-05"), "2 weeks")
+```
+
+en incrementos de 3 meses
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), as.POSIXlt("2018-10-04"), "3 months")
+```
+
+con incremento de un año
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), as.POSIXlt("2026-02-04"), "year")
+```
+
+Si especifica un número, en lugar de una cadena de caracteres reconocida, en la parte de la función de secuencia, entonces se supone que el número es un número de segundos, por lo que esto genera la hora y la fecha:
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), as.POSIXlt("2015-11-05"), 8955)
+```
+
+Al igual que con otras formas de seq, puede especificar la longitud del vector que se generará, en lugar de especificar la fecha final:
+
+```{r}
+seq(as.POSIXlt("2015-11-04"), by="month", length=10)
+```
+
+o puede generar un vector de fechas para que coincida con la longitud de un vector existente, utilizando `along =` en lugar de `length =`
+
+```{r}
+results <- runif(16)
+seq(as.POSIXlt("2015-11-04"), by="month", along=results )
+```
+
+Usted puede usar `weekdays` para extraer los días de la semana de una serie de datos
+
+```{r}
+weekdays(seq(as.POSIXlt("2015-11-04"), by="month", along=results ))
+```
+
+Suponga que desea encontrar las fechas de todos los lunes en una secuencia de fechas. Esto implica el uso de subíndices lógicos. Se seleccionarán los subíndices que evalúen como VERDADERO, por lo que la declaración lógica que debe realizar es `wday == 1`. (porque el domingo es `wday == 0`). Cree un objeto llamado `y` que contenga los primeros 100 días en 2016 (tenga en cuenta que la fecha de inicio es el 31 de diciembre de 2015), luego convierta este vector de fechas en un objeto POSIXlt, una lista llamada `x`, como esta:
+
+```{r}
+y <- as.Date(1:100,origin="2015-12-31")
+y
+```
+
+```{r}
+x <- as.POSIXlt(y)
+
+```
+
+Ahora, dado que `x` es una lista, puede usar el operador `$` para acceder a la información en días laborables y, por supuesto, descubre que están separados por 7 días, a partir del 4 de enero de 2016:
+
+```{r}
+x[x$wday==1]
+```
+
+Suponga que desea enumerar las fechas del primer lunes de cada mes. Esta es la fecha con `wday == 1` (como arriba) pero solo en su primera aparición en cada mes del año. Esto es un poco más complicado, porque varios meses contendrán cinco lunes, por lo que no puede usar `seq` con `by = "28 days"` para resolver el problema (esto generaría 13 fechas, no las 12 requeridas). Aquí están las fechas de todos los lunes del año 2016:
+
+```{r}
+y <- as.POSIXlt(as.Date(1:365,origin="2015-12-31"))
+```
+
+Esto es lo que sabemos hasta ahora:
+
+```{r}
+data.frame(monday=y[y$wday==1],month=y$mo[y$wday==1])[1:12,]
+```
+
+Desea que un vector marque los 12 lunes que necesita: estos son aquellos en los que el mes no está duplicado (es decir, desea tomar la primera fila de cada mes). Para este ejemplo, el primer lunes de enero está en la fila 1 (obviamente), el primero en febrero en la fila 5, el primero en marzo en la fila 10, y así sucesivamente. ¡Puede usar la función no duplicada! Duplicada para etiquetar estas filas
+
+```{r}
+wanted <- !duplicated(y$mo[y$wday==1])
+```
+
+Por último, seleccione las 12 fechas de los primeros lunes usando quería como subíndice como este:
+
+```{r}
+y[y$wday==1][wanted]
+```
+
+Tenga en cuenta que cada mes está representado, y ninguna de las fechas es posterior al 7 del mes, según sea necesario.
+
+## Cálculo de diferencias entre  las filas de un dataframe
+
+Una acción común con datos de tiempo es calcular la  diferencia de tiempo entre filas sucesivas de un dataframe. El vector llamado duracion creado anteriormente es de clase `difftime` y contiene 16 veces medido en horas decimales:
+
+```{r}
+class(duracion)
+```
+
+```{r}
+duracion
+```
+
+Puede calcular las diferencias entre filas sucesivas utilizando subíndices, como este:
+
+```{r}
+duracion[1:15]-duracion[2:16]
+```
+

@@ -1,0 +1,161 @@
+---
+title: "Operaciones, extración y otras funcionalidades entre tipos de estructuras de datos"
+author: "Santiago Lozano"
+date: "21 de febrero de 2020"
+output:
+  beamer_presentation:
+    theme: "Darmstadt"
+    colortheme: "default"
+    fonttheme: "structurebold"
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Función stack()
+
+Esta función concatena un simple vactor los valores de ciertas columnas de un data.frame. Esta función despliega un data.frame, con los vectores apilados en la primera columna y la segunda columna contiene un factor que indica la columna de origen. La función unstack() realiza la operación contraria \equ
+
+```{r}
+z <- data.frame(trt1=c(1,6,3,5),trt2=c(8,8,3,1))
+z
+```
+
+## Función stack()
+
+```{r}
+stack(z)
+```
+
+## Función transform
+
+Esta función realiza transformaciones sobre las columnas de una data.frame
+
+```{r}
+Z <- data.frame(Peso=c(80,75,60,52),
+                Altura=c(180,170,165,150),
+                Colesterol=c(44,12,23,34),
+                Genero=c("M","M","F","F"))
+Z
+```
+
+## Función transform
+
+```{r}
+Z <- transform(Z,Altura=Altura/100,BMI=Peso/(Peso/100)^2)
+Z
+```
+
+## Función tapply
+
+Calcula distintas operaciónes realizadas en masas, mediante combinaciones de variables cuantitativas con variables categóricas
+
+```{r}
+data<-read.table("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR04-Manipulación de datos II/temperatures.txt",header=T)
+attach(data)
+names(data)
+```
+
+```{r}
+tapply(temperature,month,mean)
+```
+
+## Función tapply
+
+```{r}
+tapply(temperature,month,min)
+```
+
+```{r}
+tapply(temperature,month,function(x)
+  sqrt(var(x)/length(x)))
+```
+
+## Función tapply
+
+mediante esta función podemos producir tablas multidimensionales simplemente reemplzando una variable categórica por una lista de variables categóricas
+
+```{r}
+tapply(temperature,list(yr,month),mean)[,1:6]
+```
+
+se debe tener cuidado con los missing datas
+
+```{r}
+tapply(temperature,list(yr,month),mean)
+```
+
+## Función tapply
+
+para corregir el inconveniente de trabajar con los missing data usamos el argumento na.rm=TRUE
+
+```{r}
+tapply(temperature,yr,mean,na.rm=TRUE)
+```
+
+## Función tapply
+
+Usted puede querer eliminar ciertos valores extremos antes de calcular la media (pues la media aritmética es bastante sensible a datos atípicos), para ello, el argumento trim especifica la fracción de los datos (entre 0 y 0.5 que usted quiere omitir). Los valores extremos son omitidos en prioridad
+
+## Función tapply
+
+```{r}
+tapply(temperature,yr,mean,trim=0.2)
+```
+
+
+## Función aggregate()
+
+La función aggregate() genera un data.frame en sub poblaciones de acuerdo a un factor (especificado por el argumento by) y aplica una función dada para cada subpoblación
+
+```{r}
+Z <- data.frame(Peso=c(80,75,60,52),
+                Altura=c(180,170,165,150),
+                Colesterol=c(44,12,23,34),
+                Genero=c("M","M","F","F"))
+Z
+```
+
+
+## Función aggregate
+
+```{r}
+aggregate(Z[,-4],by=list(Gender=Z[,4]),FUN=mean)
+```
+
+
+## Función aggregate()
+
+Suponga que tenemos dos variables respuesta (y y z) y dos variables explicativas (x y w) que pueden ser usadas para realizar un resumen estadístico. la función aggregate() funciona de distintas maneras
+
+- one to one: aggregate(y ~ x, mean)
+- one to many: aggregate(y ~ x + w, mean)
+- many to one: aggregate(cbind(y,z) ~ x, mean)
+- many to many: aggregate(cbind(y,z) ~ x + w, mean)
+
+## Función aggregate()
+
+```{r echo=TRUE}
+data2<-read.table("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR04-Manipulación de datos II/pHDaphnia.txt",header=T)
+names(data2)
+```
+
+```{r}
+aggregate(Growth.rate~Water,data2,mean)
+```
+
+## Función aggregate()
+
+```{r}
+aggregate(Growth.rate~Water+Detergent,data2,mean)
+```
+
+## Función aggregate()
+
+```{r}
+aggregate(cbind(pH,Growth.rate)~Water+Detergent,
+          data2,mean)
+```

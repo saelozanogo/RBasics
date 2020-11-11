@@ -1,0 +1,1084 @@
+---
+title: "Características Básicas de R"
+author: "Santiago Lozano"
+date: "27 de enero de 2020"
+output:
+  beamer_presentation:
+    theme: "Warsaw"
+    colortheme: "default"
+    fonttheme: "structurebold"
+    keep_tex: yes
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Calculadora
+
+Como otros lenguajes similares, R puede facilmente reemplzar todas las funcionalidades de una calculadora y de manera más eficiente, una de sus mayores fortalezas es que R permite las operaciones entre arreglos (arrays)
+
+```{r}
+5 + 7
+```
+
+## Calculadora
+
+```{r}
+log(42/7.3)
+```
+
+Cada línea puede tener a lo sumo 8192 carateres, pero si se quiere tener una instrucción o una expresión en la pantalla visualmente más legible, se puede continuar en las líneas de abajo simplemente cambiando la línea
+
+```{r}
+5 + 6 + 3 + 6 + 4 + 2 + 4 + 8 +
+  3 + 2 + 7
+```
+
+## Calculadora
+
+también se puede usar punto y coma (;) para separar varias instrucciones
+
+```{r}
+2 + 3; 5 * 7; 3 - 7
+```
+
+## Calculadora
+
+y los grandes números pueden ser expuestos en notación científica
+
+```{r}
+1.2e3 #1200
+1.2e-2 #0.012
+```
+
+a su vez, es posible relizar operaciones entre arreglos
+
+```{r}
+c(1, 2, 3, 4, 5) * 2
+```
+
+## Calculadora
+
+Los símbolos aritméticos corresponden a + (suma), - (resta), * (multiplicación), / (división), %% (módulo: Residuo de la división), %% (cociente de la división) 
+
+```{r}
+119 %/% 13
+```
+
+```{r}
+119 %% 13
+```
+
+## Calculadora
+
+```{r}
+9 %% 2
+```
+
+```{r}
+8 %% 2
+```
+
+## Calculadora
+
+**PEMDAS**
+
+- Paréntesis
+- Exponenciales
+- Multiplicacaión
+- División
+- Adición
+- Sustracción
+
+```{r}
+6/3+4*2
+```
+
+```{r}
+6*4-12/3-8
+```
+
+## Calculadora
+
+```{r}
+4*4-3*3-16/4
+```
+
+```{r}
+20-(3*2^3-5)
+```
+
+```{r}
+(5+2)^2-9*3+2^3
+```
+
+## Calculadora
+
+```{r}
+(2^4+(16-3*4))/((6+3^2)/(7-4))
+```
+
+## Redondeo
+
+Tenemos varios tipos de Redondeo
+
+- **El entero más grande menor que**
+
+```{r}
+floor(5.7)
+```
+
+- **El entero siguiente**
+
+```{r}
+ceiling(5.7)
+```
+
+## Redondeo
+
+- **Lugar decimal**: Especificando bajo que lugar decimal se hace la aproximación
+
+```{r}
+round(5.7,0)
+```
+
+## Redondeo
+
+```{r}
+round(5.4,0)
+```
+
+```{r}
+x2 <- pi * 100^(-1:3)
+x2
+round(x2, 3)
+```
+
+## Redondeo
+
+- **Dígitos de Significancia**
+
+```{r}
+signif(12345678,4)
+```
+
+```{r}
+signif(12345678,5)
+```
+
+```{r}
+signif(12345678,3)
+```
+
+## Funciones Matemáticas
+
+aquí se pega la imagen funciones
+
+## Asignación de Variables
+
+En los campos anteriores observábamos que los resultados se obtenían directamente en la ventana de comandos, sin embargo, R es un lenguaje de progrmación y a menudo la razón de usar un lenguaje de programación como opuesto a una calculadora es automatizar algún proceso o establecer repeticiones.
+
+Por ejemplo, quisierámos usar el resultado de 5 + 7 en un segundo cálculo y en vez de repetir aquella sentencia podemos crear una variable que la almacene mediante <- una flecha hacía la izquierda
+
+```{r}
+x <- 5 + 7
+```
+
+para ver el contenido de la variable x, simplemente la escribimos
+
+```{r}
+x
+```
+
+## Asignación de Variables
+
+Es erróneo tipear 
+
+```{r}
+x < - 5 + 7
+```
+
+Ahora
+
+```{r}
+y <- x - 3
+```
+
+```{r}
+y
+```
+
+## Asignación de Variables
+
+Algunas cuestiones importante a la hora de establecer variables
+
+- Cuando a algún valor no le asignamos alguna variable este no se almacena, pero si le asignamos una variable, esta variable se almacena en la memoria RAM, así que es de vital importancia tener un manejo debido de esta y evitar tener variables que contengan el mismo valor
+
+- no es lo mismo y que Y
+
+- no se puede poder un nombre de variable con número primero "1x" está mal, "x1" está bien.
+
+- los nombre de las variable no pueden contener espacios
+
+- Evitar poner nombres engorrosos a las variables
+
+
+## Tipos de Datos en R: Números reales (double)
+
+```{r}
+a <- 1
+b <- 3.4
+c <- pi
+```
+
+```{r}
+is.double(a)
+```
+
+## Tipos de datos en R: Números reales (double)
+
+```{r}
+is.double(b)
+```
+
+```{r}
+is.double(c)
+```
+
+```{r}
+typeof(b)
+```
+
+## Tipos de datos en R: Número entero (integer)
+
+Inicialmente los número son enteros y reales a la misma vez son establecidos como double, pero estos pueden ser transformados a integer, otra nota importante que puede ser tenida en cuenta es que los integer consumen menos memoria que los numeric 
+
+```{r}
+d <- as.integer(a)
+```
+
+```{r}
+is.integer(d)
+```
+
+```{r}
+typeof(d)
+```
+
+## Tipos de datos en R: Números complejos (complex)
+
+Los números complejos pueden ser creados gracias a la letra i
+
+```{r}
+1i
+```
+
+```{r}
+z <- 1 + 2i
+```
+
+```{r}
+typeof(z)
+```
+
+## Tipos de datos en R: Números complejos (complex)
+
+```{r}
+is.complex(z)
+```
+
+```{r}
+Re(z)
+```
+
+```{r}
+Im(z)
+```
+
+## Tipos de datos en R: Números complejos (complex)
+
+```{r}
+Mod(z)
+```
+
+```{r}
+Arg(z)
+```
+
+## Tipos de datos en R: Números complejos (complex)
+
+Aquí va complex
+
+## Booleano o de tipo Lógico (logical)
+
+El tipo logical() es el resultado de una operación lógica. Este puede tomar los valores TRUE o FALSE, el cálculo de operaciones lógica corresponde a preguntas sobre cosas
+
+```{r}
+TRUE == FALSE
+```
+
+```{r}
+T == F
+```
+
+## Booleano o de tipo Lógico (logical)
+
+```{r}
+T <- 0
+T == FALSE
+```
+
+```{r}
+F <- 1
+TRUE == F
+```
+
+```{r}
+T != F
+```
+
+## Booleano o de tipo Lógico (logical)
+
+Se debe tener cuidado con los números que contienen dígitos bastante grandes, pues pueden conducir a diferentes errores pues la mayoría de números se redondean sobre 53 dígitos binarios
+
+```{r}
+x <- sqrt(2)
+x * x == 2
+```
+
+```{r}
+x * x - 2
+```
+
+## Booleano o de tipo Lógico (logical)
+
+El consejo es no usar ==, lo mejor es usar all.equal
+
+```{r}
+x <- 0.3 - 0-2
+y <- 0.1
+x == y
+```
+
+la función identical tampoco funciona
+
+```{r}
+identical(x,y)
+```
+
+## Booleano o de tipo Lógico (logical)
+
+Pero all.equal si funciona, pues permite diferencias insignificantes
+
+```{r}
+all.equal(x,y)
+```
+
+otro ejemplos
+
+```{r}
+b > a
+```
+
+## Booleano o de tipo Lógico (logical)
+
+
+Aquí va logical
+
+## Booleano o de tipo Lógico (logical)
+
+```{r}
+TRUE & FALSE
+```
+
+```{r}
+FALSE | FALSE
+```
+
+```{r}
+!TRUE
+```
+
+## Missing Data (NA)
+
+Un valor faltante o valor indefinido es indicado por la instrucción NA (por no-disponible), varias funciones existen para manejar este tipo de dtos. De hecho, R lo considera como un valor lógico constante
+
+```{r}
+x <- c(3,NA,6)
+is.na(x)
+```
+
+```{r}
+mean(x)
+```
+
+## Missing Data (NA)
+
+```{r}
+mean(x,na.rm = TRUE)
+```
+
+Los Missing Values son una fuente de irritación, porque ellos afectan las funciones que ajustan modelos y pueden reducir el poder del modelamiento
+
+## Infinitos y cosas que no son números
+
+Los cálculos pueden conducir a respuestas como más infinito ó menos infinito
+
+```{r}
+3/0
+```
+
+```{r}
+-12/0
+```
+
+## Infinitos y cosas que no son números
+
+Podemos operar infinitos también
+
+```{r}
+exp(-Inf)
+```
+
+```{r}
+0/Inf
+```
+
+## Infinitos y cosas que no son números
+
+Otros cálculos conducen a cantidades que no son números
+
+```{r}
+0/0
+```
+
+```{r}
+Inf-Inf
+```
+
+```{r}
+Inf/Inf
+```
+
+## Infinitos y cosas que no son números
+
+Es necesario entender la diferencia entre NaN y NA. NaN significa "no es un número" y significa que es un resultado, pero no puede ser representado en el computador. NA explica que el data es faltante por razones desconocidas
+
+NaN implica un resultado que no puede ser calculado por cualquier razón
+
+## Caracteres tipo String (character)
+
+Este tipo de dato corresponde a las citas que queramos realizar
+
+```{r}
+a <- "R es mi amigo"
+a
+```
+
+```{r}
+typeof(a)
+```
+
+```{r}
+is.character(a)
+```
+
+## Caracteres tipo String (character)
+
+Podemos convertir números (numeric) a carater (character) y viceversa
+
+```{r}
+as.character(2.3)
+```
+
+```{r}
+as.integer("3")
+```
+
+```{r}
+as.integer("3.cuatro")
+```
+
+## Caracteres tipo String (character)
+
+También podemos generar frases de tipo string
+
+```{r}
+cat("Hola","mundo","!")
+```
+
+```{r}
+cat("Hello",2.7,"!")
+```
+
+```{r}
+paste(1:12)
+```
+
+## Caracteres tipo String (character)
+
+```{r}
+paste("Hola","mundo","!",sep = " ")
+```
+
+```{r}
+paste("Hola",2,"!",collapse = " ")
+
+```
+
+## Estructuras de Datos 
+
+En R se pueden organizar varios tipod de datos, mediante distintas estructuras que permiten realizar diferentes acciones sobre ellas
+
+## Estructuras de Datos: Vectores (vector)
+
+Es la estructura de datos más simple. Representa un secuencia de datos del mismo tipo
+
+```{r}
+0:10
+```
+
+```{r}
+15:5
+```
+
+```{r}
+c(55, 76, 92, 103, 84, 88, 121, 91, 65, 77, 99)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+seq(from=0.04,by=0.01,length=11)
+```
+
+```{r}
+seq(from=0.2, to=4, by=0.2)
+```
+
+```{r}
+seq(0, 1.5, 0.1)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+seq(6, 4, -0.2)
+```
+
+```{r}
+N <- c(55, 76, 92, 103, 84, 88, 121, 91, 65, 77, 99)
+```
+
+Si queremos usar el largo de N en otro vector usamos
+
+```{r}
+seq(from=0.04, by=0.01, along=N)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+seq(from=0.04, to=0.14, along=N)
+```
+
+Observe que cuando el incremento no coincide con el valor final, entonces la secuencia generada para antes del último valor
+
+```{r}
+seq(1.4, 2.1, 0.3)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+Si queremos generar varias sequencias de vectores con diferente tamaños usamos
+
+```{r}
+sequence(c(4,3,4,4,4,5))
+```
+
+para generar reprticiones de números o caracteres usamos
+
+```{r}
+rep(9,5)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+rep(1:4, 2)
+```
+
+```{r}
+rep(1:4,each = 2)
+```
+
+```{r}
+rep(1:4, each = 2, times = 3)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+Para repetir números pero diferente número de  veces usamos un vector que nos especifique el números de veces con respecto al ubicación del número
+
+```{r}
+rep(1:4,1:4)
+```
+
+```{r}
+rep(1:4,c(4,1,4,2))
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+usándolo para caracteres
+
+```{r}
+rep(c("gato","perro","pez","ratón","conejo")
+    ,c(2,3,2,1,3))
+```
+
+Cuando usamos la función c() establecemos un vector de datos tipo double, sin embargo, si los datos son de tipo entero los podemos convertir a enteros (integer), con el objetivo de consumir menor memoria
+
+```{r}
+x <- c(5,3,7,8)
+```
+
+estos vectores de datos tipo double se denominan numeric
+
+```{r}
+class(x)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+is.numeric(x)
+```
+
+```{r}
+is.integer(x)
+```
+
+realizando coerción
+
+```{r}
+x <- as.integer(x)
+```
+
+## Estructuras de Datos: Vectores (vector)
+
+```{r}
+is.integer(x)
+```
+
+Para ponerle nombre a los elementos de un vector procedemos
+
+```{r}
+vec<-c(1,3,6,2,7,4,8,1,0)
+names(vec)<- c("aa","bb","cc","dd","ee","ff","gg"
+               ,"hh","ii")
+vec
+```
+
+## Matrices (matrix) y Arrays (array)
+
+son representaciones de estructuras de datos con dos índices para matrices y múltiple para arrays, como los vectores, deben ser del mismo tipo.
+
+```{r}
+X <- matrix(c(1,2,0,0,1,0,0,0,1),nrow = 3)
+X
+```
+
+```{r}
+class(X)
+```
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+attributes(X)
+```
+
+```{r}
+vector <- c(1,2,3,4,4,3,2,1)
+V <- matrix(vector,byrow = T,nrow = 2)
+V
+```
+
+otra forma de convertir un vector a matrix es con
+
+```{r}
+dim(vector) <- c(4,2)
+```
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+is.matrix(vector)
+```
+
+```{r}
+vector
+```
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+vector <- t(vector)
+vector
+```
+
+```{r}
+Y <- matrix(1:12,nrow = 4,ncol = 3,byrow = TRUE)
+Y
+```
+
+## Matrices (matrix) y Arrays (array)
+
+Para colocar nombres a nuestras filas y columnas en una matriz usamos
+
+```{r}
+X <- matrix(rpois(20,1.5),nrow=4)
+X
+```
+
+## Matrices (matrix) y Arrays (array)
+
+donde do.NULL = FALSE nos da los números y el prefix el prefijo
+
+```{r}
+rownames(X) <- rownames(X,do.NULL=FALSE,prefix="Trial.")
+X
+```
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+drug.names <- c("aspirin", "paracetamol", "nurofen",
+                "hedex", "placebo")
+colnames(X) <- drug.names
+X
+```
+
+## Matrices (matrix) y Arrays (array)
+
+de forma alternativa
+
+```{r}
+dimnames(X) <- list(NULL,paste("drug.",1:5,sep=""))
+X
+```
+
+## Matrices (matrix) y Arrays (array)
+
+Los arrays corresponden a matrices multidiensionales, veamos un ejemplo de 3 dimensiones
+
+Aquí va la imagen array
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+P <- array(as.integer(rnorm(60)),dim = c(4,5,3))
+P
+```
+
+## Matrices (matrix) y Arrays (array)
+
+```{r}
+class(P)
+```
+
+## Listas (list)
+
+Son estrucutras de datos extremadamente importantes en R debido a su riqueza y a la capacidad de agrupar en una estructura datos de diferente tipos sin alterarlos, es decir, cada elemento de una lista puede ser un dato, vector, matrix, array o incluso otra lista
+
+## Listas (list)
+
+```{r}
+A <- list(TRUE,-1:3,matrix(1:4,nrow = 2), c(1+2i,3),
+          "A es un character")
+A
+```
+
+## Listas (list)
+
+```{r}
+class(A)
+```
+
+```{r}
+apples <- c(4,4.5,4.2,5.1,3.9)
+orange <- c(TRUE, TRUE, FALSE)
+chalk <- c("limestone", "marl", "oolite", "CaC03")
+cheese <- c(3.2-4.5i,12.8+2.2i)
+```
+
+## Listas (list)
+
+```{r}
+items <- list(apples,orange,chalk,cheese)
+items
+```
+
+## Listas (list)
+
+Si quiero ponerle nombre a cada elemento de la lista
+
+```{r}
+items <- list(first=apples,second=orange,third=chalk,
+              fourth=cheese)
+items
+```
+
+## Listas (list)
+
+```{r}
+names(items)
+```
+
+
+```{r}
+is.list(items)
+```
+
+## Factores (factor) y variables ordinales (ordered)
+
+Los factores son una estructura de variables categóricas que tienen un número fijo de niveles, un simple ejemplo de variables categóricas puede ser hobre o mujer
+
+```{r}
+genero <- factor(c("mujer", "hombre", "mujer"
+                   , "hombre", "mujer"))
+genero
+```
+
+```{r}
+levels(genero)
+```
+
+## Factores (factor) y variables ordinales (ordered)
+
+```{r}
+class(genero)
+```
+
+podemos establecer factores con número que ellos establezcan una caraterística
+
+```{r}
+Temp <- factor(c(0,1,0,3,1,0,1,0,3,3), 
+               labels = c("Low","medium", "High"))
+Temp
+```
+
+## Factores (factor) y variables ordinales (ordered)
+
+La función gl permite generar niveles y es útil para cuando se quieren codificar grandes vectores de niveles de factor, los argumentos dice n: hasta donde, k: cuantas veces se repite, labels: que niveles quiero
+
+```{r}
+Imp <- gl(n = 2,k = 8,labels = c("Control", "Treat"))
+Imp
+```
+
+## Factores (factor) y variables ordinales (ordered)
+
+```{r}
+gl(4,3,24)
+```
+
+Los elementos de tipo ordered tratan cuanto tenemos jerarquía en nuestras variables cualitativas
+
+## Factores (factor) y variables ordinales (ordered)
+
+```{r}
+z <- ordered(c("Small","Tall","Average","Tall",
+               "Average","Small","Small"),
+             levels=c("Small","Average","Tall"))
+z
+```
+
+```{r}
+class(z)
+```
+
+## Unidades de tiempo (date)
+
+Son las unidades que conciernen a horarios, para desplegar la hora actual
+
+```{r}
+Sys.time()
+```
+
+```{r}
+date()
+```
+
+## Unidades de tiempo (date)
+
+Realizando un vector de fechas, tenemos que
+
+```{r}
+fechas <- c("92/27/02", "92/02/27", "92/01/14", 
+            "92/02/28", "92/02/01")
+fechas <- as.Date(fechas, "%y/%m/%d")
+fechas
+```
+
+```{r}
+class(fechas)
+```
+
+## Series de tiempo (ts)
+
+Los datos correspondientes a Series de tiempo se establecen con la función ts()
+
+```{r}
+ti <- ts(1:10, frequency = 12, start = c(1959, 2))
+ti
+```
+
+```{r}
+ts(1:10, frequency = 4, start = c(1959, 2))
+```
+
+## Series de tiempo (ts)
+
+```{r}
+ti2 <- ts(1:10, frequency =1/12 , start = c(1959))
+ti2
+```
+
+```{r}
+attributes(ti)
+```
+
+## data frame (data.frame)
+
+Es una tbla de individuo X variable que es esencial en el análisis estadísticos
+
+```{r}
+datos <- data.frame(Genero=c("M","F","M","F"," ","F"),
+                    Altura=c(1.83,1.76,1.82,1.60,1.90,
+                             1.66),
+                    Peso=c(67,58,66,48,75,55),
+                    row.names=c("Jorge","Julia",
+                                "Henry","Emilia",
+                                "William","Elisa"))
+datos
+```
+
+## data frame (data.frame)
+
+```{r}
+is.data.frame(datos)
+```
+
+```{r}
+class(datos)
+```
+
+```{r}
+str(datos)
+```
+
+## data frame (data.frame)
+
+```{r}
+attributes(datos)
+```
+
+así un data frame puede ser visto como una lista cuyo elemntos tienen igual longitud, realmente, esta es la forma como R los almacena
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

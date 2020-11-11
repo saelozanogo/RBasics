@@ -1,0 +1,2001 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[]{Darmstadt}
+\usefonttheme{structurebold}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+            pdftitle={Combinación y extracción en estructuras de datos},
+            pdfauthor={Santiago Lozano},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \let\insertsectionnumber\relax
+    \let\sectionname\relax
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \let\insertsubsectionnumber\relax
+  \let\subsectionname\relax
+  \frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+\title{Combinación y extracción en estructuras de datos}
+\author{Santiago Lozano}
+\date{28 de febrero de 2020}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Para concatenar matrices o data.frames usamos las funciones cbind() para
+concatenar columnar y rbind() para concatenar filas 
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{5}\OperatorTok{:}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Sin embargo esta función no es óptima en el siguiente ejemplo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X1 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Id=}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{),}
+                 \DataTypeTok{Peso=}\KeywordTok{c}\NormalTok{(}\DecValTok{75}\NormalTok{,}\DecValTok{68}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{72}\NormalTok{))}
+\NormalTok{X1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Peso
+## 1  1      M   75
+## 2  2      F   68
+## 3  3      F   48
+## 4  4      M   72
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Id=}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{),}
+                 \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{182}\NormalTok{,}\DecValTok{165}\NormalTok{,}\DecValTok{160}\NormalTok{,}\DecValTok{178}\NormalTok{))}
+\NormalTok{X2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Altura
+## 1  1      M    182
+## 2  2      F    165
+## 3  3      F    160
+## 4  4      M    178
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cbind}\NormalTok{(X1,X2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Peso Id Genero Altura
+## 1  1      M   75  1      M    182
+## 2  2      F   68  2      F    165
+## 3  3      F   48  3      F    160
+## 4  4      M   72  4      M    178
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Para estos casos la función que permite combinar elementos en bases de
+datos es merge()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X1,X2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Peso Altura
+## 1  1      M   75    182
+## 2  2      F   68    165
+## 3  3      F   48    160
+## 4  4      M   72    178
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Ahora suonga que tenemos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X3 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Id=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{),}\DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{),}
+                 \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{165}\NormalTok{,}\DecValTok{182}\NormalTok{,}\DecValTok{178}\NormalTok{,}\DecValTok{160}\NormalTok{))}
+\NormalTok{X3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Altura
+## 1  2      F    165
+## 2  1      M    182
+## 3  4      M    178
+## 4  3      F    160
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+de igual forma merge() es la función adecuada para combinar X1 y X3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X1,X3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Id Genero Peso Altura
+## 1  1      M   75    182
+## 2  2      F   68    165
+## 3  3      F   48    160
+## 4  4      M   72    178
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Combinación de matrices o data.frames}
+
+Como hemos visto la función merge() combinados data.frames. La
+combinación está basada en las columnas de esos data.frames que tienen
+los mismos nombres. Las cuales se denominarán ``Columnas comunes''. El
+argumento \textbf{by} puede ser usado para forzar cuales columnas son
+comunes. El valor de este argumento puede ser un vector de nombres,
+vector de índices o vectores lógicos y las otras colunas son tratadas
+como distintas. La función merge() trbaja de la siguiente manera,
+entonces sea X y Y dos data.frames y veamos como trabaja
+
+\begin{itemize}
+\tightlist
+\item
+  Toda fila de un del data.frame X, en la función merge() compara los
+  elementos de esta fila con respecto a todas las filas de Y, pero solo
+  sobre el subconjunto de columnas en común
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Combinación de matrices o data.frames}
+
+\begin{itemize}
+\item
+  si encuentra un match perfect, considera que es un mismo individuo:
+  este individuo es agregado al nuevo data.frame resultado de la
+  combinación y completa con los valores de las columnas no comunes de X
+  y Y
+\item
+  Si no hay match perfecto, el individuo es igualmente agregado al
+  data.frame resultante con NA's (si el argumento all() toma el valor
+  TRUE) o removido (si el argumento all() es FALSE)
+\item
+  La operación se repite a la segunda fila y así sucesivamente
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Veamos un ejemplo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{),}
+                \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{165}\NormalTok{, }\DecValTok{82}\NormalTok{,}\DecValTok{178}\NormalTok{,}\DecValTok{160}\NormalTok{),}
+                \DataTypeTok{Peso=}\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{,}\DecValTok{65}\NormalTok{,}\DecValTok{67}\NormalTok{,}\DecValTok{55}\NormalTok{),}
+                \DataTypeTok{Ingreso=}\KeywordTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{50}\NormalTok{))}
+\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Genero Altura Peso Ingreso
+## 1      F    165   50      80
+## 2      M     82   65      90
+## 3      M    178   67      60
+## 4      F    160   55      50
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{),}
+                \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{165}\NormalTok{, }\DecValTok{82}\NormalTok{,}\DecValTok{178}\NormalTok{,}\DecValTok{160}\NormalTok{),}
+                \DataTypeTok{Peso=}\KeywordTok{c}\NormalTok{(}\DecValTok{55}\NormalTok{,}\DecValTok{65}\NormalTok{,}\DecValTok{67}\NormalTok{,}\DecValTok{85}\NormalTok{),}
+                \DataTypeTok{Salario=}\KeywordTok{c}\NormalTok{(}\DecValTok{70}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{40}\NormalTok{) ,}
+                \DataTypeTok{row.names=}\DecValTok{4}\OperatorTok{:}\DecValTok{7}\NormalTok{)}
+\NormalTok{Y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Genero Altura Peso Salario
+## 4      F    165   55      70
+## 5      M     82   65      90
+## 6      M    178   67      40
+## 7      F    160   85      40
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X,Y,}\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"Genero"}\NormalTok{,}\StringTok{"Peso"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Genero Peso Altura.x Ingreso Altura.y Salario
+## 1      F   55      160      50      165      70
+## 2      M   65       82      90       82      90
+## 3      M   67      178      60      178      40
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X,Y,}\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"Genero"}\NormalTok{,}\StringTok{"Peso"}\NormalTok{),}\DataTypeTok{all=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Genero Peso Altura.x Ingreso Altura.y Salario
+## 1      F   50      165      80       NA      NA
+## 2      F   55      160      50      165      70
+## 3      F   85       NA      NA      160      40
+## 4      M   65       82      90       82      90
+## 5      M   67      178      60      178      40
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Tengamos en cuenta que la función merge() no tiene en cuenta los nombres
+de los individuos que asigna R, cuando determina los individuos comunes.
+Los nombres pueden ser incluidos agregando una columna Id a los dos
+data.frames, para identificar los individuos usando ``row.names'' como
+el valor en el argumento by
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X,Y,}\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"row.names"}\NormalTok{,}\StringTok{"Peso"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Row.names Peso Genero.x Altura.x Ingreso Genero.y 
+## 1         4   55        F      160      50        F     
+## Altura.y Salario
+##     165      70
+
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{merge}\NormalTok{(X,Y,}\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"row.names"}\NormalTok{,}\StringTok{"Peso"}\NormalTok{),}\DataTypeTok{all=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Row.names Peso Genero.x Altura.x Ingreso Genero.y Altura.y Salario
+## 1         1   50        F      165      80     <NA>       NA      NA
+## 2         2   65        M       82      90     <NA>       NA      NA
+## 3         3   67        M      178      60     <NA>       NA      NA
+## 4         4   55        F      160      50        F      165      70
+## 5         5   65     <NA>       NA      NA        M       82      90
+## 6         6   67     <NA>       NA      NA        M      178      40
+## 7         7   85     <NA>       NA      NA        F      160      40
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{verbatim}
+##    Altura.y Salario
+## 1        NA      NA
+## 2        NA      NA
+## 3        NA      NA
+## 4       165      70
+## 5        82      90
+## 6       178      40
+## 7       160      40
+\end{verbatim}
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+Para concatenar filas usamos rbind()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rbind}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{5}\OperatorTok{:}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+veamos una función útil en algunos casos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df1 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A=}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\DataTypeTok{B=}\NormalTok{LETTERS[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
+\NormalTok{df1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   A B
+## 1 1 A
+## 2 2 B
+## 3 3 C
+## 4 4 D
+## 5 5 E
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A=}\DecValTok{6}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DataTypeTok{E=}\NormalTok{letters[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
+\NormalTok{df2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    A E
+## 1  6 a
+## 2  7 b
+## 3  8 c
+## 4  9 d
+## 5 10 e
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Combinación de matrices o data.frames}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{smartbind}\NormalTok{(df1, df2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      A    B    E
+## 1:1  1    A <NA>
+## 1:2  2    B <NA>
+## 1:3  3    C <NA>
+## 1:4  4    D <NA>
+## 1:5  5    E <NA>
+## 2:1  6 <NA>    a
+## 2:2  7 <NA>    b
+## 2:3  8 <NA>    c
+## 2:4  9 <NA>    d
+## 2:5 10 <NA>    e
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Operaciones sobre listas}
+
+Las funciones lapply() y sapply() son similares a la función apply(),
+aplicando una función a todos los elementos de una lista, el output
+corresponde a una lista, y cada elemento de la lista genera un vector si
+es posible
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DataTypeTok{beta =} \KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\OperatorTok{:}\DecValTok{3}\NormalTok{),}
+          \DataTypeTok{logic =} \KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{))}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $a
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $beta
+## [1]  0.04978707  0.13533528  0.36787944  1.00000000 
+## [5]  2.71828183  7.38905610  2.71828183  7.38905610 
+## [9] 20.08553692
+## 
+## $logic
+## [1]  TRUE FALSE FALSE  TRUE
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(x,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $a
+## [1] 5.5
+## 
+## $beta
+## [1] 4.535125
+## 
+## $logic
+## [1] 0.5
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(x,quantile,}\DataTypeTok{probs=}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{)}\OperatorTok{/}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $a
+##  25%  50%  75% 
+## 3.25 5.50 7.75 
+## 
+## $beta
+##       25%       50%       75% 
+## 0.2516074 1.0000000 5.0536690 
+## 
+## $logic
+## 25% 50% 75% 
+## 0.0 0.5 1.0
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(x, quantile)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          a        beta logic
+## 0%    1.00  0.04978707   0.0
+## 25%   3.25  0.25160736   0.0
+## 50%   5.50  1.00000000   0.5
+## 75%   7.75  5.05366896   1.0
+## 100% 10.00 20.08553692   1.0
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Operaciones sobre listas}
+
+Si desea aplicar una función a un vector (en lugar de al margen de una
+matriz), use sapply(. Aquí está el código para generar una lista de
+secuencias.
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i36 <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{3}\OperatorTok{:}\DecValTok{6}\NormalTok{, seq)}\CommentTok{# Crea una lista de vectores}
+\NormalTok{i36}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] 1 2 3 4
+## 
+## [[3]]
+## [1] 1 2 3 4 5
+## 
+## [[4]]
+## [1] 1 2 3 4 5 6
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones sobre listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(i36, sum) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  6 10 15 21
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (1)}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Progrmación en R/2020-I/PR05-}
+	\StringTok{"Combinación y extracción en estrucutura de datos"}
+	\StringTok{"de datos"}\NormalTok{)}
+\NormalTok{(matdata <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{sweepdata.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\begin{verbatim}
+##    V1 V2  V3  V4
+## 1   3 12 0.4 125
+## 2   5 12 0.7 166
+## 3   7 15 0.8 174
+## 4   7 14 0.7 128
+## 5   5 18 0.3 136
+## 6   9 13 0.2 155
+## 7   7 15 0.5 115
+## 8   2 13 0.5 169
+## 9   1 10 0.1 182
+## 10  0 11 0.2 166
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (1)}
+
+En este ejemplo, queremos expresar una matriz en términos de las
+desviaciones de cada valor de su media de columna. Primero aplique la
+función apply() para sacar la media a cada una de sus columnas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(cols <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(matdata,}\DataTypeTok{MARGIN=}\DecValTok{2}\NormalTok{,mean))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     V1     V2     V3     V4 
+##   4.60  13.30   0.44 151.60
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (1)}
+
+Ahora a cada valor de la columna le resto la media correspondiente
+usando sweep()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sweep}\NormalTok{(matdata,}\DataTypeTok{MARGIN=}\DecValTok{2}\NormalTok{,}\DataTypeTok{STATS=}\NormalTok{cols,}\DataTypeTok{FUN=}\StringTok{"-"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      V1   V2    V3    V4
+## 1  -1.6 -1.3 -0.04 -26.6
+## 2   0.4 -1.3  0.26  14.4
+## 3   2.4  1.7  0.36  22.4
+## 4   2.4  0.7  0.26 -23.6
+## 5   0.4  4.7 -0.14 -15.6
+## 6   4.4 -0.3 -0.24   3.4
+## 7   2.4  1.7  0.06 -36.6
+## 8  -2.6 -0.3  0.06  17.4
+## 9  -3.6 -3.3 -0.34  30.4
+## 10 -4.6 -2.3 -0.24  14.4
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (2)}
+
+Suponga que desea obtener los subíndices para un barrido de datos en
+columnas o en filas. Establezca los subíndices de fila repetidos en cada
+columna usando apply():
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{apply}\NormalTok{(matdata,}\DataTypeTok{MARGIN=}\DecValTok{2}\NormalTok{,}\DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{ (x) }\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       V1 V2 V3 V4
+##  [1,]  1  1  1  1
+##  [2,]  2  2  2  2
+##  [3,]  3  3  3  3
+##  [4,]  4  4  4  4
+##  [5,]  5  5  5  5
+##  [6,]  6  6  6  6
+##  [7,]  7  7  7  7
+##  [8,]  8  8  8  8
+##  [9,]  9  9  9  9
+## [10,] 10 10 10 10
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (2)}
+
+y para las columnas usando apply()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t}\NormalTok{(}\KeywordTok{apply}\NormalTok{(matdata,}\DataTypeTok{MARGIN=}\DecValTok{1}\NormalTok{,}\DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{ (x) }\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2] [,3] [,4]
+##  [1,]    1    2    3    4
+##  [2,]    1    2    3    4
+##  [3,]    1    2    3    4
+##  [4,]    1    2    3    4
+##  [5,]    1    2    3    4
+##  [6,]    1    2    3    4
+##  [7,]    1    2    3    4
+##  [8,]    1    2    3    4
+##  [9,]    1    2    3    4
+## [10,]    1    2    3    4
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (3)}
+
+Realice lo misimo con la función sweep()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sweep}\NormalTok{(matdata,}\DataTypeTok{MARGIN=}\DecValTok{1}\NormalTok{,}\DataTypeTok{STATS=}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(a,b) \{b\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    1    1
+##  [2,]    2    2    2    2
+##  [3,]    3    3    3    3
+##  [4,]    4    4    4    4
+##  [5,]    5    5    5    5
+##  [6,]    6    6    6    6
+##  [7,]    7    7    7    7
+##  [8,]    8    8    8    8
+##  [9,]    9    9    9    9
+## [10,]   10   10   10   10
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (4)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sweep}\NormalTok{(matdata,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\ControlFlowTok{function}\NormalTok{(a,b) b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2] [,3] [,4]
+##  [1,]    1    2    3    4
+##  [2,]    1    2    3    4
+##  [3,]    1    2    3    4
+##  [4,]    1    2    3    4
+##  [5,]    1    2    3    4
+##  [6,]    1    2    3    4
+##  [7,]    1    2    3    4
+##  [8,]    1    2    3    4
+##  [9,]    1    2    3    4
+## [10,]    1    2    3    4
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (5)}
+
+Tenga en cuenta que en ambos casos, la respuesta producida por apply()
+es un vector en lugar de una matriz. Puede aplicar funciones a los
+elementos individuales de la matriz en lugar de a los márgenes. El
+margen que especifique solo influye en la forma de la matriz resultante.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(X <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{24}\NormalTok{,}\DataTypeTok{nrow=}\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    5    9   13   17   21
+## [2,]    2    6   10   14   18   22
+## [3,]    3    7   11   15   19   23
+## [4,]    4    8   12   16   20   24
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (5)}
+
+Aplique raíz cuadrada a todos los elementos de la matriz y muestremelos
+por filas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{apply}\NormalTok{(X,}\DataTypeTok{MARGIN=}\DecValTok{1}\NormalTok{,}\DataTypeTok{FUN=}\NormalTok{sqrt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]     [,2]     [,3]     [,4]
+## [1,] 1.000000 1.414214 1.732051 2.000000
+## [2,] 2.236068 2.449490 2.645751 2.828427
+## [3,] 3.000000 3.162278 3.316625 3.464102
+## [4,] 3.605551 3.741657 3.872983 4.000000
+## [5,] 4.123106 4.242641 4.358899 4.472136
+## [6,] 4.582576 4.690416 4.795832 4.898979
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios (5)}
+
+ahora por columnas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{apply}\NormalTok{(X,}\DecValTok{2}\NormalTok{,sqrt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]     [,2]     [,3]     [,4]     [,5]    
+## [1,] 1.000000 2.236068 3.000000 3.605551 4.123106 
+## [2,] 1.414214 2.449490 3.162278 3.741657 4.242641 
+## [3,] 1.732051 2.645751 3.316625 3.872983 4.358899 
+## [4,] 2.000000 2.828427 3.464102 4.000000 4.472136 
+
+##             [,6]
+## [1,] 4.582576
+## [2,] 4.690416
+## [3,] 4.795832
+## [4,] 4.898979
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Extracción e inserción de elementos}
+
+Es esta sección veremos los diferentes recursos que tiene R para extraer
+componentes de n vector, pues algunas veces quisieramos usar no todos
+los contenidos de un vector. En R podemos usar la función ``{[}''(), o
+podemos usar ``{[}{]}'' en el cual establecemos los subíndices que
+queremos extraer ó podemos tomar los siguientes argumentos
+
+\begin{itemize}
+\item
+  un vector de índices de elementos a extraer
+\item
+  un vector de índices de elementos a no extraer
+\item
+  un vector de valores lógicos indicando cuales elementos se extraen
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{vec}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 2 3 4 8 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"["}\NormalTok{(vec,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[}\OperatorTok{-}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 2 4 8 3
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores
+(slicing)}
+
+Podemos realizar un barrido para seleccionar una cantidad masiva de
+subíndices a extraer, debe tenerse en cuente que R maneja los subíndices
+empezando en 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[}\DecValTok{2}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 3 4 8 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 3 4 8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores
+(slicing)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[}\KeywordTok{c}\NormalTok{(T,F,F,T,T)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 2 8 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec}\OperatorTok{>}\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] FALSE FALSE FALSE  TRUE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec[vec}\OperatorTok{>}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores}
+
+Es importante notar que la simplicidad sintáctica de una instrucción
+como x{[}y\textgreater{}0{]}, el cual extrae de x todos los elementos
+del subíndice i tales que \(y_i>0\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{5}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\OperatorTok{-}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\OperatorTok{-}\DecValTok{2}\NormalTok{)}
+\NormalTok{x[y}\OperatorTok{>}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 2 4
+\end{verbatim}
+
+a menudo necesitamos usar tantas construcciones como sean posibles, las
+cuales son llamadas máscaras lógicas, en estos existen dos ventajs: el
+código es sencillo para leer y rápido para ejecutar
+
+Note que las funciones which(),which.min(), which.max() serán útiles
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción de elementos en vectores}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mask <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{NA}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{which}\NormalTok{(mask)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 3 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{0}\OperatorTok{:}\DecValTok{5}\NormalTok{,}\DecValTok{11}\NormalTok{)}
+\KeywordTok{which.min}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{which.max}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Remplazamiento en vectores}
+
+Para reemplazar elementos en un vector se hace de una manera similar a
+la extracción. Todo lo que necesitamos es seleccionar las elementos como
+si usted quisiera extraerlos, y usando \textless{}- se sigue de los
+elementos para reemplazar. Por supuesto, usted necesita especificar el
+mismo número de elementos entrantes que salientes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{z[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)] <-}\StringTok{ }\DecValTok{1}
+\NormalTok{z}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 0 0 2 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z[}\KeywordTok{which.max}\NormalTok{(z)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{z}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 0 0 0 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z[z}\OperatorTok{==}\DecValTok{0}\NormalTok{] <-}\StringTok{ }\DecValTok{8}
+\NormalTok{z}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 8 8 8 1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Agregar o insertar elementos a un vector
+preexistente}
+
+Usamos la función c()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vecA <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{vecA}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 3 6 2 7 4 8 1 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(vecB <-}\StringTok{ }\KeywordTok{c}\NormalTok{(vecA, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##  [1] 1 3 6 2 7 4 8 1 0 4 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(vecC <-}\StringTok{ }\KeywordTok{c}\NormalTok{(vecA[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{], }\DecValTok{8}\NormalTok{, }\DecValTok{5}\NormalTok{, vecA[}\DecValTok{5}\OperatorTok{:}\DecValTok{9}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##  [1] 1 3 6 2 8 5 7 4 8 1 0
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Agregar o insertar elementos a un vector
+preexistente}
+
+Este mecanismo provee la habilidad para completar un vector cuyo tamaño
+no es fijo en el principio
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(a,}\DecValTok{2}\NormalTok{)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(a,}\DecValTok{7}\NormalTok{)}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 2 7
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Ejercicio}
+
+Cree un vecctor altura \textless{}- c(182,150,160,140.5,191) y vector
+género genero \textless{}- c(0,1,1,1,0) donde la altura seexpresa en cms
+y el género 1 mujer y 0 hombre. extraiga del vector altura, las altura
+de los hombres. Use el método de extracción de variables por subíndices,
+repitiendo la tarea con una máscara lógica
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+
+Extraiga del siguiente vector todos los números entre 2 y 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{2.1}\NormalTok{,}\FloatTok{3.5}\NormalTok{,}\FloatTok{2.8}\NormalTok{,}\FloatTok{2.7}\NormalTok{,}\FloatTok{1.9}\NormalTok{,}\FloatTok{2.2}\NormalTok{,}\FloatTok{5.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{Extracción e inserción en matrices}
+
+-Extracción via X{[}índice fila,índice columna{]}, omitir la primera
+componente significa que todas las filas son seleccionada, o en su
+debido caso las columnas, cuando las componentes son negativas indican
+que elementos no extraer
+
+\begin{itemize}
+\tightlist
+\item
+  Extracción vía máscara lógica X{[}máscara{]}, sabiendo que la matriz
+  es de valores lógicos de mismo tamaño que X el cual indica que
+  elementos extraer
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{12}\NormalTok{,}\DataTypeTok{nrow=}\DecValTok{4}\NormalTok{,}\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{,}\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{Mat}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9
+## [4,]   10   11   12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat[,}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1]  1  4  7 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]   10   11   12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat[}\DecValTok{3}\NormalTok{,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MatLogical <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{),}\DataTypeTok{nrow=}\DecValTok{4}\NormalTok{,}\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\NormalTok{MatLogical}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##       [,1]  [,2]  [,3]
+## [1,]  TRUE  TRUE  TRUE
+## [2,] FALSE FALSE FALSE
+## [3,]  TRUE  TRUE  TRUE
+## [4,] FALSE FALSE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat[MatLogical]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 7 2 8 3 9
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ind <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{Mat[ind]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1]  4 10  5 11  7
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+Algunas veces la función de extracción cambia la estrucutura de
+manipulación
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{,}\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{) ; m}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[,}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 2
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+Pero resulta que yo quería el vector como columna, este problema se
+puede arreglar
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[,}\DecValTok{1}\NormalTok{,drop=}\OtherTok{FALSE}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+## [2,]    2
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+Usando la función which yo puedo alternar subíndices de los elementos de
+una matriz los cuales son verificados con la condición
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{),}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{m}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    1    2
+## [2,]    2    2    1
+## [3,]    3    3    3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{which}\NormalTok{(m }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 1 4 8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+para poner los índices como parejas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{which}\NormalTok{(m }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,}\DataTypeTok{arr.ind=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      row col
+## [1,]   1   1
+## [2,]   1   2
+## [3,]   2   3
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+Para realizarr inserción de elementos en una matriz
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[m}\OperatorTok{!=}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{m}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    0    0    2
+## [2,]    2    2    0
+## [3,]    0    0    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Mat <-}\StringTok{ }\NormalTok{Mat[}\OperatorTok{-}\DecValTok{4}\NormalTok{,] ; Mat}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en matrices}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[Mat}\OperatorTok{>}\DecValTok{7}\NormalTok{] <-}\StringTok{ }\NormalTok{Mat[Mat}\OperatorTok{>}\DecValTok{7}\NormalTok{]}
+\NormalTok{m}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    0    0    2
+## [2,]    2    2    0
+## [3,]    0    8    9
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicio}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{22}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{28}\NormalTok{),}\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\NormalTok{m2 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{),}\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+reemplace todos los valores distintos de cero de m1 con el
+correspondiente valor en m2,despues remueva la segunda columna de m1
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DecValTok{12}\NormalTok{,}\KeywordTok{c}\NormalTok{(}\DecValTok{34}\NormalTok{,}\DecValTok{67}\NormalTok{,}\DecValTok{8}\NormalTok{),Mat,}\DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{,}\KeywordTok{list}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{11}\NormalTok{))}
+\NormalTok{L}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [[1]]
+## [1] 12
+## 
+## [[2]]
+## [1] 34 67  8
+## 
+## [[3]]
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9
+
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+\pause
+\begin{verbatim}
+
+## [[4]]
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+## 
+## [[5]]
+## [[5]][[1]]
+## [1] 10
+## 
+## [[5]][[2]]
+## [1] 11
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [[1]]
+## [1] 34 67  8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(L[}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "list"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [[1]]
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9
+## 
+## [[2]]
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+Para acceder a los elementos de una lista usamos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 34 67  8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[[}\DecValTok{2}\NormalTok{]][}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 34
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[[}\DecValTok{5}\NormalTok{]][[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+Para usar indexación recursiva usamos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)]]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+Para accerder a los elementos de una lista con nombres en cada elemento
+usamos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{cars=}\KeywordTok{c}\NormalTok{(}\StringTok{"FORD"}\NormalTok{,}\StringTok{"PEUGEOT"}\NormalTok{),}\DataTypeTok{climate=}
+            \KeywordTok{c}\NormalTok{(}\StringTok{"Tropical"}\NormalTok{,}\StringTok{"Temperate"}\NormalTok{))}
+\NormalTok{L}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## $cars
+## [1] "FORD"    "PEUGEOT"
+## 
+## $climate
+## [1] "Tropical"  "Temperate"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L[[}\StringTok{"cars"}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "PEUGEOT"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L}\OperatorTok{$}\NormalTok{cars}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "FORD"    "PEUGEOT"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L}\OperatorTok{$}\NormalTok{climate[}\DecValTok{2}\NormalTok{] <-}\StringTok{ "Continental"}
+\NormalTok{L}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## $cars
+## [1] "FORD"    "PEUGEOT"
+## 
+## $climate
+## [1] "Tropical"    "Continental"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Extracción e inserción en listas}
+
+El nombre de una columna puede incluir espacios. Para acceder a ella,
+usted necesita una marca especial
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"pretty cars"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\StringTok{"FORD"}\NormalTok{,}\StringTok{"PEUGEOT"}\NormalTok{))}
+\NormalTok{L}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## $`pretty cars`
+## [1] "FORD"    "PEUGEOT"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L}\OperatorTok{$}\StringTok{"pretty cars"}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "FORD"    "PEUGEOT"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pods <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{)}
+\NormalTok{peas[pods]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 7 6 7
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 7 6 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 7 6 5 6 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(peas)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 4 7 6 5 6
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 4 7 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{,}\KeywordTok{length}\NormalTok{(peas),}\DecValTok{2}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 7 5 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peas[}\DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(peas) }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 7 5 7
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\FloatTok{4.3}
+\NormalTok{z <-}\StringTok{ }\NormalTok{y[}\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+\KeywordTok{length}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{11}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rev}\NormalTok{(}\KeywordTok{sort}\NormalTok{(y))[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 11 10  9
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{rev}\NormalTok{(}\KeywordTok{sort}\NormalTok{(y)))[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 95 NA NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{names <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Williams"}\NormalTok{,}\StringTok{"Jones"}\NormalTok{,}\StringTok{"Smith"}\NormalTok{,}\StringTok{"Williams"}\NormalTok{,}
+           \StringTok{"Jones"}\NormalTok{,}\StringTok{"Williams"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(names)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## names
+##    Jones    Smith Williams 
+##        2        1        3
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{(names)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "Williams" "Jones"    "Smith"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{duplicated}\NormalTok{(names)}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{names[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(names)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] "Williams" "Jones"    "Smith"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{42}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{42}\NormalTok{)}
+\NormalTok{salary[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(names)]}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 42 42 48
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(salary[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(names)])}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 44
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(salary[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(salary)])}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 45
+\end{verbatim}
+
+\end{frame}
+
+\end{document}

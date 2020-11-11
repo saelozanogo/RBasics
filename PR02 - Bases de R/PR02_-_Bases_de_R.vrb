@@ -1,0 +1,23 @@
+\frametitle{data frame (data.frame)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{attributes}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $names
+## [1] "Genero" "Altura" "Peso"
+##
+## $class
+## [1] "data.frame"
+##
+## $row.names
+## [1] "Jorge"   "Julia"   "Henry"   "Emilia"  "William"
+## [6] "Elisa"
+\end{verbatim}
+
+así un data frame puede ser visto como una lista cuyos elemntos tienen
+igual longitud, realmente, esta es la forma como R los almacena
+

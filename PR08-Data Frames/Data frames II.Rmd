@@ -1,0 +1,108 @@
+---
+title: "Data Frames II"
+author: "Santiago Lozano"
+date: "21 de marzo de 2020"
+output:
+  pdf_document: default
+  ioslides_presentation: default
+  beamer_presentation:
+    colortheme: default
+    fonttheme: structurebold
+    theme: Darmstadt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Usar order() y !duplicated() para eliminar pseudoreplicación
+
+En un ejemplo más complicado quisieramos extraer una observación de cada tipo de vegetación, y que si es así que extraiga el de worm density mayor. Hay 2 pasos par hacer, el primero es ordenar las filas y el segundo es seleccionar los no duplicados, así
+
+
+```{r}
+setwd("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR08-Data Frames")
+worms <- read.table("worms.txt",header = T,dec = ".")
+attach(worms)
+```
+
+```{r}
+new <- worms[rev(order(Worm.density)),]
+new[!duplicated(new$Vegetation),]
+```
+
+## Ordenamiento complejo
+
+Existen ocasiones em la que queremos order varias variables pero ordenarlas en sentidos opuestos
+
+```{r}
+worms[order(Vegetation,-Worm.density),]
+```
+
+Aquí Vegetation se orden alfabético, pero worm density se ordenó de mayor a menor
+
+Para ordenar de manera contraria al alfabeto podemos usar la función rank()
+
+```{r}
+worms[order(-rank(Vegetation),-Worm.density),]
+```
+
+Una forma menos probable de ordenar será seleccionando columna sobre operadores lógico. Suponga que por alguna razón usted quiere seleccionar las columnas que contienen el caracter "S", así
+
+```{r}
+names(worms)
+```
+
+```{r}
+grep("S",names(worms))
+```
+
+de esta manera
+
+```{r}
+worms[,grep("S",names(worms))]
+```
+
+## Un Dataframe con nombres de filas en vez de número de fila
+
+Podemos suprimir la creación de número de filas, ubicando su propio nombre de cada fila alteranndo la sintaxis de read.table
+
+```{r}
+worms2 <- read.table("worms.txt",header = T,dec = ".",row.names = 1)
+worms2
+```
+
+## Crear un dataframe a partir de otro tipo de objeto
+
+Sabemos que podemos usar la función table() para contar los elementos de un vector
+
+```{r}
+y <- rpois(1500,1.5)
+table(y)
+```
+
+Y Podemos este simple conteo convertirlo en un dataframe
+
+```{r}
+short<-as.data.frame(table(y))
+short
+```
+
+
+```{r}
+index<-rep(1:8,short$Freq)
+index
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

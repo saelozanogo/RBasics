@@ -1,0 +1,21 @@
+\frametitle{Función aggregate()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(pH,Growth.rate)}\OperatorTok{~}\NormalTok{Water}\OperatorTok{+}\NormalTok{Detergent,}
+\NormalTok{          data2,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Water Detergent       pH Growth.rate
+## 1  Tyne    BrandA 4.883908    3.661807
+## 2  Wear    BrandA 5.054835    4.107857
+## 3  Tyne    BrandB 5.043797    3.911116
+## 4  Wear    BrandB 4.892346    4.108972
+## 5  Tyne    BrandC 4.847069    3.814321
+## 6  Wear    BrandC 4.912128    4.094704
+## 7  Tyne    BrandD 4.809144    3.356203
+## 8  Wear    BrandD 5.097039    3.760259
+\end{verbatim}
+

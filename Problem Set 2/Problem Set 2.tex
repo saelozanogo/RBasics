@@ -1,0 +1,155 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[12pt]{article} % use larger type; default would be 10pt
+%\usepackage{tgtermes} % times font
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage[spanish]{babel}
+%%% PACKAGES
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{listings}
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Taller primer corte}
+\author{Santiago Enrique Lozano González \\
+	Programación en R \\
+	Universidad Piloto de Colombia Seccional Alto Magdalena  \\
+	santiago-lozano@unipiloto.edu.co \\
+	}
+\date{\today}
+\begin{document}
+\maketitle
+Este taller se debe realizar en formato R Markdown que ofrece Rstudio como lo explicaré en la clase del viernes 20 de marzo de 2020, en grupos de 3 personas, así los grupos deben escoger entre realizar los puntos pares o los puntos impares para entregar en el taller, con el objetivo de tener total conocimiento de los integrantes de los grupos, deben entrar al excel de one drive para especificar los integrantes y que grupo de ejercicios se realizarán, los cupos para cada grupo de pares o impares son limitados, solo habrán 3 cupos para ejercicios pares y 2 para ejercicios impares, así que examinen los punto y decidan\par
+Los datos como JTRAIN2 y BWGHT deben ser importados y mtcars, iris y Titanic se guardan con la codificación \textbf{data(mtcars)}, por ejemplo
+\begin{enumerate}
+\item La base de datos de JTRAIN2.txt proviene de un experimento de capacitación para el trabajo realizado para hombres con bajos ingresos durante 1976-1977; véase Lalonde (1986).
+\begin{enumerate}
+\item Emplee la variable indicadora train para determinar la proporción de hombres a los que
+se les dio capacitación para el trabajo.
+\item La variable re78 es ingresos desde 1978, dados en dólares de 1982. Determine el promedio de re78 para la muestra de hombres a los que se les dio capacitación laboral y para la muestra de hombres a los que no se les dio. ¿Es esta diferencia económicamente grande?
+\item La variable unem78 indica si un hombre estuvo desempleado o no en 1978. ¿Qué proporción de los hombres a los que se les dio capacitación para el trabajo están desempleados? ¿Y de aquellos a los que no se les dio capacitación laboral? Comente la diferencia.
+\item Con base en los incisos (a) y (bi), ¿parece haber sido efectivo el programa de capacitación laboral? 
+\end{enumerate}
+\item Para responder estas preguntas emplee la base de datos BWGHT.txt.
+\begin{enumerate}
+\item ¿Cuántas mujeres hay en la muestra ($male=0$) y cuántas de las informantes fumaron durante un embarazo?
+\item ¿Cuál es la cantidad promedio de cigarros consumidos por día ($cigs$)? 
+\item Entre las mujeres que fumaron durante el embarazo, ¿cuál es la cantidad promedio de cigarros consumidos por día? 
+\item Determine el promedio de $fatheduc$ (años de educación del padre) en la muestra. ¿Por qué se emplean sólo 1 192 observaciones para calcular este promedio?
+\item Dé el ingreso familiar promedio (famine) y su desviación estándar en dólares.
+\end{enumerate}
+\item Para la base de Datos mtcars extraída de 1974 Motor Trend US magazine que contiene información sobre 32 modelos de automóviles
+\begin{enumerate}
+\item Esciba la codificación que me permite saber si en la variable $am$ ¿Cuáles tipos de carros hay más, si con transmisión automática $am=0$ o manual $am=1$
+\item Haga un diagrama de dispersión entre $hp$ vs. $weight$
+\end{enumerate}
+\item Para la base de datos iris la cual da la medidas en centímetros del largo de los sépalos (Sepal.Length) y el ancho de los mismos (Sepal.Width ), tambíen el largo de los pétalos (Petal.Length) y el ancho de  estos (Petal.Width), de 50 flores de 3 especies de la flor iris (Iris setosa, versicolor y virginica)
+\begin{enumerate}
+\item Cree un nuevo data frame solo con flores de tipo versicolor
+\item Para el data frame creado en el inciso anterior cree un vector denominado Sepal.Diff con la diferencial entre el ancho y el largo de los sépalos
+\item Cree una nueva variable en el dataframe del punto (a) que tenga los valores del punto (b)
+\end{enumerate}
+\item Usando los datos de mtcars
+\begin{enumerate}
+\item Mediante la función sapply vea una forma de ver el tipo de vector de cada variable
+\item cambie las variables ‘am’, ‘cyl’ y ‘vs’ to integer and y cree un nuevo data frame con este cambio
+\item Redondee todos los datos en el dataframe de inciso anterior a un decimal después del punto
+\end{enumerate}
+\item Usando iris
+\begin{enumerate}
+\item extraiga del data frame todos los datos de la especie virginica con Sepal.Width mayores a 3.7
+\item Cómo extraería de la base de datos iris, de todos los datos de la especiae virginica aquellas que tengan Sepal.Width mayores a 3.5 pero sin mostrar la última columna
+\end{enumerate}
+\item Tomando iris
+\begin{enumerate}
+\item Repita cada valor de Sepal.Length dos veces y todo el vector repítalo dos veces, es decir. De $x<-c(1,2,3)$, debe obtener el vector c(1,1,2,2,3,3,1,1,2,2,3,3)
+\item Obtenga un nuevo vector que extraiga las ubicaciones impares de Sepal.Length
+\item obtenga un vector aplicando el mismo procedimiento de (a) al vector que resultó de (b)
+\item Reemlace el vector de inciso anterior por el que está ubicado en la columna Sepal.Length de iris
+\end{enumerate}
+\item Use mtcars
+\begin{enumerate}
+\item Use la función lapply() para obtener los valores mínimos de cada columna de mtcars
+\item Use la función sapply() para obtener los valores mínimos de cada columna de mtcars
+\item guarde las acciones de los incisos anteriores en variables
+\item Cree una lista donde almacdene los dos resultados
+\item mediante la función sapply() diga que clase de objeto es cada elemento de la lista
+\end{enumerate}
+\item Usando la base de datos Titanic. Este conjunto de datos proporciona información sobre el destino de los pasajeros en el fatal viaje inaugural del transatlántico "Titanic", resumido de acuerdo con el estado económico (clase), sexo, edad y supervivencia.
+\begin{enumerate}
+\item Use de manera apropiada la función apply() para obtenerla cantidad de hombres vs. la cantidad de mujeres
+\begin{verbatim}
+      Survived
+ Sex     No Yes
+ Male  1364 367
+ Female 126 344
+\end{verbatim}
+\item obtenga una tabla cruzada de sobrevivientes por sexo
+\begin{verbatim}
+          Sex
+   Age  Male Female
+ Child    64     45
+ Adult  1667    425
+\end{verbatim}
+\item obtenga una tabla cruzada de la cantidad de pasajeros sexo vs. edad
+\end{enumerate}
+\item cree las siguientes matrices y listas
+\begin{verbatim}
+first = matrix(38:66, 3)
+second = matrix(56:91, 3)
+third = matrix(82:145, 3)
+fourth = matrix(46:93, 5)
+listobj = list(first, second, third, fourth)
+\end{verbatim}
+\begin{enumerate}
+\item Extraiga la segunda columna de la lista de matrices
+\item Extraiga la tercera fila de la lista de matrices
+\end{enumerate}
+Sugerencia: Use la función lapply()
+\end{enumerate}
+\end{document}

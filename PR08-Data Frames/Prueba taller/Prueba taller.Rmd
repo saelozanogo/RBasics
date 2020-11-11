@@ -1,0 +1,56 @@
+---
+title: "Taller Primer Corte"
+author: "Santiago Lozano-Fulanito GonzÃƒÂ¡lez"
+date: "21 de marzo de 2020"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Punto 1
+
+### Numeral (a)
+
+En el numeral (a), lo primero que hacer es trael la base datos
+
+```{r}
+data(mtcars)
+mtcars
+```
+
+veamos que tipo de dato es la variable am
+
+```{r}
+attach(mtcars)
+class(am)
+```
+
+Ahora voy extraer los datos de am==1
+
+```{r}
+mtcars[am==1,]
+```
+
+### Numeral (b)
+
+llamamos la base de datos iris
+
+```{r}
+data("iris")
+iris
+```
+
+contando las cantidades en Species
+
+```{r}
+attach(iris)
+table(Species)
+```
+
+Entonces hay 50 de setosa, 50 de versicolor y 50 de virginica
+

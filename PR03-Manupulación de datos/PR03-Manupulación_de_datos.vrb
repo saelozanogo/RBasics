@@ -1,0 +1,30 @@
+\frametitle{Función sweep()}
+
+vamos a restar 3 de la fila 1 y 5 de la fila 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sweep}\NormalTok{(V,}\DataTypeTok{MARGIN=}\DecValTok{1}\NormalTok{,}\DataTypeTok{STATS=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{FUN=}\StringTok{"-"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]   -2   -1    0    1
+## [2,]   -1   -2   -3   -4
+\end{verbatim}
+
+vamos a dividir las primeras dos columnas por 2 y las dos útilmas por 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sweep}\NormalTok{(V,}\DataTypeTok{MARGIN=}\DecValTok{2}\NormalTok{,}\DataTypeTok{STATS=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{),}\DataTypeTok{FUN=}\StringTok{"/"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]      [,3]      [,4]
+## [1,]  0.5  1.0 1.0000000 1.3333333
+## [2,]  2.0  1.5 0.6666667 0.3333333
+\end{verbatim}
+

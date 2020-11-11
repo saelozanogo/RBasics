@@ -1,0 +1,22 @@
+\frametitle{Ejercicios}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(salary[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(names)])}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 44
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(salary[}\OperatorTok{!}\KeywordTok{duplicated}\NormalTok{(salary)])}
+\end{Highlighting}
+\end{Shaded}
+\pause
+\begin{verbatim}
+## [1] 45
+\end{verbatim}
+

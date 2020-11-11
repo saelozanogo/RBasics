@@ -1,0 +1,10 @@
+\frametitle{Buena limpieza}
+
+para deshacerse de todo incluyendo dataframes usamos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\StringTok{list=ls()}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+

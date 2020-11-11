@@ -1,0 +1,71 @@
+---
+title: 'Obtención de datos de internet: JSON y XML'
+author: "Santiago Lozano"
+date: "8 de mayo de 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción
+
+El eXtensible MArkup Language (XML) y JavaScript Object Notation (JSON) son ampliamente usados en la web para la creación de página web y gráficos interactivo, despliegue de datos geográficos como los de Google Earth, y transferencia de datos entre aplicaciones en una formato de aplicación independiente.
+
+Estos formatos de datos nos permiten acceder rápida y facilmente acceder y reunir datos de muchas diferentes fuentes y presentarlas en maneras extraordinarias.
+
+Vincularemos R con las páginas web  los servicios locales de archivos JSON o XML, aquí discutiremos detalles sobre los formatos anterioremente dicho para saltar  a extraerlos posterormente, aprenderemos algunas funciones acerca de varias funciones de alto nivel que están disponibles en el paquete XML para trabajar con este contenido y para importar formatos JSON usaremos una función del paquete RJSONIO 
+
+## Leyendo datos de tablas HTML
+
+ES bastante común encontrar datos que están disponibles en páginas Web, tipicamente desplegados como tablas o listas
+
+Por ejemplo en la página web `http://en.wikipedia.org/
+wiki/Country_population` 
+
+donde vemos una página como la siguiente
+
+Tales páginas presentan la tabla de manera amena para la vista humana, pero esto no es fácil de leer para R, podríamos copiar y pegar los datos de la table eper esta es una forma burda y torpe de obetener los datos, lo que esperamos es obtener la tabla con funciones como `read.csv()` o `read.table()` que de forma automática nos traigan los datos, así si los datos estám cómodamente ubicados podemos usar la función `readHTMLTable()` función en el paquete XML
+
+```{r}
+#install.packages("XML")
+#install.packages("RCurl")
+library(RCurl)
+library(XML)
+u = "https://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
+tabs <- getURL(u)
+tabs <- readHTMLTable(tabs, stringsAsFactors = F)
+```
+
+```{r}
+sapply(tabs, nrow)
+```
+
+## Lectura de datos desde documentos XML formateados
+
+A continuación pasamos a leer datos de documentos XML. Los documentos XML son muy generales y pueden usarse para describir estructuras de datos muy complejas. Sin embargo, muchos documentos XML son bastante simples. Como ejemplo, consideramos la información del prestamista proporcionada por Kiva, una organización sin fines de lucro que brinda micropréstamos a personas en países en desarrollo al conectarlos con personas de todo el mundo que desean prestar dinero para tales actividades. Kiva pone a disposición información sobre prestamistas y préstamos a través del servicio Web y también proporciona un "volcado" de toda la base de datos en formatos XML y JSON. Estos datos incluyen características de los prestamistas y también de los préstamos, por ejemplo, la cantidad y el propósito del préstamo, que se pagaron y cuáles no, y cuándo. Los datos están disponibles en `http://build.kiva.org`.
+
+Al observar uno de los documentos que describen a los prestamistas a continuación, vemos la estructura básica. Además, la representación gráfica del documento en la Figura 1.2 deja en claro la estructura jerárquica del documento. Estamos interesados en la información sobre cada prestamista. Un <lender> tiene un <lender_id>, un <name>, información sobre una imagen del prestamista y una ubicación dada por el nodo <whereabouts> y los nodos <country_code>. También tenemos información sobre la cantidad de préstamos el individuo ha proporcionado (<load_count>), la etiqueta corta para su ocupación declarada y una descripción más completa de la misma (en <occupation> y <occupation_info>), y por qué el prestamista participa en Kiva (<loan_because>).
+
+aquí va estructura
+
+La secuencia de nodos <lender> en los datos de Kiva se asigna naturalmente a una lista en R con un elemento para cada nodo <lender>. Del mismo modo, cada <lender> se puede representar como una lista. Es decir, cada nodo secundario de un nodo <lender> se puede asignar a una cadena que contiene el contenido de texto del elemento secundario o, en el caso de <image>, una lista o un vector con dos elementos: <id> y <tempalte_id>. Básicamente, es natural asignar un nodo XML a una lista con un elemento para cada nodo secundario utilizando el nombre del hijo como el nombre del elemento de la lista. En el siguiente ejemplo, usamos la función `xmlToList ()` para ayudarnos a hacer esto.
+
+Comenzamos analizando el documento XML con
+
+```{r}
+setwd("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR11-Archivos XML")
+doc = xmlParse("UGA_2018_MIS_v01_M.xml")
+```
+
+Luego pasamos doc a la función `xmlToList ()`, y devolverá una lista R con un elemento para cada uno de sus nodos secundarios de nivel superior, asignando cada uno de estos hijos a una lista R y así sucesivamente, de la misma manera recursiva
+
+```{r}
+kivaList = xmlToList(doc, addAttributes = FALSE)
+
+```
+
+
+
+

@@ -1,0 +1,435 @@
+---
+title: "Operaciones, extración y otras funcionalidades entre tipos de estructuras de datos"
+author: "Santiago Lozano"
+date: "21 de febrero de 2020"
+output:
+  beamer_presentation:
+    theme: "Darmstadt"
+    colortheme: "default"
+    fonttheme: "structurebold"
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Evaluación de combinaciones de TRUE o FALSE
+
+ $\equi$ Es importante saber cómo se operan los conectores lógicos vistos anteriormente, referente a los distintos valores logical que pueden resultar, además de cómo se operan los Missing Values con los otros valores lógicos, veamos todas las combinaciones mediante la siguiente codificación
+
+```{r}
+x <- c(NA, FALSE, TRUE)
+names(x) <- as.character(x)
+x
+```
+
+## Evaluación de combinaciones de TRUE o FALSE
+
+Veamos las distintas combinaciones mediante el conector lógico y (&)
+
+```{r}
+outer(x, x, "&")
+```
+
+## Evaluación de combinaciones de TRUE o FALSE
+
+Ahora mediante el conector ó (|)
+
+```{r}
+outer(x, x, "|")
+```
+
+## Lógica Aritmética
+
+La aritmética que envuelven las expresiones lógica las diferentes estrucutras de datos juega un papel muy importante a la hora de programar nos indicará de una u otra forma que elementos escoger y cuales no, la clave para entende esta parte es que las expresiones lógicas evaluan si es cierto o falso alguna proposición, y qué R puede convertir en valores numéricos 1 para TRUE, 0 para FALSE
+
+```{r}
+x<- 0:6
+```
+
+```{r}
+x < 4
+```
+
+## Lógica Aritmética
+
+Para poder chequear si todos los valores de un vector cumplen con la condición o para verificar si alguno cumple la condición usamos all() y any() 
+
+
+```{r}
+all(x>0)
+```
+
+```{r}
+any(x<0)
+```
+
+## Lógica Aritmética
+
+Podemos usar las respuestas de las funciones lógicas en aritmética. Podemos contar los valores TRUE de (x<4), usando sum
+
+```{r}
+sum(x<4)
+```
+
+Podemos multiplicar el vector (x<4) por otros vectores
+
+```{r}
+(x<4)*runif(7)
+```
+
+## Lógica Aritmética
+
+```{r}
+y <- c(4,NA,7)
+y == NA # no funciona
+```
+
+U
+```{r}
+y == "NA" # no funciona
+```
+
+```{r}
+is.na(y)
+```
+
+## Lógica Aritmética
+
+La lógica aritmética es útil para generar niveles simplificados de factores durante el modelamiento estadístico. Suponga que queremos reducir un factor de 5 niveles (a, b, c, d, e) llamado tratamiento a un factor de 3 niveles llamado t2 juntados los niveles a y e (nuevo factor nivel 1) y c y d (nuevo factor nivel 3) mientras que dejamos b solo (nuevo factor nivel 2)
+
+```{r}
+tratamiento <- letters[1:5]
+tratamiento
+```
+
+```{r}
+1 + (tratamiento == "b")
+```
+
+## Lógica Aritmética
+
+```{r}
+t2 <- factor(1+(tratamiento=="b")+2*(tratamiento=="c")
+             +2*(tratamiento=="d"))
+t2
+```
+
+## Distinciones entre las igualdades
+
+`x <- y` a x le asigno el valor de y
+
+`x = y` en una función o una lista x se establece en y, a menos que especifique lo contrario
+
+`x == y` produce TRUE si x es exactamente igual a y y falso en otro caso
+
+## Resumén de diferencias entre objetos usando all.equal
+
+La función all.equal es muy útil in programación para chequear que los objetos son realmente como tu esperabas. Cuando ocurren diferencias, all.equal hace un trabajo útil en describir todas las diferencias encontradas
+
+```{r}
+a <- c("cat","dog","goldfish")
+b <- factor(a)
+```
+
+```{r}
+all.equal(a,b)
+```
+
+## Resumen de diferencias entre objetos usando all.equal
+
+en este caso el objeto de la izquierda (a) es llamado "target" y el objeto de la derecha (b) es "current"
+
+```{r}
+mode(b)
+```
+
+```{r}
+mode(a)
+```
+
+## Resumen de diferencias entre objetos usando all.equal
+
+```{r}
+attributes(b)
+```
+
+```{r}
+attributes(a)
+```
+
+## Resumén de diferencias entre objetos usando all.equal
+
+```{r}
+n1 <- c(1,2,3)
+n2 <- c(1,2,3,4)
+all.equal(n1,n2)
+```
+
+```{r}
+n2 <- as.character(n2)
+all.equal(n1,n2)
+```
+
+## Funciones básicas para vectores
+
+Una de las fortalezas de R es la habilidad de evaluar funciones sobre vectores enteros, con gran utilidad a la hora de operar ciclos, veamos algunas de las funciones más importantes, la mayoría de las funciones aplican para vectores de tipo numeric
+
+```{r}
+y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+```
+
+función media
+
+```{r}
+mean(y)
+```
+
+## Funciones básicas para vectores
+
+Largo de un vector
+
+```{r}
+length(y)
+```
+
+rango de los números en un vector
+
+```{r}
+range(y)
+```
+
+## Funciones básicas para vectores
+
+ordenar los elementos del vector de menor a mayor
+
+```{r}
+sort(y)
+```
+
+de forma decreciente
+
+```{r}
+sort(y,decreasing = TRUE)
+```
+
+## Funciones básicas para vectores
+
+reodernar los elementos del vector en order reversivo
+
+```{r}
+rev(y)
+```
+
+remover los duplicados en un vector
+
+```{r}
+unique(y)
+```
+
+## Funciones básicas para vectores
+
+valor lógico en cada elemento que afirma si está duplicado o no
+
+```{r}
+duplicated(y)
+```
+
+which indica que índice lleva el valor TRUE
+
+```{r}
+mask <- c(TRUE,FALSE,TRUE,NA,FALSE,FALSE,TRUE)
+which(mask)
+```
+
+## Funciones básicas para vectores
+ 
+Para buscar el índice con el menor valor
+
+```{r}
+which.min(y)
+```
+
+ahora con el mayor valor
+
+```{r}
+which.max(y)
+```
+
+## Funciones básicas para vectores
+
+para nombrar los elementos de un vector
+
+```{r}
+names(y) <- 1:15
+y
+```
+
+La suma acumulada
+
+```{r}
+cumsum(y)
+```
+
+## Funciones básicas para vectores
+
+El producto acumulado
+
+```{r}
+cumprod(y)
+```
+
+## Funciones básicas para vectores
+
+mínimo
+
+```{r}
+min(y)
+```
+
+```{r}
+max(y)
+```
+
+```{r}
+quantile(y)
+```
+
+## Funciones básicas para vectores
+
+con pmin y pmax tomamos tres vectores con el mismo largor y hallamos el valor mínimo de cada componente 
+
+```{r}
+x<-c(0.99,0.98,0.20,0.65,0.93,0.18)
+x
+```
+
+```{r}
+y<-c(0.51,0.30,0.41,0.53,0.07,0.49)
+y
+```
+
+## Funciones básicas para vectores
+
+```{r}
+z<-c(0.26,0.132,0.44,0.65,0.031,0.36)
+z
+```
+
+```{r}
+pmin(x,y,z)
+```
+
+## Funciones básicas para vectores
+
+para contar la cantidad el número de elementos de cada componente del vector
+
+```{r}
+table(y)
+```
+
+ordena los elementos pero despliega los índices
+
+## Funciones básicas para vectores
+
+```{r}
+y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+```
+
+```{r}
+order(y)
+```
+
+## Funciones básicas sobre vectores
+
+```{r}
+rank(y)
+```
+
+
+
+## Funciones básicas sobre matrices y dataframes
+
+Tomemos la siguiente matriz
+
+```{r}
+vector <- c(1,2,3,4,4,3,2,1)
+V <- matrix(vector,byrow=T,nrow=2)
+V
+```
+
+```{r}
+dim(V)
+```
+
+## Funciones básicas sobre matrices y dataframes
+
+```{r}
+nrow(V)
+```
+
+```{r}
+ncol(V)
+```
+
+## Funciones básicas sobre matrices y dataframes
+
+```{r}
+dimnames(V) <- list(c("ad","sd"),c("aa","bb","cc"," d"))
+V          
+```
+
+names(), colnames(): nombres de columnas
+
+rownames(): nombres de filas
+
+## Funciones básicas
+
+Aquí va la imagen vectores
+
+## Aplicación de funciones en masa para matrices, dataframes y listas (apply())
+
+La función apply(), aplica una función dada (con el argumento FUN) a todas la filas (MARGIN=1) o todas las columnas (MARGIN=2)
+
+```{r}
+V <- matrix(vector,byrow=T,nrow=2)
+V
+```
+
+```{r}
+apply(V,MARGIN = 1,FUN = mean)
+```
+
+## Aplicación de funciones en masa para matrices, dataframes y listas (apply())
+
+```{r}
+apply(V,MARGIN = 1,FUN = sum)
+```
+
+## Hágalo usted mismo
+
+Vamos a calcular la suma cuadrada de todas las filas de una matriz M de tamaño 5x2 con los número a bondad. Usando la función apply() sobre la filas de la matriz, se usará el argumento asociado FUN=function(x) {sum(x^2)}
+
+## Función sweep() 
+
+Esta función es muy útil para realizar un barrido (en el sentido de una función por FUN) a cierto estadístico (dado por el argumento STATS), para todas las filas (MARGIN=1) o todas las columnas (MARGIN=2)
+
+```{r}
+V
+```
+
+## Función sweep() 
+
+vamos a restar 3 de la fila 1 y 5 de la fila 2
+
+```{r}
+sweep(V,MARGIN=1,STATS=c(3,5),FUN="-")
+```
+
+vamos a dividir las primeras dos columnas por 2 y las dos útilmas por 3
+
+```{r}
+sweep(V,MARGIN=2,STATS=c(2,2,3,3),FUN="/")
+```
+

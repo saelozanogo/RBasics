@@ -1,0 +1,91 @@
+---
+title: "Quiz1 Segundo Corte"
+author: "Santiago Lozano"
+date: "18 de abril de 2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1)
+
+Escriba un `while` loop que comience en $x=0$ y que imprime todos los números hasta 70 menos los múltiplos de 3
+
+## 2)
+
+Traiga el dataframe `mtcars` mediante la codificación `data(mtcars)`, y cree un loop que recorra todos los elementos de la variable `disp` y haga que este imprima los valores de `disp` mayores o iguales a 160 y que si encuentra un valor menor a 160 se salga del loop
+
+## 3)
+
+Cree un programa que tome una matriz e imprima la suma de todos los elementos da cada fila
+
+para por ejemplo, para 
+
+```{r echo=FALSE}
+M <- matrix(1:15,nrow=3)
+M
+```
+
+que imprima
+
+```{r echo=FALSE}
+c(35,40,45)
+```
+
+
+
+## 4)
+
+Escriba un loop `while` que genere un número aleatorio con `rnorm(1)` y repita esta misma tarea siempre que el número sea menor o igual a 1, pero que pare el loop si encuentra un número mayor a 1
+
+##5)
+
+
+Escriba un loop while que que use la siguiente variable `a <- 1:10` y que imprima los valores de las suma iteradas, es decir
+
+```
+a[1]
+a[1]+a[2]
+a[1]+a[2]+a[3]
+.
+.
+.
+```
+
+## 6)
+
+Usando las siguientes variables `a <- 15:10`, `b <- 20:15`, cree un programa que calcule los productos
+
+```
+x[1]=a[1]*b[6]
+x[2]=a[2]*b[5]
+x[3]=a[3]*b[5]
+.
+.
+x[6]=a[6]*b[1]
+```
+
+## 7)
+
+Escriba un programa que cree una sucesión de números aleatorios entre 0 y 100 mediante `sample()`, y encuentre la media de los números entre 20 y 50, y la suma de los números entre 51 y 91 
+
+
+## 8)
+
+Escriba una función que tome un vector de números y retorne otro vector que contenga la media, suma y multiplicación de todos sus elementos
+
+## 9) 
+
+Cree una función que tome un vector y retorne los vaores que son divisibles por 7
+
+## 10)
+
+Escriba un programa que reciba un vector de números e imprima la cantidad de número pares y la cantidad de números impares
+
+## 11) 
+
+Escriba un programa que despliegue la serie de Fibonacci hasta el número 50. la serie de Fibonacci es de la siguiente forma 0,1,1,2,3,5,8,....., donde los dos primeros elementos son fijos (0 y 1) y los siguientes elementos son la suma de los dos números anteriores, por ejemplo, el tercer elemento es 1, pues 1+0=1, el cuarto elemento es 2, pues 1+1=2, el quinto elemento es 3, pues 2+1=2, y así sucesivamente (Pista: debe poner fijos los dos primeros elementos, 0 y 1,  con un loop completar la sucesión )

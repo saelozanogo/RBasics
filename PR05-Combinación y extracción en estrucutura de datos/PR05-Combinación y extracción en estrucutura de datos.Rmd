@@ -1,0 +1,879 @@
+---
+title: "Combinación y extracción en estructuras de datos"
+author: "Santiago Lozano"
+date: "28 de febrero de 2020"
+output:
+  beamer_presentation:
+    theme: "Darmstadt"
+    colortheme: "default"
+    fonttheme: "structurebold"
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Combinación de matrices o data.frames
+
+Para concatenar matrices o data.frames usamos las funciones cbind() para concatenar columnar y rbind() para concatenar filas \equi
+
+```{r}
+cbind(1:4,5:8)
+```
+
+## Combinación de matrices o data.frames
+
+Sin embargo esta función no es óptima en el siguiente ejemplo
+
+```{r}
+X1 <- data.frame(Id=1:4,Genero=c("M","F","F","M"),
+                 Peso=c(75,68,48,72))
+X1
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+X2 <- data.frame(Id=1:4,Genero=c("M","F","F","M"),
+                 Altura=c(182,165,160,178))
+X2
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+cbind(X1,X2)
+```
+
+## Combinación de matrices o data.frames
+
+Para estos casos la función que permite combinar elementos en bases de datos es merge() 
+
+```{r}
+merge(X1,X2)
+```
+
+## Combinación de matrices o data.frames
+
+Ahora suonga que tenemos
+
+```{r}
+X3 <- data.frame(Id=c(2,1,4,3),Genero=c("F","M","M","F"),
+                 Altura=c(165,182,178,160))
+X3
+```
+
+## Combinación de matrices o data.frames
+
+de igual forma merge() es la función adecuada para combinar X1 y X3
+
+```{r}
+merge(X1,X3)
+```
+
+## Combinación de matrices o data.frames
+
+Como hemos visto la función merge() combinados data.frames. La combinación está basada en las columnas de esos data.frames que tienen los mismos nombres. Las cuales se denominarán "Columnas comunes". El argumento **by** puede ser usado para forzar cuales columnas son comunes. El valor de este argumento puede ser un vector de nombres, vector de índices o vectores lógicos y las otras colunas son tratadas como distintas. La función merge() trbaja de la siguiente manera, entonces sea X y Y dos data.frames y veamos como trabaja
+
+- Toda fila de un del data.frame X, en la función merge() compara los elementos de esta fila con respecto a todas las filas de Y, pero solo sobre el subconjunto de columnas en común
+
+## Combinación de matrices o data.frames
+
+- si encuentra un match perfect, considera que es un mismo individuo: este individuo es agregado al nuevo data.frame resultado de la combinación y completa con los valores de las columnas no comunes de X y Y
+
+- Si no hay match perfecto, el individuo es igualmente agregado al data.frame resultante con NA's (si el argumento all() toma el valor TRUE) o removido (si el argumento all() es FALSE)
+
+- La operación se repite a la segunda fila y así sucesivamente
+
+## Combinación de matrices o data.frames
+
+Veamos un ejemplo
+
+```{r}
+X <- data.frame(Genero=c("F","M","M","F"),
+                Altura=c(165, 82,178,160),
+                Peso=c(50,65,67,55),
+                Ingreso=c(80,90,60,50))
+X
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+Y <- data.frame(Genero=c("F","M","M","F"),
+                Altura=c(165, 82,178,160),
+                Peso=c(55,65,67,85),
+                Salario=c(70,90,40,40) ,
+                row.names=4:7)
+Y
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+merge(X,Y,by=c("Genero","Peso"))
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+merge(X,Y,by=c("Genero","Peso"),all=TRUE)
+```
+
+## Combinación de matrices o data.frames
+
+Tengamos en cuenta que la función merge() no tiene en cuenta los nombres de los individuos que asigna R, cuando determina los individuos comunes. Los nombres pueden ser incluidos agregando una columna Id a los dos data.frames, para identificar los individuos usando "row.names" como el valor en el argumento by
+
+```{r}
+merge(X,Y,by=c("row.names","Peso"))
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+merge(X,Y,by=c("row.names","Peso"),all=TRUE)
+```
+
+## Combinación de matrices o data.frames
+
+Para concatenar filas usamos rbind()
+
+```{r}
+rbind(1:4,5:8)
+```
+
+## Combinación de matrices o data.frames
+
+veamos una función útil en algunos casos
+
+```{r}
+df1 <- data.frame(A=1:5, B=LETTERS[1:5])
+df1
+```
+
+## Combinación de matrices o data.frames
+
+```{r}
+df2 <- data.frame(A=6:10, E=letters[1:5])
+df2
+```
+
+## Combinación de matrices o data.frames
+
+```{r warning=FALSE, include=FALSE}
+library(gtools)
+```
+
+```{r}
+smartbind(df1, df2)
+```
+
+## Operaciones sobre listas
+
+Las funciones lapply() y sapply() son similares a la función apply(), aplicando una función a todos los elementos de una lista, el output corresponde a una lista, y cada elemento de la lista genera un vector si es posible
+
+## Operaciones sobre listas
+
+```{r}
+x <- list(a = 1:10, beta = exp(-3:3),
+          logic = c(TRUE,FALSE,FALSE,TRUE))
+x
+```
+
+## Operaciones sobre listas
+
+```{r}
+lapply(x,mean)
+```
+
+## Operaciones sobre listas
+
+```{r}
+lapply(x,quantile,probs=(1:3)/4)
+```
+
+## Operaciones sobre listas
+
+```{r}
+sapply(x, quantile)
+```
+
+## Operaciones sobre listas
+
+Si desea aplicar una función a un vector (en lugar de al margen de una matriz), use sapply(. Aquí está el código para generar una lista de secuencias.
+
+## Operaciones sobre listas
+
+```{r}
+i36 <- sapply(3:6, seq)# Crea una lista de vectores
+i36
+```
+
+## Operaciones sobre listas
+
+```{r}
+sapply(i36, sum) 
+```
+
+## Ejercicios (1)
+
+Importa la base de datos sweepdata
+
+```{r}
+setwd("~/Progrmación en R/2020-I/PR05-Combinación y extracción en estrucutura de datos")
+(matdata <- read.table("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR05-Combinación y extracción en estrucutura de datos/sweepdata.txt"))
+```
+
+## Ejercicios (1)
+
+En este ejemplo, queremos expresar una matriz en términos de las desviaciones de cada valor de su media de columna. Primero aplique la función apply() para sacar la media a cada una de sus columnas
+
+```{r}
+(cols <- apply(matdata,MARGIN=2,mean))
+```
+
+## Ejercicios (1)
+
+Ahora a cada valor de la columna le resto la media correspondiente usando sweep()
+
+```{r}
+sweep(matdata,MARGIN=2,STATS=cols,FUN="-")
+```
+
+## Ejercicios (2)
+Suponga que desea obtener los subíndices para un barrido de datos en columnas o en filas. Establezca los subíndices de fila repetidos en cada columna usando apply():
+
+```{r}
+apply(matdata,MARGIN=2,FUN=function (x) 1:10)
+```
+
+## Ejercicios (2)
+
+y para las columnas usando apply()
+
+```{r}
+t(apply(matdata,MARGIN=1,FUN=function (x) 1:4))
+```
+
+## Ejercicios (3)
+
+Realice lo misimo con la función sweep()
+
+```{r}
+sweep(matdata,MARGIN=1,STATS=1:10,FUN=function(a,b) {b})
+```
+
+## Ejercicios (4)
+
+```{r}
+sweep(matdata,2,1:4,function(a,b) b)
+```
+
+## Ejercicios (5)
+
+Tenga en cuenta que en ambos casos, la respuesta producida por apply() es un vector en lugar de una matriz. Puede aplicar funciones a los elementos individuales de la matriz en lugar de a los márgenes. El margen que especifique solo influye en la forma de la matriz resultante.
+
+```{r}
+(X <- matrix(1:24,nrow=4))
+```
+
+## Ejercicios (5)
+
+Aplique raíz cuadrada a todos los elementos de la matriz y muestremelos por filas
+
+```{r}
+apply(X,MARGIN=1,FUN=sqrt)
+```
+
+## Ejercicios (5)
+
+ahora por columnas
+
+```{r}
+apply(X,2,sqrt)
+```
+
+## Extracción e inserción de elementos
+
+Es esta sección veremos los diferentes recursos que tiene R para extraer componentes de n vector, pues algunas veces quisieramos usar no todos los contenidos de un vector. En R podemos usar la función "["(), o podemos usar "[]" en el cual establecemos los subíndices que queremos extraer ó podemos tomar los siguientes argumentos
+
+- un vector de índices de elementos a extraer
+
+- un vector de índices de elementos a no extraer
+
+- un vector de valores lógicos indicando cuales elementos se extraen
+
+## Extracción e inserción de elementos en vectores
+
+```{r}
+vec <- c(2,3,4,8,3)
+vec
+```
+
+```{r}
+vec[2]
+```
+
+## Extracción e inserción de elementos en vectores
+
+```{r}
+"["(vec,2)
+```
+
+```{r}
+vec[-2]
+```
+
+## Extracción e inserción de elementos en vectores (slicing)
+
+Podemos realizar un barrido para seleccionar una cantidad masiva de subíndices a extraer, debe tenerse en cuente que R maneja los subíndices empezando en 1
+
+```{r}
+vec[2:5]
+```
+
+```{r}
+vec[-c(1,5)]
+```
+
+## Extracción e inserción de elementos en vectores (slicing)
+
+```{r}
+vec[c(T,F,F,T,T)]
+```
+
+```{r}
+vec>4
+```
+
+```{r}
+vec[vec>4]
+```
+
+## Extracción e inserción de elementos en vectores 
+
+Es importante notar que la simplicidad sintáctica de una instrucción como x[y>0], el cual extrae de x todos los elementos del subíndice i tales que $y_i>0$
+
+```{r}
+x <- 1:5
+y <- c(-1,2,-3,4,-2)
+x[y>0]
+```
+
+a menudo necesitamos usar tantas construcciones como sean posibles, las cuales son llamadas máscaras lógicas, en estos existen dos ventajs: el código es sencillo para leer y rápido para ejecutar
+
+Note que las funciones which(),which.min(), which.max() serán útiles
+
+## Extracción e inserción de elementos en vectores 
+
+```{r}
+mask <- c(TRUE,FALSE,TRUE,NA,FALSE,FALSE,TRUE)
+which(mask)
+```
+
+```{r}
+x <- c(0:4,0:5,11)
+which.min(x)
+```
+
+```{r}
+which.max(x)
+```
+
+## Remplazamiento en vectores
+
+Para reemplazar elementos en un vector se hace de una manera similar a la extracción. Todo lo que necesitamos es seleccionar las elementos como si usted quisiera extraerlos, y usando <- se sigue de los elementos para reemplazar. Por supuesto, usted necesita especificar el mismo número de elementos entrantes que salientes
+
+
+```{r}
+z <- c(0,0,0,2,0)
+z[c(1,5)] <- 1
+z
+```
+
+```{r}
+z[which.max(z)] <- 0
+z
+```
+
+```{r}
+z[z==0] <- 8
+z
+```
+
+## Agregar o insertar elementos a un vector preexistente 
+
+Usamos la función c()
+
+```{r}
+vecA <- c(1,3,6,2,7,4,8,1,0)
+vecA
+```
+
+```{r}
+(vecB <- c(vecA, 4, 1))
+```
+
+```{r}
+(vecC <- c(vecA[1:4], 8, 5, vecA[5:9]))
+```
+
+## Agregar o insertar elementos a un vector preexistente 
+
+Este mecanismo provee la habilidad para completar un vector cuyo tamaño no es fijo en el principio
+
+```{r}
+a <- c()
+a <- c(a,2)
+a <- c(a,7)
+a
+```
+
+## Ejercicio
+
+Cree un vecctor altura <- c(182,150,160,140.5,191) y vector género genero <- c(0,1,1,1,0) donde la altura seexpresa en cms y el género 1 mujer y 0 hombre. extraiga del vector altura, las altura de los hombres. Use el método de extracción de variables por subíndices, repitiendo la tarea con una máscara lógica
+
+## Ejercicio
+
+Extraiga del siguiente vector todos los números entre 2 y 3
+
+```{r}
+x <- c(0.1,0.5,2.1,3.5,2.8,2.7,1.9,2.2,5.6)
+```
+
+## Extracción e inserción en matrices
+
+-Extracción via X[índice fila,índice columna], omitir la primera componente significa que todas las filas son seleccionada, o en su debido caso las columnas, cuando las componentes son negativas indican que elementos no extraer
+
+- Extracción vía máscara lógica X[máscara], sabiendo que la matriz es de valores lógicos de mismo tamaño que X el cual indica que elementos extraer
+
+## Extracción e inserción en matrices
+
+
+```{r}
+Mat <- matrix(1:12,nrow=4,ncol=3,byrow=TRUE)
+Mat
+```
+
+```{r}
+Mat[2,3]
+```
+
+## Extracción e inserción en matrices
+
+```{r}
+Mat[,1]
+```
+
+```{r}
+Mat[c(1,4),]
+```
+
+```{r}
+Mat[3,-c(1,3)]
+```
+
+## Extracción e inserción en matrices
+
+```{r}
+MatLogical <- matrix(c(TRUE,FALSE),nrow=4,ncol=3)
+MatLogical
+```
+
+```{r}
+Mat[MatLogical]
+```
+
+## Extracción e inserción en matrices
+
+```{r}
+ind <- c(2,4,6,8,3)
+Mat[ind]
+```
+
+## Extracción e inserción en matrices
+
+Algunas veces la función de extracción cambia la estrucutura de manipulación
+
+```{r}
+m <- matrix(1:6,nrow=2) ; m
+```
+
+```{r}
+m[,1]
+```
+
+## Extracción e inserción en matrices
+
+Pero resulta que yo quería el vector como columna, este problema se puede arreglar
+
+```{r}
+m[,1,drop=FALSE]
+```
+
+## Extracción e inserción en matrices
+
+Usando la función which yo puedo alternar subíndices de los elementos de una matriz los cuales son verificados con la condición
+
+```{r}
+m <- matrix(c(1,2,3,1,2,3,2,1,3),3,3)
+m
+```
+
+```{r}
+which(m == 1)
+```
+
+## Extracción e inserción en matrices
+
+para poner los índices como parejas
+
+```{r}
+which(m == 1,arr.ind=TRUE)
+```
+
+## Extracción e inserción en matrices
+
+Para realizarr inserción de elementos en una matriz
+
+```{r}
+m[m!=2] <- 0
+m
+```
+
+```{r}
+Mat <- Mat[-4,] ; Mat
+```
+
+## Extracción e inserción en matrices
+
+```{r}
+m[Mat>7] <- Mat[Mat>7]
+m
+```
+
+## Ejercicio
+
+```{r}
+m1 <- matrix(c(0,22,0,23,34,0,0,0,28),ncol=3)
+m2 <- matrix(c(10,1,4,10,9,9,2,6,4),ncol=3)
+```
+
+reemplace todos los valores distintos de cero de m1 con el correspondiente valor en m2,despues remueva la segunda columna de m1
+
+## Extracción e inserción en listas
+
+```{r}
+L <- list(12,c(34,67,8),Mat,1:15,list(10,11))
+L
+```
+
+## Extracción e inserción en listas
+
+```{r}
+L[2]
+```
+
+```{r}
+class(L[2])
+```
+
+## Extracción e inserción en listas
+
+```{r}
+L[c(3,4)]
+```
+
+## Extracción e inserción en listas
+
+Para acceder a los elementos de una lista usamos
+
+```{r}
+L[[2]]
+```
+
+```{r}
+L[[2]][1]
+```
+
+```{r}
+L[[5]][[2]]
+```
+
+## Extracción e inserción en listas
+
+Para usar indexación recursiva usamos
+
+```{r}
+L[[c(2,3)]]
+```
+
+## Extracción e inserción en listas
+
+Para accerder a los elementos de una lista con nombres en cada elemento usamos
+
+```{r}
+L <- list(cars=c("FORD","PEUGEOT"),climate=
+            c("Tropical","Temperate"))
+L
+```
+
+## Extracción e inserción en listas
+
+```{r}
+L[["cars"]][2]
+```
+
+```{r}
+L$cars
+```
+
+## Extracción e inserción en listas
+
+```{r}
+L$climate[2] <- "Continental"
+L
+```
+
+## Extracción e inserción en listas
+
+El nombre de una columna puede incluir espacios. Para acceder a ella, usted necesita una marca especial
+
+```{r}
+L <- list("pretty cars"=c("FORD","PEUGEOT"))
+L
+```
+
+```{r}
+L$"pretty cars"
+```
+
+## Ejercicios
+
+```{r}
+peas <- c(4,7,6,5,6,7)
+```
+
+```{r}
+peas[4]
+```
+
+```{r}
+pods <- c(2,3,6)
+peas[pods]
+```
+
+## Ejercicios
+
+```{r}
+peas[c(2,3,6)]
+```
+
+```{r}
+peas[-1]
+```
+
+```{r}
+peas[-length(peas)]
+```
+
+## Ejercicios
+
+```{r}
+peas[1:3]
+```
+
+```{r}
+peas[seq(2,length(peas),2)]
+```
+
+```{r}
+peas[1:length(peas) %% 2 == 0]
+```
+
+## Ejercicios
+
+```{r}
+y <- 4.3
+z <- y[-1]
+length(z)
+```
+
+```{r}
+y <- c(8,3,5,7,6,6,8,9,2,3,9,4,10,4,11)
+```
+
+```{r}
+rev(sort(y))[1:3]
+```
+
+## Ejercicios
+
+```{r}
+sum(rev(sort(y)))[1:3]
+```
+
+```{r}
+names <- c("Williams","Jones","Smith","Williams",
+           "Jones","Williams")
+```
+
+```{r}
+table(names)
+```
+
+## Ejercicios
+
+```{r}
+unique(names)
+```
+
+```{r}
+duplicated(names)
+```
+
+```{r}
+names[!duplicated(names)]
+```
+
+## Ejercicios
+
+```{r}
+salary <- c(42,42,48,42,42,42)
+salary[!duplicated(names)]
+```
+
+## Ejercicios
+
+```{r}
+mean(salary[!duplicated(names)])
+```
+
+```{r}
+mean(salary[!duplicated(salary)])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

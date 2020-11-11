@@ -1,0 +1,1961 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={Ingreso de Datos},
+            pdfauthor={Santiago Lozano},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Ingreso de Datos}
+\author{Santiago Lozano}
+\date{29 de marzo de 2020}
+
+\begin{document}
+\maketitle
+
+\subsection{Introducción}\label{introducciuxf3n}
+
+Se puede obtener números y datos a través del teclado, portapapeles o de
+algún archivo externo, sabemos que para una variable con una cantidad de
+números pequeña, por ejemplo 10, es sencillo crear un vector
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{ (}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Tenemos varias opciones en R que se adecuan a tamaño de los datos que se
+quieran ingresar
+
+\subsection{Ingreso de datos desde el teclado (por
+consola)}\label{ingreso-de-datos-desde-el-teclado-por-consola}
+
+La opción scan es útil en estos casos para pegar algunos números en un
+vector llamado x, asi,
+
+\begin{verbatim}
+x <- scan()
+\end{verbatim}
+
+después de esto en la consola aparecerá
+
+\begin{verbatim}
+1:
+\end{verbatim}
+
+el cual actúa como un prompt que permite ingresar su primer número,
+después de haber ingresado este debemos oprimir enter
+
+\begin{verbatim}
+1: 6
+2: 
+\end{verbatim}
+
+permitiendo ingresar el segundo número, de manera sucesiva realizamos
+este procedimiento, cuando hayamos ingresado nuestro último número
+oprimimos 2 veces enter para acabar el vector de números
+
+\begin{verbatim}
+1: 6
+2: 7
+3: 3
+4: 4
+5: 8
+6: 5
+7: 6
+8: 2
+9:
+
+Read 8 items
+\end{verbatim}
+
+Tambíem podemos usar scan() para pegar columnas de números desde el
+protapapeles, así, en una hoja de cálculo seleccine la columna de
+números de interés y cópiela, cuando aplique
+
+\begin{verbatim}
+x <- scan()
+\end{verbatim}
+
+y aparezca
+
+\begin{verbatim}
+1:
+\end{verbatim}
+
+en el 1. pegue la columna que estaba en el portapapeles
+
+Aquí va img1
+
+\begin{verbatim}
+> x <- scan()
+1: 2
+   5
+   3
+\end{verbatim}
+
+Y Presionando enter
+
+\begin{verbatim}
+> x <- scan()
+1: 2
+2: 5
+3: 3
+4: 
+Read 3 items
+\end{verbatim}
+
+Si queremos agregar más elementos desde el portapapeles, copiamos el
+conjunto de número a copiar y pegar, y lo ponemos sobre lo que ya
+tenemos
+
+aquí va img2
+
+\begin{verbatim}
+> x <- scan()
+1: 2
+   5
+   3
+   4
+   5
+   4
+\end{verbatim}
+
+Y oprimimos enter y
+
+\begin{verbatim}
+> x <- scan()
+1: 2
+2: 5
+3: 3
+4: 4
+5: 5
+6: 4
+7: 
+Read 6 items
+\end{verbatim}
+
+Copiando por filas se obtiene el mismo resultado
+
+Otra forma de ingresar datos, pero ya de todo tipo, usamos la función
+readline()
+
+\begin{verbatim}
+mi.nombre <- readline(prompt="Ingrese su nombre: ")
+mi.edad <- readline(prompt="Ingrese su edad: ")
+\end{verbatim}
+
+corriendo la línea de mi.nombre obtendremos
+
+\begin{verbatim}
+> mi.nombre <- readline(prompt="Ingrese su nombre: ")
+Ingrese su nombre:
+\end{verbatim}
+
+Donde efectivamente ingresaríamos nuestro nombre
+
+\begin{verbatim}
+> mi.nombre <- readline(prompt="Ingrese su nombre: ")
+Ingrese su nombre: Santiago
+\end{verbatim}
+
+\begin{verbatim}
+> mi.edad <- readline(prompt="Ingrese su edad: ")
+Ingrese su edad: 26
+\end{verbatim}
+
+Pero veamos que en esta última línea las variables se guardan como
+character
+
+\begin{verbatim}
+> typeof(mi.edad)
+[1] "character"
+\end{verbatim}
+
+con lo que un valor entero como una edad debe ser guardado con tipo
+integer
+
+\begin{verbatim}
+my.age <- as.integer(my.age)
+\end{verbatim}
+
+y podemos imprimir finalmente
+
+\begin{verbatim}
+print(paste("Hola","mi nombre es",mi.nombre,",mi edad es",mi.edad,"años"))
+\end{verbatim}
+
+obteniendo
+
+\begin{verbatim}
+[1] "Hola mi nombre es Santiago mi edad es 26 años"
+\end{verbatim}
+
+\subsection{Ingreso de datos desde
+archivos}\label{ingreso-de-datos-desde-archivos}
+
+Una manera sencilla de obtener datos en R es trayéndolos desde algún
+archivo sobre el cuál usted obtuvo los datos, sobre distintas
+estructuras de consignación de datos (dataframes, textos, etc), en esta
+parte veremos ciertos tipos de formatos de datos consignados y como
+importarlos para cada caso.
+
+\subsection{El directorio de trabajo}\label{el-directorio-de-trabajo}
+
+Es importante establecer un lugar en su PC bajo el cual R accederá y
+esccribira de una manera sencilla, para que en posteriores códigos, se
+puedan sólo mencionar el nombre del archivo y no toda la ruta. Para
+establecer el directorio de trabajo usamos la función setwd()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(}\StringTok{"C:/Users/santiago/Documents/Progrmación en R/2020-I/PR10-Ingreso de Datos"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+recuerde que aquí hay que cambiar los ~(backslash) por /.
+
+Si estamos trabajando desde R y queremos saber cuál es nuestro
+directorio de trabajo usamos la función getwd()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "C:/Users/santiago/Documents/Progrmación en R/2020-I/PR10-Ingreso de Datos"
+\end{verbatim}
+
+El directorio de trabajo por defecto que trabajamos en R cuando no le
+hemos establecido el directorio de trabajo
+
+Muchas veces queremos volver a nuestro diretorio de trabajo por lo que
+es necesario guardar nuestro directorio anterior, R nos da la
+posibilidad de guardad este directorio de trabajo en una variable
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dicr <-}\StringTok{ }\KeywordTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+y para volver al dorectorio de trabajo por defecto que es mis documentos
+hacemos
+
+\begin{verbatim}
+setwd("~")
+\end{verbatim}
+
+y
+
+\begin{verbatim}
+getwd()
+\end{verbatim}
+
+obtendremos
+
+\begin{verbatim}
+> getwd()
+[1] "C:/Users/santiago/Documents"
+\end{verbatim}
+
+y si queremos después volver al direcitorio que usabamos anteriormente
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(dicr)}
+\end{Highlighting}
+\end{Shaded}
+
+si queremos ver los archivos que tenemos en nuestro directorio de
+trabajo, con el fin de asegurarno que cierto archivo se encuentre en esa
+carpeta, hacemos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dir}\NormalTok{(dicr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "bowens.csv"                "daphnia.txt"              
+##  [3] "Datos ingreso de datos"    "ex.txt"                   
+##  [5] "img1.PNG"                  "img2.PNG"                 
+##  [7] "img3.PNG"                  "Intima_ftable.txt"        
+##  [9] "Intima_Media2.txt"         "murders.txt"              
+## [11] "PR10-Ingreso-de-Datos.Rmd" "PR10-Ingreso de Datos.Rmd"
+## [13] "PR10-Ingreso_de_Datos.aux" "PR10-Ingreso_de_Datos.out"
+## [15] "PR10-Ingreso_de_Datos.pdf" "rt.txt"                   
+## [17] "worms.txt"                 "yield.txt"
+\end{verbatim}
+
+Para traer un archivo del direcctorio de trabajo usando el navegador del
+computador usamos \texttt{file.choose()} el cual puede ser usado en
+todas la funciones que nos permiten importar datos
+
+\begin{verbatim}
+data<-read.table(file.choose(),header=T)
+\end{verbatim}
+
+Aquí va img3
+
+\subsection{Ingreso de datos con
+read.table}\label{ingreso-de-datos-con-read.table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{yield <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"yield.txt"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T)}
+\KeywordTok{head}\NormalTok{(yield)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   year wheat barley oats rye corn
+## 1 1980   5.9    4.4  4.1 3.8  4.4
+## 2 1981   5.8    4.4  4.3 3.7  4.1
+## 3 1982   6.2    4.9  4.4 4.1  4.0
+## 4 1983   6.4    4.7  4.3 3.7  4.1
+## 5 1984   7.7    5.6  4.9 4.7  4.7
+## 6 1985   6.3    5.0  4.6 4.6  4.3
+\end{verbatim}
+
+Si quiere simplificar escritura, puede usar `\texttt{read.delim()} pues
+esta omite el \texttt{header=T}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{yield2 <-}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(}\StringTok{"yield.txt"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(yield2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   year wheat barley oats rye corn
+## 1 1980   5.9    4.4  4.1 3.8  4.4
+## 2 1981   5.8    4.4  4.3 3.7  4.1
+## 3 1982   6.2    4.9  4.4 4.1  4.0
+## 4 1983   6.4    4.7  4.3 3.7  4.1
+## 5 1984   7.7    5.6  4.9 4.7  4.7
+## 6 1985   6.3    5.0  4.6 4.6  4.3
+\end{verbatim}
+
+\subsection{Errores comunes en el
+read.table()}\label{errores-comunes-en-el-read.table}
+
+Es importante resaltar que en el \texttt{read.table()} podría fallar si
+hubo algunos espacions en los nombre de las variables de la fila 1 de un
+dataframe (la fila encabezado), por ejemplo con nombres como Nombre
+Campo, pH soya, densidad del clima, o entre palabras con el mismo nivel
+de factor, es decir la misma caraterística de nombramiento cualitativo,
+por ejemplo si una de la caraterística de Nombre Campo es El cañadulzal,
+con lo que es óptimo reemplazar los espacios con punto ``.'', por
+ejemplo Nombre.Campo, pH.soya, etc, antes de guardar el archivo en Excel
+o cualquier porgrama qu esté manejando
+
+Algunas cosas a tener en cuenta son:
+
+\begin{itemize}
+\item
+  La ruta y los nombres de los archivos siempre deben ir en comillas,
+  por ejemplo \texttt{"c:\textbackslash{}\textbackslash{}abc.txt"}.
+\item
+  El argumento \texttt{header=T} dice si el archivo a importar contiene
+  fila encabezado
+\end{itemize}
+
+Una de las causas más comunes de falla a la hora de importar es que el
+número de variables no coincide con el número de columnas de
+información, y eso se debe principalmente a que se ha dejado espacios en
+blanco en los nombres de las variables, por ejemplo
+
+\begin{verbatim}
+nombre dept poblacion hogar propietario carro
+\end{verbatim}
+
+Es erróneo pues se esperan 6 columna en nuestro dataframe, pero este
+sólo contiene 5, una forma correcta de establecerlos es mediante
+
+\begin{verbatim}
+nombre dept poblacion hogar propietario carro
+\end{verbatim}
+
+Otra forma común de equivocación es que los archivos contienen espacios
+en blanco donde hay missing datas, es necesario que en su archivo de
+origen se reemplacen estos por NA's
+
+Existen archivos a importar que los nombres de las variables los separan
+por otro marcador distinto al espacio en blanco, por ejemplo por comas
+``,'', estos archivos son en formato .csv los cuales corresponden a
+hojas de cálculo, donde cada elemento está separado mediante comas ``,''
+o en un caso poco común mediante punto y coma ``;''
+
+Para este caso es posible importarlos mediante \texttt{read.table()},
+usando el argumento \texttt{sep=","}, o de forma más rápida y fácil
+\texttt{read.csv()}, también si está separado por tabulaciones (tab),
+que en nuestro contexto generalmente son cuatro espacios en blanco
+usamos \texttt{sep="\textbackslash{}t"}
+
+De esta manera es importante las características que posea su archivo
+para importar de manera que lo pueda hacer correctamente
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowens <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"bowens.csv"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T,}\DataTypeTok{sep=}\StringTok{","}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(bowens)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               place east north
+## 1          Abingdon   50    97
+## 2      Admoor Copse   60    70
+## 3      AERE Harwell   48    87
+## 4     Agates Meadow   70    73
+## 5       Aldermaston   59    65
+## 6 Aldermaston Court   60    65
+\end{verbatim}
+
+Sin embargo es más sencillo con
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowens2 <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"bowens.csv"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(bowens2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               place east north
+## 1          Abingdon   50    97
+## 2      Admoor Copse   60    70
+## 3      AERE Harwell   48    87
+## 4     Agates Meadow   70    73
+## 5       Aldermaston   59    65
+## 6 Aldermaston Court   60    65
+\end{verbatim}
+
+\subsection{Separadores y puntos
+decimales}\label{separadores-y-puntos-decimales}
+
+El caracter separador de campos en \texttt{read.table()} es
+\texttt{sep="\ "}, el cual corresponde a una separación de un espacio en
+blanco, sin embargo, uster puede usar más espacios para especificar la
+cantidad de espacios en blanco que los separan, se puede separar también
+por tab \texttt{\textbackslash{}t} para un tab, se pueden usar más, por
+ejemplo \texttt{\textbackslash{}t\textbackslash{}t\textbackslash{}t}
+corresponde a 3 tab, \texttt{\textbackslash{}n} es una nueva línea.
+
+Vea que todas las opciones de \texttt{read.table} tienen por defecto
+\texttt{header=TRUE}
+
+También es importante que usted sepa que marca decimal se está usando en
+el archivo que va a importar pues R es cuidadoso en esta característica,
+así, si \texttt{dec=","}, está especificando que su marca decimal es
+coma, puede ser \texttt{dec="."} especificando el punto como marca
+decimal.
+
+\subsection{Otras formas de importar}\label{otras-formas-de-importar}
+
+archivos separados por punto y coma
+
+\begin{verbatim}
+read.csv2("c:\\temp\\file.csv")
+\end{verbatim}
+
+archivos separados por tab con marca decimal coma
+
+\begin{verbatim}
+read.delim2("c:\\temp\\file.txt")
+\end{verbatim}
+
+\subsection{Otras cuestiones sobre importar
+datos}\label{otras-cuestiones-sobre-importar-datos}
+
+Cuando los nombres de sus variables usan espacios es útil usar como
+separadores de variables comas o punto y coma, por ejemplo cuando usamos
+``Reino Unido'' o ``Estado Unidos''
+
+Si queremos especificar los nombres de nuestras filas \texttt{row.names}
+entonces una de las columnas del dataframe debe ser la que debemos
+especificar, lo podemos hacer especificando el número de la columna o
+también un dato character que diga el nombre de la columna
+\texttt{row.names=1}, \texttt{row.names="Pais"}, si \texttt{row.names}
+no se pone, por defecto la filas se ordenan con números en orden
+
+Recordemos también que cuando \texttt{read.table()} se usa, las
+variables de tipo cualitativo quedan como factores, pero podemos
+especificar cierta variables que queremos que no las ponga como factores
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"murders.txt"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T)}
+\KeywordTok{head}\NormalTok{(murders)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        state population murder region
+## 1    Alabama       3615   15.1  South
+## 2     Alaska        365   11.3   West
+## 3    Arizona       2212    7.8   West
+## 4   Arkansas       2110   10.1  South
+## 5 California      21198   10.3   West
+## 6   Colorado       2541    6.8   West
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{attach}\NormalTok{(murders)}
+\KeywordTok{class}\NormalTok{(region)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "factor"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murder <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"murders.txt"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T,}\DataTypeTok{as.is=}\StringTok{"region"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{attach}\NormalTok{(murder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The following object is masked _by_ .GlobalEnv:
+## 
+##     murder
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from murders:
+## 
+##     murder, population, region, state
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(region)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\subsection{Importar datos desde la
+web}\label{importar-datos-desde-la-web}
+
+Podemos importar datos directamente desde internet usando
+\texttt{read.table()} con la URL del sitio
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data2 <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"http://www.bio.ic.ac.uk/research/mjcraw/therbook/data/cancer.txt"}\NormalTok{, }\DataTypeTok{header=}\NormalTok{T)}
+\KeywordTok{head}\NormalTok{(data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   death treatment status
+## 1     4     DrugA      1
+## 2    26     DrugA      1
+## 3     2     DrugA      1
+## 4    25     DrugA      1
+## 5     7     DrugA      1
+## 6     6     DrugA      0
+\end{verbatim}
+
+\subsection{Ejercicio}\label{ejercicio}
+
+Cree una función en la que utilizando la ruta larga del archivo, sólo
+especifique el nombre del archivo y este haga todo el procedimiento
+
+\subsection{read.table usando clicks}\label{read.table-usando-clicks}
+
+\begin{verbatim}
+read.csv(file.choose())
+read.csv2(file.choose())
+read.delim(file.choose())
+read.delim2(file.choose())
+\end{verbatim}
+
+\subsection{read.table() desde el
+portapapeles}\label{read.table-desde-el-portapapeles}
+
+\begin{verbatim}
+x <- read.table(file("clipboard"),sep="nt",header=TRUE,dec=" ")
+\end{verbatim}
+
+\subsection{Importar Tablas de
+contigencia}\label{importar-tablas-de-contigencia}
+
+Las tablas de contigencia son una manera cruzada de expresar la
+información de una población
+
+\begin{verbatim}
+    H  M
+ 0 168 140
+ 1 92  45
+\end{verbatim}
+
+Estas tablas pueden ser importadas en R de manera sistemática usando
+\texttt{read-ftable()}, con lo que
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Intima.table <-}\StringTok{ }\KeywordTok{read.ftable}\NormalTok{(}\StringTok{"Intima_ftable.txt"}\NormalTok{,}\DataTypeTok{row.var.names=}\KeywordTok{c}\NormalTok{(}\StringTok{"GENDER"}\NormalTok{,}\StringTok{"tobacco"}\NormalTok{),}\DataTypeTok{col.vars=}\KeywordTok{list}\NormalTok{(}\StringTok{"alcohol"}\NormalTok{=}\KeywordTok{c}\NormalTok{(}\StringTok{"nondrinker"}\NormalTok{,}\StringTok{"occasional drinker"}\NormalTok{,}\StringTok{"regular drinker"}\NormalTok{)))}
+\KeywordTok{ftable}\NormalTok{(Intima.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      alcohol nondrinker occasional drinker regular drinker
+## GENDER tobacco                                                            
+## M      non-smoker                     6                 19               7
+##        former smoker                  0                  9               0
+##        smoker                         1                  6               5
+## F      non-smoker                    12                 26               2
+##        former smoker                  3                  5               1
+##        smoker                         1                  6               1
+\end{verbatim}
+
+Aquí tenemos que \texttt{row.var.names} es un vector de caracteres que
+menciona los nombre de las variables fila, en caso de que estos no
+puedan ser determinados, \texttt{cols.vars} es una lista que da los
+nombres y niveles de las variables columna, en caso de que puedan ser
+determinadas, de igual forma esta función también usa \texttt{sep=} y
+\texttt{dec=} de la manera aanteriormente dicha
+
+\subsection{Importar datos usando
+scan()}\label{importar-datos-usando-scan}
+
+Cuando se trata de dataframes \texttt{read.table()} es magnífico, pero
+cuando tratamos con archivos algo engorrosos como rt.txt vemos que
+
+\begin{verbatim}
+read.table("rt.txt",header = F)
+\end{verbatim}
+
+\begin{verbatim}
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : line 1 did not have 4 elements
+\end{verbatim}
+
+simplemente \texttt{read.table} precisa de una coincidencia con todas
+las líneas
+
+Pero funciones como \texttt{scan()} y \texttt{readLines} pueden hacer
+esta labor
+
+La función \texttt{scan()} lee los datos y los consigna en una lista o
+vector cuando es usado para leer un archivo. Es mucho menos amigable que
+\texttt{read.table()} pero es más flexible y por ende puede leer otras
+estructuras de archivos.
+
+Por defecto \texttt{scan()} asume que se están ingresando datos de tipo
+double, pero se puede usar el argumento \texttt{what}, con el fin de
+organizar otros tipos de datos que estén en el documento (por ejemplo
+`character', `logical', `integer', `complex' o `list').
+
+Algo importante de \texttt{what} es que para especificar el tipo de dato
+que se quiere leer no se debe poner el nombre del tipo de dato si no una
+muestra del tipo, por ejemplo, si tenemos un dato de tipo complex, no
+usamos \texttt{complex} sino una muestra,\texttt{2+3i}.
+
+Si \texttt{what} es una lista, se asume que las líneas del archivo son
+traídas cada una conteniendo campos, tantos ítems como
+\texttt{length(what)} tengan, es decir, \texttt{scan} retorna una lista
+donde cada elemento de esta lista es un vector con los datos respecto al
+lugar del dato dado en esa posición.
+
+\texttt{what} también provee una forma de lectura de datos en forma
+columnar, donde si el correspondiente campo es NULL, es decir, vacío
+(\texttt{""}), corresponde a un dato de tipo character con lo que si en
+\texttt{what} creamos una lista de NULL's con cantidad de campos
+correspondiente a las columnas que se usan, obtendremos una lista donde
+cada elemento de esta es un vector con los valores de la recpectiva
+columna
+
+Por defecto tenemos que en \texttt{scan()} los campos están separados
+por espacio en blanco o por tabulación (tab), y si se quere especificar
+la opción de separación simplemente se utiliza \texttt{sep=","} para
+especificar la marca separadora entre comillas, aunque en sí, un campo
+está siempre delimitados por una marca de cambio de línea, a menos que
+esté entre comillas.
+
+si \texttt{sep} es el establecido por defecto (\texttt{"\ "}), el
+caracter \texttt{\textbackslash{}} antes de una commilla hace que esta
+no tenga su efecto de establecer una frase como un campo
+(\texttt{"Ella\ dijo\ \textbackslash{}"QUE!!\textbackslash{}"\ a\ el"}),
+pero si \texttt{sep} no está establecido por defecto, los campos pueden
+ser puestos entre comillas en el estilo de un archivo \texttt{.csv}
+donde los separadores dentro de las comillas son ignorados y la comillas
+pueden ser puestas dentro del string doblandolas
+
+Sin embargo, si \texttt{sep="\textbackslash{}n"} se asume que se quiere
+leer la línea entera
+
+Con \texttt{scan()}menudo queremos obviar las filas encabezado o algún
+texto irrelevante , así, el argumento \texttt{skip=1}, por ejemplo
+ignora la primera línea del documento
+
+Ahora usemos \texttt{scan()} para importar un dataframe y veamos la
+ineficiencia de esta para tales casos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sn <-}\StringTok{ }\KeywordTok{scan}\NormalTok{(}\StringTok{"worms.txt"}\NormalTok{,}\DataTypeTok{skip=}\DecValTok{1}\NormalTok{,}\DataTypeTok{what=}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{""}\NormalTok{,}\DecValTok{7}\NormalTok{)))}
+\NormalTok{sn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##  [1] "Nashs.Field"       "Silwood.Bottom"    "Nursery.Field"    
+##  [4] "Rush.Meadow"       "Gunness.Thicket"   "Oak.Mead"         
+##  [7] "Church.Field"      "Ashurst"           "The.Orchard"      
+## [10] "Rookery.Slope"     "Garden.Wood"       "North.Gravel"     
+## [13] "South.Gravel"      "Observatory.Ridge" "Pond.Field"       
+## [16] "Water.Meadow"      "Cheapside"         "Pound.Hill"       
+## [19] "Gravel.Pit"        "Farm.Wood"        
+## 
+## [[2]]
+##  [1] "3.6" "5.1" "2.8" "2.4" "3.8" "3.1" "3.5" "2.1" "1.9" "1.5" "2.9" "3.3"
+## [13] "3.7" "1.8" "4.1" "3.9" "2.2" "4.4" "2.9" "0.8"
+## 
+## [[3]]
+##  [1] "11" "2"  "3"  "5"  "0"  "2"  "3"  "0"  "0"  "4"  "10" "1"  "2"  "6"  "0" 
+## [16] "0"  "8"  "2"  "1"  "10"
+## 
+## [[4]]
+##  [1] "Grassland" "Arable"    "Grassland" "Meadow"    "Scrub"     "Grassland"
+##  [7] "Grassland" "Arable"    "Orchard"   "Grassland" "Scrub"     "Grassland"
+## [13] "Grassland" "Grassland" "Meadow"    "Meadow"    "Scrub"     "Arable"   
+## [19] "Grassland" "Scrub"    
+## 
+## [[5]]
+##  [1] "4.1" "5.2" "4.3" "4.9" "4.2" "3.9" "4.2" "4.8" "5.7" "5"   "5.2" "4.1"
+## [13] "4"   "3.8" "5"   "4.9" "4.7" "4.5" "3.5" "5.1"
+## 
+## [[6]]
+##  [1] "F" "F" "F" "T" "F" "F" "F" "F" "F" "T" "F" "F" "F" "F" "T" "T" "T" "F" "F"
+## [20] "T"
+## 
+## [[7]]
+##  [1] "4" "7" "2" "5" "6" "2" "3" "4" "9" "7" "8" "1" "2" "0" "6" "8" "4" "5" "1"
+## [20] "3"
+\end{verbatim}
+
+Viendo aquí que todos los vectores son character
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(}\DataTypeTok{FUN =}\NormalTok{ class, }\DataTypeTok{X =}\NormalTok{ sn)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character" "character" "character" "character" "character" "character"
+## [7] "character"
+\end{verbatim}
+
+Aquí, sabiendo que worms tiene 7 columnas, usamos \texttt{what} para
+especificar este propósito.
+
+Ahora, si yo quiero identificar los tipos de datos de cada columna
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sn2 <-}\StringTok{ }\KeywordTok{scan}\NormalTok{(}\StringTok{"worms.txt"}\NormalTok{,}\DataTypeTok{skip=}\DecValTok{1}\NormalTok{,}\DataTypeTok{what=}\KeywordTok{list}\NormalTok{(}\StringTok{""}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{as.integer}\NormalTok{(}\DecValTok{0}\NormalTok{),}\StringTok{""}\NormalTok{,}\DecValTok{0}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\KeywordTok{as.integer}\NormalTok{(}\DecValTok{0}\NormalTok{)))}
+\NormalTok{sn2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+##  [1] "Nashs.Field"       "Silwood.Bottom"    "Nursery.Field"    
+##  [4] "Rush.Meadow"       "Gunness.Thicket"   "Oak.Mead"         
+##  [7] "Church.Field"      "Ashurst"           "The.Orchard"      
+## [10] "Rookery.Slope"     "Garden.Wood"       "North.Gravel"     
+## [13] "South.Gravel"      "Observatory.Ridge" "Pond.Field"       
+## [16] "Water.Meadow"      "Cheapside"         "Pound.Hill"       
+## [19] "Gravel.Pit"        "Farm.Wood"        
+## 
+## [[2]]
+##  [1] 3.6 5.1 2.8 2.4 3.8 3.1 3.5 2.1 1.9 1.5 2.9 3.3 3.7 1.8 4.1 3.9 2.2 4.4 2.9
+## [20] 0.8
+## 
+## [[3]]
+##  [1] 11  2  3  5  0  2  3  0  0  4 10  1  2  6  0  0  8  2  1 10
+## 
+## [[4]]
+##  [1] "Grassland" "Arable"    "Grassland" "Meadow"    "Scrub"     "Grassland"
+##  [7] "Grassland" "Arable"    "Orchard"   "Grassland" "Scrub"     "Grassland"
+## [13] "Grassland" "Grassland" "Meadow"    "Meadow"    "Scrub"     "Arable"   
+## [19] "Grassland" "Scrub"    
+## 
+## [[5]]
+##  [1] 4.1 5.2 4.3 4.9 4.2 3.9 4.2 4.8 5.7 5.0 5.2 4.1 4.0 3.8 5.0 4.9 4.7 4.5 3.5
+## [20] 5.1
+## 
+## [[6]]
+##  [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [13] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+## 
+## [[7]]
+##  [1] 4 7 2 5 6 2 3 4 9 7 8 1 2 0 6 8 4 5 1 3
+\end{verbatim}
+
+y aquí
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(}\DataTypeTok{FUN =}\NormalTok{ class, }\DataTypeTok{X =}\NormalTok{ sn2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character" "numeric"   "integer"   "character" "numeric"   "logical"  
+## [7] "integer"
+\end{verbatim}
+
+Para convertir esta lista en un dataframe usamos \texttt{as.data.frame},
+con lo que
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data3 <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(sn)}
+\end{Highlighting}
+\end{Shaded}
+
+Y para poner los nombres de las variables hacemos, con lo que usando
+\texttt{scan()} sacamos la primera fila y nos ayudamos del argumento
+\texttt{nlines=1}, el cual nos especifica que solo queremos leer la
+primera línea y quitamos \texttt{skip=1}, así
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{header <-}\StringTok{ }\KeywordTok{scan}\NormalTok{(}\StringTok{"worms.txt"}\NormalTok{,}\DataTypeTok{nlines=}\DecValTok{1}\NormalTok{,}\DataTypeTok{what=}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{""}\NormalTok{,}\DecValTok{7}\NormalTok{)))}
+\NormalTok{header}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "Field.Name"
+## 
+## [[2]]
+## [1] "Area"
+## 
+## [[3]]
+## [1] "Slope"
+## 
+## [[4]]
+## [1] "Vegetation"
+## 
+## [[5]]
+## [1] "Soil.pH"
+## 
+## [[6]]
+## [1] "Damp"
+## 
+## [[7]]
+## [1] "Worm.density"
+\end{verbatim}
+
+Pero lo queremos como vector, así que la función \texttt{unlist()} sirve
+para estos propósitos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rn <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(header)}
+\NormalTok{rn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Field.Name"   "Area"         "Slope"        "Vegetation"   "Soil.pH"     
+## [6] "Damp"         "Worm.density"
+\end{verbatim}
+
+Y finalmente agregamos nuestros nombres de columnas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(data3)<-rn}
+\KeywordTok{head}\NormalTok{(data3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Field.Name Area Slope Vegetation Soil.pH Damp Worm.density
+## 1     Nashs.Field  3.6    11  Grassland     4.1    F            4
+## 2  Silwood.Bottom  5.1     2     Arable     5.2    F            7
+## 3   Nursery.Field  2.8     3  Grassland     4.3    F            2
+## 4     Rush.Meadow  2.4     5     Meadow     4.9    T            5
+## 5 Gunness.Thicket  3.8     0      Scrub     4.2    F            6
+## 6        Oak.Mead  3.1     2  Grassland     3.9    F            2
+\end{verbatim}
+
+Como vemos, importar un dataframe es demasiado tedioso mediante
+\texttt{scan()}, claramente \texttt{read.table()} es mucho mejor
+
+\subsection{scan() estructuras de datos
+complicadas}\label{scan-estructuras-de-datos-complicadas}
+
+Teniendo en cuenta esta estrucutura vemos que
+
+TITLE extra line 2 3 5 7 11 13 17
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"ex.txt"}\NormalTok{, }\DataTypeTok{skip =} \DecValTok{1}\NormalTok{, }\DataTypeTok{quiet =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  5  7 11 13 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"ex.txt"}\NormalTok{, }\DataTypeTok{skip =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  5  7 11 13 17
+\end{verbatim}
+
+donde el la primera no me muestra el \texttt{Read\ 7\ items} y en la
+segunda si, gracias a `quiet=TRUE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"ex.txt"}\NormalTok{, }\DataTypeTok{skip =} \DecValTok{1}\NormalTok{, }\DataTypeTok{nlines =} \DecValTok{1}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 3 5 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"ex.txt"}\NormalTok{,}\DataTypeTok{skip=}\DecValTok{1}\NormalTok{, }\DataTypeTok{what =} \KeywordTok{list}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{as.integer}\NormalTok{(}\DecValTok{0}\NormalTok{),}\DecValTok{3}\OperatorTok{+}\NormalTok{2i))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in scan("ex.txt", skip = 1, what = list(0, as.integer(0), 3 + (0+2i))):
+## número de items leídos no es múltiplo del número de columnas
+\end{verbatim}
+
+\begin{verbatim}
+## [[1]]
+## [1]  2  7 17
+## 
+## [[2]]
+## [1]  3 11 NA
+## 
+## [[3]]
+## [1]  5+0i 13+0i    NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"ex.txt"}\NormalTok{,}\DataTypeTok{skip=}\DecValTok{1}\NormalTok{, }\DataTypeTok{what =} \KeywordTok{list}\NormalTok{(}\StringTok{""}\NormalTok{,}\StringTok{""}\NormalTok{,}\StringTok{""}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in scan("ex.txt", skip = 1, what = list("", "", "")): número de items
+## leídos no es múltiplo del número de columnas
+\end{verbatim}
+
+\begin{verbatim}
+## [[1]]
+## [1] "2"  "7"  "17"
+## 
+## [[2]]
+## [1] "3"  "11" ""  
+## 
+## [[3]]
+## [1] "5"  "13" ""
+\end{verbatim}
+
+\begin{verbatim}
+138         
+27  44      
+19  20  345 48
+115 2366        
+59
+\end{verbatim}
+
+El archivo \texttt{rt} tiene la siguiente estructura, donde cada fila
+hace referencia a los ID de los vecinos de 5 individuos
+
+así, para importar los datos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  138   27   44   19   20  345   48  115 2366   59
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]       138      2744 192034548   1152366        59
+\end{verbatim}
+
+Vemos que cada elemento está separado por el cambio de línea
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  138   NA   NA   NA   27   44   NA   NA   19   20  345   48  115 2366   NA
+## [16]   NA   59   NA   NA   NA
+\end{verbatim}
+
+Vemos que en esta forma de separación es la que mejor nos conviene, pues
+se conservan la integridad de los números y al menos sabemos que cada 4
+números cambiamos de individuo.
+
+Imaginen que queremos una lista donde cada elemento de ella corresponde
+a un individuo
+
+Para buscar esto procedemos de la siguiente manera
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+sabemos que tenemos 5 individuos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+Aquí vemos que tenemos 20/5=4 items por individuo, aunque sean NA's
+
+Así, para encontrar los vecinos del primer individuo, hacemos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 138  NA  NA  NA
+\end{verbatim}
+
+Haciendo este pricedimiento de forma sistemática hacemos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lista <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  lista[[i]]<-}\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\DataTypeTok{quiet=}\NormalTok{T)[(}\DecValTok{4}\OperatorTok{*}\NormalTok{i}\OperatorTok{-}\DecValTok{3}\NormalTok{)}\OperatorTok{:}\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{i)]}
+\NormalTok{\}}
+\NormalTok{lista}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 138  NA  NA  NA
+## 
+## [[2]]
+## [1] 27 44 NA NA
+## 
+## [[3]]
+## [1]  19  20 345  48
+## 
+## [[4]]
+## [1]  115 2366   NA   NA
+## 
+## [[5]]
+## [1] 59 NA NA NA
+\end{verbatim}
+
+ahora quitando los NA's y cambiando a número
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  lista[[i]]<-}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(lista[[i]]))}
+\NormalTok{\}}
+\NormalTok{lista}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 138
+## 
+## [[2]]
+## [1] 27 44
+## 
+## [[3]]
+## [1]  19  20 345  48
+## 
+## [[4]]
+## [1]  115 2366
+## 
+## [[5]]
+## [1] 59
+\end{verbatim}
+
+O en una línea
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(i)}
+\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(}
+\KeywordTok{scan}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\DataTypeTok{quiet=}\NormalTok{T)[(}\DecValTok{4}\OperatorTok{*}\NormalTok{i}\OperatorTok{-}\DecValTok{3}\NormalTok{)}\OperatorTok{:}
+\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{i)])))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 138
+## 
+## [[2]]
+## [1] 27 44
+## 
+## [[3]]
+## [1]  19  20 345  48
+## 
+## [[4]]
+## [1]  115 2366
+## 
+## [[5]]
+## [1] 59
+\end{verbatim}
+
+\subsection{Lectura de datos con
+readLines}\label{lectura-de-datos-con-readlines}
+
+Una alternativa bastante poderosa diferente a \texttt{scan()} es
+\texttt{readLines()}, el cual consigna la lectura de datos por línea, en
+un vector de caracteres
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lworms<-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"worms.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in readLines("worms.txt"): incomplete final line found on 'worms.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lworms}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Field.Name\tArea\tSlope\tVegetation\tSoil.pH\tDamp\tWorm.density"
+##  [2] "Nashs.Field\t3.6\t11\tGrassland\t4.1\tF\t4"                      
+##  [3] "Silwood.Bottom\t5.1\t2\tArable\t5.2\tF\t7"                       
+##  [4] "Nursery.Field\t2.8\t3\tGrassland\t4.3\tF\t2"                     
+##  [5] "Rush.Meadow\t2.4\t5\tMeadow\t4.9\tT\t5"                          
+##  [6] "Gunness.Thicket\t3.8\t0\tScrub\t4.2\tF\t6"                       
+##  [7] "Oak.Mead\t3.1\t2\tGrassland\t3.9\tF\t2"                          
+##  [8] "Church.Field\t3.5\t3\tGrassland\t4.2\tF\t3"                      
+##  [9] "Ashurst\t2.1\t0\tArable\t4.8\tF\t4"                              
+## [10] "The.Orchard\t1.9\t0\tOrchard\t5.7\tF\t9"                         
+## [11] "Rookery.Slope\t1.5\t4\tGrassland\t5\tT\t7"                       
+## [12] "Garden.Wood\t2.9\t10\tScrub\t5.2\tF\t8"                          
+## [13] "North.Gravel\t3.3\t1\tGrassland\t4.1\tF\t1"                      
+## [14] "South.Gravel\t3.7\t2\tGrassland\t4\tF\t2"                        
+## [15] "Observatory.Ridge\t1.8\t6\tGrassland\t3.8\tF\t0"                 
+## [16] "Pond.Field\t4.1\t0\tMeadow\t5\tT\t6"                             
+## [17] "Water.Meadow\t3.9\t0\tMeadow\t4.9\tT\t8"                         
+## [18] "Cheapside\t2.2\t8\tScrub\t4.7\tT\t4"                             
+## [19] "Pound.Hill\t4.4\t2\tArable\t4.5\tF\t5"                           
+## [20] "Gravel.Pit\t2.9\t1\tGrassland\t3.5\tF\t1"                        
+## [21] "Farm.Wood\t0.8\t10\tScrub\t5.1\tT\t3"
+\end{verbatim}
+
+Vemos que \texttt{readLines} crea un vector donde cada elemento de este
+es una línea del archivo que se está leyendo, esta en formato character,
+y en este caso vemos que la separación está dada en tabulacin
+\texttt{\textbackslash{}t}, el vector como está aquí desplegado está
+algo sucio, es nuestro deber limpiarlo de manera que logrems extraer la
+infomación relevante
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stworms <-}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(lworms,}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{stworms}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "Field.Name"   "Area"         "Slope"        "Vegetation"   "Soil.pH"     
+## [6] "Damp"         "Worm.density"
+## 
+## [[2]]
+## [1] "Nashs.Field" "3.6"         "11"          "Grassland"   "4.1"        
+## [6] "F"           "4"          
+## 
+## [[3]]
+## [1] "Silwood.Bottom" "5.1"            "2"              "Arable"        
+## [5] "5.2"            "F"              "7"             
+## 
+## [[4]]
+## [1] "Nursery.Field" "2.8"           "3"             "Grassland"    
+## [5] "4.3"           "F"             "2"            
+## 
+## [[5]]
+## [1] "Rush.Meadow" "2.4"         "5"           "Meadow"      "4.9"        
+## [6] "T"           "5"          
+## 
+## [[6]]
+## [1] "Gunness.Thicket" "3.8"             "0"               "Scrub"          
+## [5] "4.2"             "F"               "6"              
+## 
+## [[7]]
+## [1] "Oak.Mead"  "3.1"       "2"         "Grassland" "3.9"       "F"        
+## [7] "2"        
+## 
+## [[8]]
+## [1] "Church.Field" "3.5"          "3"            "Grassland"    "4.2"         
+## [6] "F"            "3"           
+## 
+## [[9]]
+## [1] "Ashurst" "2.1"     "0"       "Arable"  "4.8"     "F"       "4"      
+## 
+## [[10]]
+## [1] "The.Orchard" "1.9"         "0"           "Orchard"     "5.7"        
+## [6] "F"           "9"          
+## 
+## [[11]]
+## [1] "Rookery.Slope" "1.5"           "4"             "Grassland"    
+## [5] "5"             "T"             "7"            
+## 
+## [[12]]
+## [1] "Garden.Wood" "2.9"         "10"          "Scrub"       "5.2"        
+## [6] "F"           "8"          
+## 
+## [[13]]
+## [1] "North.Gravel" "3.3"          "1"            "Grassland"    "4.1"         
+## [6] "F"            "1"           
+## 
+## [[14]]
+## [1] "South.Gravel" "3.7"          "2"            "Grassland"    "4"           
+## [6] "F"            "2"           
+## 
+## [[15]]
+## [1] "Observatory.Ridge" "1.8"               "6"                
+## [4] "Grassland"         "3.8"               "F"                
+## [7] "0"                
+## 
+## [[16]]
+## [1] "Pond.Field" "4.1"        "0"          "Meadow"     "5"         
+## [6] "T"          "6"         
+## 
+## [[17]]
+## [1] "Water.Meadow" "3.9"          "0"            "Meadow"       "4.9"         
+## [6] "T"            "8"           
+## 
+## [[18]]
+## [1] "Cheapside" "2.2"       "8"         "Scrub"     "4.7"       "T"        
+## [7] "4"        
+## 
+## [[19]]
+## [1] "Pound.Hill" "4.4"        "2"          "Arable"     "4.5"       
+## [6] "F"          "5"         
+## 
+## [[20]]
+## [1] "Gravel.Pit" "2.9"        "1"          "Grassland"  "3.5"       
+## [6] "F"          "1"         
+## 
+## [[21]]
+## [1] "Farm.Wood" "0.8"       "10"        "Scrub"     "5.1"       "T"        
+## [7] "3"
+\end{verbatim}
+
+de esta tenemos ya cada palabra separada por un elemento de un vector
+que a su vez separa cada línea en na lista, tomemos esta lista como un
+vector
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vcworms <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(stworms)}
+\NormalTok{vcworms}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] "Field.Name"        "Area"              "Slope"            
+##   [4] "Vegetation"        "Soil.pH"           "Damp"             
+##   [7] "Worm.density"      "Nashs.Field"       "3.6"              
+##  [10] "11"                "Grassland"         "4.1"              
+##  [13] "F"                 "4"                 "Silwood.Bottom"   
+##  [16] "5.1"               "2"                 "Arable"           
+##  [19] "5.2"               "F"                 "7"                
+##  [22] "Nursery.Field"     "2.8"               "3"                
+##  [25] "Grassland"         "4.3"               "F"                
+##  [28] "2"                 "Rush.Meadow"       "2.4"              
+##  [31] "5"                 "Meadow"            "4.9"              
+##  [34] "T"                 "5"                 "Gunness.Thicket"  
+##  [37] "3.8"               "0"                 "Scrub"            
+##  [40] "4.2"               "F"                 "6"                
+##  [43] "Oak.Mead"          "3.1"               "2"                
+##  [46] "Grassland"         "3.9"               "F"                
+##  [49] "2"                 "Church.Field"      "3.5"              
+##  [52] "3"                 "Grassland"         "4.2"              
+##  [55] "F"                 "3"                 "Ashurst"          
+##  [58] "2.1"               "0"                 "Arable"           
+##  [61] "4.8"               "F"                 "4"                
+##  [64] "The.Orchard"       "1.9"               "0"                
+##  [67] "Orchard"           "5.7"               "F"                
+##  [70] "9"                 "Rookery.Slope"     "1.5"              
+##  [73] "4"                 "Grassland"         "5"                
+##  [76] "T"                 "7"                 "Garden.Wood"      
+##  [79] "2.9"               "10"                "Scrub"            
+##  [82] "5.2"               "F"                 "8"                
+##  [85] "North.Gravel"      "3.3"               "1"                
+##  [88] "Grassland"         "4.1"               "F"                
+##  [91] "1"                 "South.Gravel"      "3.7"              
+##  [94] "2"                 "Grassland"         "4"                
+##  [97] "F"                 "2"                 "Observatory.Ridge"
+## [100] "1.8"               "6"                 "Grassland"        
+## [103] "3.8"               "F"                 "0"                
+## [106] "Pond.Field"        "4.1"               "0"                
+## [109] "Meadow"            "5"                 "T"                
+## [112] "6"                 "Water.Meadow"      "3.9"              
+## [115] "0"                 "Meadow"            "4.9"              
+## [118] "T"                 "8"                 "Cheapside"        
+## [121] "2.2"               "8"                 "Scrub"            
+## [124] "4.7"               "T"                 "4"                
+## [127] "Pound.Hill"        "4.4"               "2"                
+## [130] "Arable"            "4.5"               "F"                
+## [133] "5"                 "Gravel.Pit"        "2.9"              
+## [136] "1"                 "Grassland"         "3.5"              
+## [139] "F"                 "1"                 "Farm.Wood"        
+## [142] "0.8"               "10"                "Scrub"            
+## [145] "5.1"               "T"                 "3"
+\end{verbatim}
+
+aquí ya tenemos en una lista cada entrada del dataframe, y como este
+está organizado de manera ordenada, podemos consignarlo en una matriz
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(vcworms) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{21}\NormalTok{) }
+\NormalTok{vcworms}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]           [,2]          [,3]             [,4]           
+## [1,] "Field.Name"   "Nashs.Field" "Silwood.Bottom" "Nursery.Field"
+## [2,] "Area"         "3.6"         "5.1"            "2.8"          
+## [3,] "Slope"        "11"          "2"              "3"            
+## [4,] "Vegetation"   "Grassland"   "Arable"         "Grassland"    
+## [5,] "Soil.pH"      "4.1"         "5.2"            "4.3"          
+## [6,] "Damp"         "F"           "F"              "F"            
+## [7,] "Worm.density" "4"           "7"              "2"            
+##      [,5]          [,6]              [,7]        [,8]           [,9]     
+## [1,] "Rush.Meadow" "Gunness.Thicket" "Oak.Mead"  "Church.Field" "Ashurst"
+## [2,] "2.4"         "3.8"             "3.1"       "3.5"          "2.1"    
+## [3,] "5"           "0"               "2"         "3"            "0"      
+## [4,] "Meadow"      "Scrub"           "Grassland" "Grassland"    "Arable" 
+## [5,] "4.9"         "4.2"             "3.9"       "4.2"          "4.8"    
+## [6,] "T"           "F"               "F"         "F"            "F"      
+## [7,] "5"           "6"               "2"         "3"            "4"      
+##      [,10]         [,11]           [,12]         [,13]          [,14]         
+## [1,] "The.Orchard" "Rookery.Slope" "Garden.Wood" "North.Gravel" "South.Gravel"
+## [2,] "1.9"         "1.5"           "2.9"         "3.3"          "3.7"         
+## [3,] "0"           "4"             "10"          "1"            "2"           
+## [4,] "Orchard"     "Grassland"     "Scrub"       "Grassland"    "Grassland"   
+## [5,] "5.7"         "5"             "5.2"         "4.1"          "4"           
+## [6,] "F"           "T"             "F"           "F"            "F"           
+## [7,] "9"           "7"             "8"           "1"            "2"           
+##      [,15]               [,16]        [,17]          [,18]       [,19]       
+## [1,] "Observatory.Ridge" "Pond.Field" "Water.Meadow" "Cheapside" "Pound.Hill"
+## [2,] "1.8"               "4.1"        "3.9"          "2.2"       "4.4"       
+## [3,] "6"                 "0"          "0"            "8"         "2"         
+## [4,] "Grassland"         "Meadow"     "Meadow"       "Scrub"     "Arable"    
+## [5,] "3.8"               "5"          "4.9"          "4.7"       "4.5"       
+## [6,] "F"                 "T"          "T"            "T"         "F"         
+## [7,] "0"                 "6"          "8"            "4"         "5"         
+##      [,20]        [,21]      
+## [1,] "Gravel.Pit" "Farm.Wood"
+## [2,] "2.9"        "0.8"      
+## [3,] "1"          "10"       
+## [4,] "Grassland"  "Scrub"    
+## [5,] "3.5"        "5.1"      
+## [6,] "F"          "T"        
+## [7,] "1"          "3"
+\end{verbatim}
+
+transponiendo,y quitando la fila encabezado
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t}\NormalTok{(vcworms)[}\OperatorTok{-}\DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1]                [,2]  [,3] [,4]        [,5]  [,6] [,7]
+##  [1,] "Nashs.Field"       "3.6" "11" "Grassland" "4.1" "F"  "4" 
+##  [2,] "Silwood.Bottom"    "5.1" "2"  "Arable"    "5.2" "F"  "7" 
+##  [3,] "Nursery.Field"     "2.8" "3"  "Grassland" "4.3" "F"  "2" 
+##  [4,] "Rush.Meadow"       "2.4" "5"  "Meadow"    "4.9" "T"  "5" 
+##  [5,] "Gunness.Thicket"   "3.8" "0"  "Scrub"     "4.2" "F"  "6" 
+##  [6,] "Oak.Mead"          "3.1" "2"  "Grassland" "3.9" "F"  "2" 
+##  [7,] "Church.Field"      "3.5" "3"  "Grassland" "4.2" "F"  "3" 
+##  [8,] "Ashurst"           "2.1" "0"  "Arable"    "4.8" "F"  "4" 
+##  [9,] "The.Orchard"       "1.9" "0"  "Orchard"   "5.7" "F"  "9" 
+## [10,] "Rookery.Slope"     "1.5" "4"  "Grassland" "5"   "T"  "7" 
+## [11,] "Garden.Wood"       "2.9" "10" "Scrub"     "5.2" "F"  "8" 
+## [12,] "North.Gravel"      "3.3" "1"  "Grassland" "4.1" "F"  "1" 
+## [13,] "South.Gravel"      "3.7" "2"  "Grassland" "4"   "F"  "2" 
+## [14,] "Observatory.Ridge" "1.8" "6"  "Grassland" "3.8" "F"  "0" 
+## [15,] "Pond.Field"        "4.1" "0"  "Meadow"    "5"   "T"  "6" 
+## [16,] "Water.Meadow"      "3.9" "0"  "Meadow"    "4.9" "T"  "8" 
+## [17,] "Cheapside"         "2.2" "8"  "Scrub"     "4.7" "T"  "4" 
+## [18,] "Pound.Hill"        "4.4" "2"  "Arable"    "4.5" "F"  "5" 
+## [19,] "Gravel.Pit"        "2.9" "1"  "Grassland" "3.5" "F"  "1" 
+## [20,] "Farm.Wood"         "0.8" "10" "Scrub"     "5.1" "T"  "3"
+\end{verbatim}
+
+y ya convirtiendo el dataframe
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataf <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{t}\NormalTok{(vcworms)[}\OperatorTok{-}\DecValTok{1}\NormalTok{,])}
+\NormalTok{dataf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   V1  V2 V3        V4  V5 V6 V7
+## 1        Nashs.Field 3.6 11 Grassland 4.1  F  4
+## 2     Silwood.Bottom 5.1  2    Arable 5.2  F  7
+## 3      Nursery.Field 2.8  3 Grassland 4.3  F  2
+## 4        Rush.Meadow 2.4  5    Meadow 4.9  T  5
+## 5    Gunness.Thicket 3.8  0     Scrub 4.2  F  6
+## 6           Oak.Mead 3.1  2 Grassland 3.9  F  2
+## 7       Church.Field 3.5  3 Grassland 4.2  F  3
+## 8            Ashurst 2.1  0    Arable 4.8  F  4
+## 9        The.Orchard 1.9  0   Orchard 5.7  F  9
+## 10     Rookery.Slope 1.5  4 Grassland   5  T  7
+## 11       Garden.Wood 2.9 10     Scrub 5.2  F  8
+## 12      North.Gravel 3.3  1 Grassland 4.1  F  1
+## 13      South.Gravel 3.7  2 Grassland   4  F  2
+## 14 Observatory.Ridge 1.8  6 Grassland 3.8  F  0
+## 15        Pond.Field 4.1  0    Meadow   5  T  6
+## 16      Water.Meadow 3.9  0    Meadow 4.9  T  8
+## 17         Cheapside 2.2  8     Scrub 4.7  T  4
+## 18        Pound.Hill 4.4  2    Arable 4.5  F  5
+## 19        Gravel.Pit 2.9  1 Grassland 3.5  F  1
+## 20         Farm.Wood 0.8 10     Scrub 5.1  T  3
+\end{verbatim}
+
+y agragando los nombres de las variables
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(dataf) <-}\StringTok{ }\KeywordTok{t}\NormalTok{(vcworms)[}\DecValTok{1}\NormalTok{,]}
+\NormalTok{dataf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Field.Name Area Slope Vegetation Soil.pH Damp Worm.density
+## 1        Nashs.Field  3.6    11  Grassland     4.1    F            4
+## 2     Silwood.Bottom  5.1     2     Arable     5.2    F            7
+## 3      Nursery.Field  2.8     3  Grassland     4.3    F            2
+## 4        Rush.Meadow  2.4     5     Meadow     4.9    T            5
+## 5    Gunness.Thicket  3.8     0      Scrub     4.2    F            6
+## 6           Oak.Mead  3.1     2  Grassland     3.9    F            2
+## 7       Church.Field  3.5     3  Grassland     4.2    F            3
+## 8            Ashurst  2.1     0     Arable     4.8    F            4
+## 9        The.Orchard  1.9     0    Orchard     5.7    F            9
+## 10     Rookery.Slope  1.5     4  Grassland       5    T            7
+## 11       Garden.Wood  2.9    10      Scrub     5.2    F            8
+## 12      North.Gravel  3.3     1  Grassland     4.1    F            1
+## 13      South.Gravel  3.7     2  Grassland       4    F            2
+## 14 Observatory.Ridge  1.8     6  Grassland     3.8    F            0
+## 15        Pond.Field  4.1     0     Meadow       5    T            6
+## 16      Water.Meadow  3.9     0     Meadow     4.9    T            8
+## 17         Cheapside  2.2     8      Scrub     4.7    T            4
+## 18        Pound.Hill  4.4     2     Arable     4.5    F            5
+## 19        Gravel.Pit  2.9     1  Grassland     3.5    F            1
+## 20         Farm.Wood  0.8    10      Scrub     5.1    T            3
+\end{verbatim}
+
+ya lo que queda es tomar cada columna y convertirla en su respectivo
+tipo de dato
+
+Ahora tomemos el archivo \texttt{rt.txt}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "138\t\t\t"       "27\t44\t\t"      "19\t20\t345\t48" "115\t2366\t\t"   "59\t\t\t"
+\end{verbatim}
+
+así, esta función desplegó un vector de 5 elemento correspondientes a
+cada línea del archivo, como podemos ver, cada elemento está separado
+por tabulaciones, separando cada palabra
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lx <-}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(x,}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{lx}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "138" ""    ""   
+## 
+## [[2]]
+## [1] "27" "44" ""  
+## 
+## [[3]]
+## [1] "19"  "20"  "345" "48" 
+## 
+## [[4]]
+## [1] "115"  "2366" ""    
+## 
+## [[5]]
+## [1] "59" ""   ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xl <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(lx,as.numeric)}
+\NormalTok{xl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 138  NA  NA
+## 
+## [[2]]
+## [1] 27 44 NA
+## 
+## [[3]]
+## [1]  19  20 345  48
+## 
+## [[4]]
+## [1]  115 2366   NA
+## 
+## [[5]]
+## [1] 59 NA NA
+\end{verbatim}
+
+y terminando de limpiar el archivo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xf <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,}\ControlFlowTok{function}\NormalTok{(i) }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(xl[[i]])))}
+\NormalTok{xf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 138
+## 
+## [[2]]
+## [1] 27 44
+## 
+## [[3]]
+## [1]  19  20 345  48
+## 
+## [[4]]
+## [1]  115 2366
+## 
+## [[5]]
+## [1] 59
+\end{verbatim}
+
+\subsection{Fallas al usar attach en un
+dataframe}\label{fallas-al-usar-attach-en-un-dataframe}
+
+Traigamos el dataframe a analizar
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murder <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"murders.txt"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T,}\DataTypeTok{as.is=}\StringTok{"region"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+y apliquemos \texttt{attach()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{attach}\NormalTok{(murder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The following object is masked _by_ .GlobalEnv:
+## 
+##     murder
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from murder (pos = 3):
+## 
+##     murder, population, region, state
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from murders:
+## 
+##     murder, population, region, state
+\end{verbatim}
+
+El suceso en este caso es que tenemos el dataframe \texttt{murder} y una
+variable llamada \texttt{murder}, y puede causar el siguiente problema
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(murder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        state population murder region
+## 1    Alabama       3615   15.1  South
+## 2     Alaska        365   11.3   West
+## 3    Arizona       2212    7.8   West
+## 4   Arkansas       2110   10.1  South
+## 5 California      21198   10.3   West
+## 6   Colorado       2541    6.8   West
+\end{verbatim}
+
+\begin{verbatim}
+table(murder)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(murder}\OperatorTok{$}\NormalTok{murder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  1.4  1.7  2.3  2.4  2.7  2.9    3  3.1  3.3  4.2  4.3  4.5    5  5.2  5.3  5.5 
+##    1    1    2    1    1    1    1    1    2    1    1    2    1    1    1    1 
+##  6.1  6.2  6.4  6.7  6.8  6.9  7.1  7.4  7.8  8.5  9.3  9.5  9.7 10.1 10.3 10.6 
+##    1    2    1    1    1    1    1    1    1    1    1    1    1    1    2    1 
+## 10.7 10.9   11 11.1 11.3 11.5 11.6 12.2 12.5 13.2 13.9 15.1 
+##    1    1    1    2    1    1    1    1    1    1    1    1
+\end{verbatim}
+
+\subsection{Enmascaramiento}\label{enmascaramiento}
+
+Usamos la función \texttt{attach} para que se pueda acceder directamente
+a las variables dentro de un dataframe por su nombre. Técnicamente, esto
+significa que el dataframe se adjunta a la ruta de búsqueda R, de modo
+que R busca el dataframe cuando evalúa una variable
+
+Así que el problema de enmascaramiento ocurre cuando
+
+\begin{itemize}
+\item
+  Se llama al mismo dataframe dos veces
+\item
+  puede que usted tenga dos dataframes con el mismo nombre de variable
+  pero distinto
+\end{itemize}
+
+La causa más común de enmascaramiento ocurre con nombres de variables
+simples como x e y. Es muy fácil terminar con múltiples variables del
+mismo nombre dentro de una sola sesión que significan cosas totalmente
+diferentes.
+
+Así el mensaje de peligro debe alertar al usuario de las variables que
+se están enmascarando para que se prevenga de usar variables con el
+mismo nombre, pues esto podría conducir a problemas de hacer algún
+análisis que con la variable incorrecta y obtener resultados inesperados
+
+Algunas prevenciones para evitar este problema pueden ser
+
+\begin{itemize}
+\item
+  Usar nombres de variables más largo y explcativos
+\item
+  no calcular variables con el mismo nombr de variables dentro de un
+  dataframe
+\item
+  usar siempre \texttt{detach} del dataframe después de usarlo
+\item
+  remover variables calculadas después de usarlas
+\item
+  usar \$ en vez de \texttt{attach()}
+\end{itemize}
+
+\subsection{Formatos de input y
+output}\label{formatos-de-input-y-output}
+
+Hablemos de las secuecias de escape, las cuales se utilizan para definir
+ciertos caracteres especiales dentro de una cadena de texto que tienen
+una función distinta a su significado literal
+
+La combianción de caracteres en R consiste de un backslash ~seguido de
+una letra o una combinación de dígitos y rrepresentan acciones típica
+como un cambio de línea, retorno de carro, tabulación etc
+
+Una secuencia de escape se considera como un solo carácter y, por lo
+tanto, es válida como una constante de carácter. En R especificamos las
+secuencias de escape entre comillas, algunas secuencias de escape en R
+son
+
+\texttt{\textbackslash{}n} nueva línea
+
+\texttt{\textbackslash{}r} retorno de carro
+
+El retorno de carro consiste en mover el curso a la primera posición de
+una línea
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"Hola"}\NormalTok{,}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}\StringTok{"¿Cómo estás?"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hola 
+##  ¿Cómo estás?
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"Hola"}\NormalTok{,}\StringTok{"}\CharTok{\textbackslash{}r}\StringTok{"}\NormalTok{,}\StringTok{"s"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## sla
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"Program}\CharTok{\textbackslash{}r}\StringTok{ación")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+aciónam
+\end{verbatim}
+
+\texttt{\textbackslash{}t} tabulación
+
+\texttt{\textbackslash{}b} borrado
+
+Este hace la misma tarea de borrado en el teclado
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"Prog}\CharTok{\textbackslash{}b}\StringTok{ramación")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Proramacion
+\end{verbatim}
+
+\texttt{\textbackslash{}a} Campana
+
+Esta secuancia de escape produce un sonido de campana en el sistema del
+computador, en algunos se representa con un sonido en el pc, pero en
+otro sollo se reduce a un mensaje en el sistema
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}a}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\texttt{\textbackslash{}f} alimentación
+
+Es una forma avanzada de bajar el cursor hasta la siguiente página, es
+comunmente usado para separa páginas y tambíen para separar seccíones
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{"Hola"}\NormalTok{,}\StringTok{"}\CharTok{\textbackslash{}f}\StringTok{"}\NormalTok{,}\StringTok{"¿Cómo estás?"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hola  ¿Cómo estás?
+\end{verbatim}
+
+\subsection{Chequeo de archivos desde la línea de
+comando}\label{chequeo-de-archivos-desde-la-luxednea-de-comando}
+
+Es útil chequear desde R si un archivo dado existe en la ruta que usted
+especifica
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{file.exists}\NormalTok{(}\StringTok{"rt.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\end{document}

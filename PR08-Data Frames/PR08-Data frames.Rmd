@@ -1,0 +1,273 @@
+---
+title: "Data Frames"
+author: "Santiago Lozano"
+date: "20 de marzo de 2020"
+output:
+  pdf_document: default
+  ioslides_presentation: default
+  beamer_presentation:
+    colortheme: default
+    fonttheme: structurebold
+    theme: Darmstadt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importar Data frames
+
+```{r}
+setwd("C:/Users/santiago/Documents/Progrmación en R/2020-I/PR08-Data Frames")
+worms <- read.table("worms.txt",header = T,dec = ".")
+```
+
+Para ver el data frame recuerde que es con ``View(worms)`` 
+
+Existen funciones básicas para poder trabajar con el data frame
+
+- attach hace que las variables sea naccesibles con solo nombrarlas en R
+- head da una mirada de las primeras filas del data frame
+- tail da una mirada de las últimas filas de un data frame
+
+## Visulaización
+
+```{r}
+attach(worms)
+```
+
+Para ver los nombres de las variables usamos
+
+```{r}
+names(worms)
+```
+
+## visualización
+
+```{r}
+head(worms)
+```
+
+## Resumen de los datos
+
+```{r}
+summary(worms)
+```
+
+## Subíndices e índices
+
+```{r}
+worms[3,5]
+```
+
+```{r}
+worms[14:19,7]
+```
+
+## Subíndices e índices
+
+```{r}
+worms[3,]
+```
+
+```{r}
+worms[,3]
+```
+
+```{r}
+class(worms[3,])
+```
+
+## Subíndices e índices
+
+```{r}
+class(worms[,3])
+```
+
+## Subíndices e índices
+
+```{r}
+worms[,c(1,5)]
+```
+
+## Seleccionar filas de un data frame de manera aleatoria
+
+Veamos primero que la función sample() me permite tomar números al azar dependiendo de ciertos parámetros, en el primer argumento debe ir el vector del que yo voy a sacer la muestra aleatoria, el argumento replace=FALSE menciona si cada fila se puede seleccionar una y solo una vez (es la opción por defecto)
+
+```{r}
+sample(1:20,8)
+```
+
+Aquí estoy seleccionando al azar 8 elementos del vector de 1 a 20
+
+## Seleccionar filas de un data frame de manera aleatoria
+
+Para mostrar la muestra aleatoria de acuerdo al data frame hacemos
+
+```{r}
+worms[sample(1:20,8),]
+```
+
+## Algunas codificaciones útiles
+
+Aqui va saleccion.png
+
+## Métodos de ordenamiento de data frames
+
+Veamos que el dataframe anterior está en desorden, lo ordenamos mediante
+
+```{r}
+worms[order(Slope),]
+```
+
+
+## Métodos de ordenamiento de data frames (de mayor a menor)
+
+```{r}
+worms[rev(order(Slope)),]
+```
+
+## Métodos de ordenamiento de Data frames
+
+Una forma más compleja de ordenamiento es con variables cualitativas y cuantitativas
+
+```{r}
+worms[order(Vegetation,Worm.density),]
+```
+
+## Métodos de ordenamiento de dataframes
+
+Usando 3 condiciones
+
+```{r}
+worms[order(Vegetation,Worm.density,Soil.pH),]
+```
+
+## Métodos de ordenamiento 
+
+Aquí la regla es el orden de prioridad que yo asigno cuando ordeno los argumentos
+
+## Métodos de ordenamiento
+
+Quizás yo sólo quiero ver ciertas columnas en mi ordenamiento
+
+```{r}
+worms[order(Vegetation,Worm.density),c(4,7,5,3)]
+```
+
+## Métodos de ordenamiento
+
+O puede hacerlo con los nombres de la columna
+
+```{r}
+worms[order(Vegetation,Worm.density),
+c("Vegetation", "Worm.density", "Soil.pH", "Slope")]
+```
+
+## Selección mediante condiciones lógicas
+
+Si queremos restringir sólo a los casos donde Damp es verdadero
+
+```{r}
+worms[Damp == T,]
+```
+
+## Selección mediante condiciones lógicas
+
+La lógica para seleccionar filas también se puede referirir a más de una variable
+
+```{r}
+worms[Worm.density > median(Worm.density) & Soil.pH < 5.2,]
+```
+
+## Selección mediante condiciones lógicas
+
+Suponga que usted quiere extrae las columnas que sólo tienen números
+
+```{r}
+sapply(worms, is.numeric)
+```
+
+## Selección mediante condiciones lógicas
+
+```{r}
+worms[,sapply(worms,is.numeric)]
+```
+
+## Selección mediante condiciones lógicas
+
+Ahora las que sólo son factores
+
+```{r}
+worms[,sapply(worms,is.factor)]
+```
+
+## Selección mediante condiciones lógicas
+
+Para descartar filas usamos el signo negativo
+
+```{r}
+worms[-(6:15),]
+```
+
+## Selección mediante condiciones lógicas
+
+Para mostrar las filas que no son grasslands
+
+```{r}
+worms[!(Vegetation=="Grassland"),]
+```
+
+## Eliminar missings NA's
+
+```{r}
+data <- read.table("worms.missing.txt",header = T,dec = ".")
+data
+```
+
+## Eliminar missings NA's
+
+
+```{r}
+na.omit(data)
+```
+
+## Eliminar missings NA's
+
+la función na.exclude() hace lo mismo salvo algunas cuestiones
+
+Para ver en qué filas hay al menos un NA usamos
+
+```{r}
+complete.cases(data)
+```
+
+## Eliminar missings NA's
+
+Para ver también donde hay NA usamos
+
+```{r}
+apply(apply(data,2,is.na),2,sum)
+```
+
+## Reemplazar NA's por ceros
+
+```{r}
+data[is.na(data)] <- 0
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

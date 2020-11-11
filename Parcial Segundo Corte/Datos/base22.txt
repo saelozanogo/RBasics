@@ -1,0 +1,11 @@
+Este es el archivo base22
+
+"país" "sexo" "Estado" "id"
+"Korea" "female" "isolated" 531
+"Korea" "female" "isolated" 457
+"Korea" "female" "isolated" 481
+"Korea" "female" "isolated" 117
+"Korea" "male" "isolated" 1184
+"Korea" "female" "isolated" 539
+"Korea" "female" "isolated" 224
+"Korea" "female" "isolated" 217

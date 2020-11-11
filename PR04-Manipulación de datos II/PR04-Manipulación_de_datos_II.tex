@@ -1,0 +1,524 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[]{Darmstadt}
+\usefonttheme{structurebold}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+            pdftitle={Operaciones, extración y otras funcionalidades entre tipos de estructuras de datos},
+            pdfauthor={Santiago Lozano},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \let\insertsectionnumber\relax
+    \let\sectionname\relax
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \let\insertsubsectionnumber\relax
+  \let\subsectionname\relax
+  \frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+\title{Operaciones, extración y otras funcionalidades entre tipos de
+estructuras de datos}
+\author{Santiago Lozano}
+\date{21 de febrero de 2020}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Función stack()}
+
+Esta función concatena un simple vactor los valores de ciertas columnas
+de un data.frame. Esta función despliega un data.frame, con los vectores
+apilados en la primera columna y la segunda columna contiene un factor
+que indica la columna de origen. La función unstack() realiza la
+operación contraria 
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{trt1=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{trt2=}\KeywordTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\NormalTok{z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trt1 trt2
+## 1    1    8
+## 2    6    8
+## 3    3    3
+## 4    5    1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función stack()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stack}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   values  ind
+## 1      1 trt1
+## 2      6 trt1
+## 3      3 trt1
+## 4      5 trt1
+## 5      8 trt2
+## 6      8 trt2
+## 7      3 trt2
+## 8      1 trt2
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función transform}
+
+Esta función realiza transformaciones sobre las columnas de una
+data.frame
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Peso=}\KeywordTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{75}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{52}\NormalTok{),}
+                \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{180}\NormalTok{,}\DecValTok{170}\NormalTok{,}\DecValTok{165}\NormalTok{,}\DecValTok{150}\NormalTok{),}
+                \DataTypeTok{Colesterol=}\KeywordTok{c}\NormalTok{(}\DecValTok{44}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{34}\NormalTok{),}
+                \DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{))}
+\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Peso Altura Colesterol Genero
+## 1   80    180         44      M
+## 2   75    170         12      M
+## 3   60    165         23      F
+## 4   52    150         34      F
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función transform}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z <-}\StringTok{ }\KeywordTok{transform}\NormalTok{(Z,}\DataTypeTok{Altura=}\NormalTok{Altura}\OperatorTok{/}\DecValTok{100}\NormalTok{,}\DataTypeTok{BMI=}\NormalTok{Peso}\OperatorTok{/}\NormalTok{(Peso}\OperatorTok{/}\DecValTok{100}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Peso Altura Colesterol Genero      BMI
+## 1   80   1.80         44      M 125.0000
+## 2   75   1.70         12      M 133.3333
+## 3   60   1.65         23      F 166.6667
+## 4   52   1.50         34      F 192.3077
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función tapply}
+
+Calcula distintas operaciónes realizadas en masas, mediante
+combinaciones de variables cuantitativas con variables categóricas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{"C:/Users/santiago/Documents/}
+	\StringTok{Progrmación en R/2020-I/PR04}
+	\StringTok{Manipulación de datos II/temperatures.txt"}
+	 \NormalTok{,}\DataTypeTok{header=}\NormalTok{T)}
+\KeywordTok{attach}\NormalTok{(data)}
+\KeywordTok{names}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "temperature" "lower"  "rain"  "month" "yr"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función tapply}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,month,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1         2         3         4         5         
+##  7.930051  8.671136 11.200508 13.813708 17.880847  
+##         6         7         8         9        10
+## 20.306151 22.673854 23.104924 19.344211 15.125976
+##         11        12 
+## 10.720702  8.299830
+\end{verbatim}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Función tapply}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,month,min)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    1    2   3   4   5    6    7    8   9   10  11  12 
+## -6.8 -3.5 1.5 2.8 8.8 11.5 14.3 15.0 7.5  8.3 0.5 -1.8
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Función tapply}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,month,}\ControlFlowTok{function}\NormalTok{(x)}
+  \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{var}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1         2         3         4         5         
+## 0.1401489 0.1414445 0.1358934 0.1476242 0.1673197  
+##         6         7         8         9        10
+## 0.1596439 0.1539661 0.1516091 0.1309294 0.1155612
+##         11        12 
+## 0.1291703 0.1398438
+
+\end{verbatim}
+
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{Función tapply}
+
+mediante esta función podemos producir tablas multidimensionales
+simplemente reemplzando una variable categórica por una lista de
+variables categóricas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,}\KeywordTok{list}\NormalTok{(yr,month),mean)[,}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función tapply}
+
+\begin{verbatim}
+          1      2      3     4     5     6
+1987  3.170  6.871  8.132 14.92 15.60 17.73
+1988  8.048  8.248  9.959 12.74 17.31 18.71
+1989  8.841  9.482 11.919 11.03 20.43 21.23
+1990  9.445 11.021 12.487 13.80 20.19 18.57
+1991  6.980  4.817 12.022 13.13 15.58 16.88
+1992  6.964  8.686 11.477 13.30 20.45 22.21
+1993 10.115  6.984 11.207 14.10 17.75 21.10
+1994  8.825  7.217 11.806 12.67 16.23 20.86
+1995  8.309 10.436 10.662 14.77 18.73 19.93
+1996  7.019  6.065  8.4870 13.96 14.31 21.96
+1997  4.932 10.171 13.378 15.07 18.19 19.90
+1998  8.759 11.247 11.715 12.53 19.46 19.30
+1999  9.523  8.485 11.790 14.60 18.94 20.00
+2000  8.229 10.328 11.900 12.50 18.21 20.63
+2001  7.067  9.121  9.012912.66 18.96 20.52
+2002  9.067 11.399 12.315 15.67 16.80 19.67
+2003  8.012  8.171 13.425 15.60 17.36 22.80
+2004  8.261  8.993 10.354 15.10 17.98 21.73
+2005  9.116  7.032 10.787 13.73 17.12 22.00
+\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Función tapply}
+
+para corregir el inconveniente de trabajar con los missing data usamos
+el argumento na.rm=TRUE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,yr,mean,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1987     1988     1989     1990     1991     1992     
+## 13.27014 13.79126 15.54986 15.62986 14.11945 14.61612 
+##     1993     1994     1995     1996     1997     1998     
+## 14.30984 15.12877 15.81260 13.98082 15.63918 15.02568 
+##     1999     2000     2001     2002    2003     2004      
+## 15.63736 14.94071 14.90849 15.47589 16.03260 15.25109 
+##     2005  
+## 15.06000 
+
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Función tapply}
+
+Usted puede querer eliminar ciertos valores extremos antes de calcular
+la media (pues la media aritmética es bastante sensible a datos
+atípicos), para ello, el argumento trim especifica la fracción de los
+datos (entre 0 y 0.5 que usted quiere omitir). Los valores extremos son
+omitidos en prioridad
+
+\end{frame}
+
+\begin{frame}[fragile]{Función tapply}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(temperature,yr,mean,}\DataTypeTok{trim=}\FloatTok{0.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1987     1988     1989     1990     1991     1992     
+## 13.45068 13.74500 14.99726 15.16301 13.92237 14.32091
+##     1993     1994     1995     1996     1997     1998     
+## 14.28000 14.64658 15.25571 13.75845 15.54064 14.91500 
+##     1999     2000     2001     2002    2003     2004      
+## 15.44364 14.59318 14.63333 15.33927 15.70959 15.04136 
+##     2005  
+## 15.02009 
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función aggregate()}
+
+La función aggregate() genera un data.frame en sub poblaciones de
+acuerdo a un factor (especificado por el argumento by) y aplica una
+función dada para cada subpoblación
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Peso=}\KeywordTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{75}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{52}\NormalTok{),}
+                \DataTypeTok{Altura=}\KeywordTok{c}\NormalTok{(}\DecValTok{180}\NormalTok{,}\DecValTok{170}\NormalTok{,}\DecValTok{165}\NormalTok{,}\DecValTok{150}\NormalTok{),}
+                \DataTypeTok{Colesterol=}\KeywordTok{c}\NormalTok{(}\DecValTok{44}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{34}\NormalTok{),}
+                \DataTypeTok{Genero=}\KeywordTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{))}
+\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Peso Altura Colesterol Genero
+## 1   80    180         44      M
+## 2   75    170         12      M
+## 3   60    165         23      F
+## 4   52    150         34      F
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función aggregate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(Z[,}\OperatorTok{-}\DecValTok{4}\NormalTok{],}\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Gender=}\NormalTok{Z[,}\DecValTok{4}\NormalTok{]),}\DataTypeTok{FUN=}\NormalTok{mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Gender Peso Altura Colesterol
+## 1      F 56.0  157.5       28.5
+## 2      M 77.5  175.0       28.0
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Función aggregate()}
+
+Suponga que tenemos dos variables respuesta (y y z) y dos variables
+explicativas (x y w) que pueden ser usadas para realizar un resumen
+estadístico. la función aggregate() funciona de distintas maneras
+
+\begin{itemize}
+\tightlist
+\item
+  one to one: aggregate(y \textasciitilde{} x, mean)
+\item
+  one to many: aggregate(y \textasciitilde{} x + w, mean)
+\item
+  many to one: aggregate(cbind(y,z) \textasciitilde{} x, mean)
+\item
+  many to many: aggregate(cbind(y,z) \textasciitilde{} x + w, mean)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función aggregate()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data2<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{"C:/Users/santiago/Documents/}
+	\StringTok{"Progrmación en R/2020-I/PR04}
+	\StringTok{Manipulación de datos II/pHDaphnia.txt"}\NormalTok{,}\DataTypeTok{header=}\NormalTok{T)}
+\KeywordTok{names}\NormalTok{(data2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Growth.rate" "Water" "Detergent" "Daphnia"  "pH"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(Growth.rate}\OperatorTok{~}\NormalTok{Water,data2,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Water Growth.rate
+## 1  Tyne    3.685862
+## 2  Wear    4.017948
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función aggregate()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(Growth.rate}\OperatorTok{~}\NormalTok{Water}\OperatorTok{+}\NormalTok{Detergent,data2,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Water Detergent Growth.rate
+## 1  Tyne    BrandA    3.661807
+## 2  Wear    BrandA    4.107857
+## 3  Tyne    BrandB    3.911116
+## 4  Wear    BrandB    4.108972
+## 5  Tyne    BrandC    3.814321
+## 6  Wear    BrandC    4.094704
+## 7  Tyne    BrandD    3.356203
+## 8  Wear    BrandD    3.760259
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Función aggregate()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(pH,Growth.rate)}\OperatorTok{~}\NormalTok{Water}\OperatorTok{+}\NormalTok{Detergent,}
+\NormalTok{          data2,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Water Detergent       pH Growth.rate
+## 1  Tyne    BrandA 4.883908    3.661807
+## 2  Wear    BrandA 5.054835    4.107857
+## 3  Tyne    BrandB 5.043797    3.911116
+## 4  Wear    BrandB 4.892346    4.108972
+## 5  Tyne    BrandC 4.847069    3.814321
+## 6  Wear    BrandC 4.912128    4.094704
+## 7  Tyne    BrandD 4.809144    3.356203
+## 8  Wear    BrandD 5.097039    3.760259
+\end{verbatim}
+
+\end{frame}
+
+\end{document}
